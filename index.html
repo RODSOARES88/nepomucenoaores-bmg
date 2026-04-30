@@ -1609,7 +1609,7 @@ Após os lançamentos: enviar mensagem à Célula de Garantias solicitando REGUL
   ]
 };
 
-let currentTeam = 'cadastro'; = 'cadastro'; = 'cadastro';
+let currentTeam = 'cadastro';
 let currentTopico = 'todos';
 
 function selectTeam(team){
@@ -1667,7 +1667,8 @@ function renderFaq(){
     filtered = filtered.map(i=>({...i,_score:score(i,query)})).filter(i=>i._score>0).sort((a,b)=>b._score-a._score);
   }
 
-  const teamLabel = currentTeam==='defesa'?'Equipe de Defesa':'Equipe de Intermediários';
+  const teamLabels = {cadastro:'Cadastro',publicacao:'Publicação',defesa:'Defesa',intermediarios:'Intermediários',cumprimento:'Cumprimento de Sentença',encerramento:'Encerramento'};
+  const teamLabel = teamLabels[currentTeam] || currentTeam;
   
   if(filtered.length===0){
     document.getElementById('faq-output').innerHTML = `<div class="no-result">Nenhuma resposta encontrada para "${query}".<br>Tente palavras diferentes ou navegue pelos tópicos acima.</div>`;

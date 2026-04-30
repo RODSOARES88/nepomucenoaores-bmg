@@ -166,6 +166,44 @@ select:focus{outline:none;border-color:#1E2B6A}
 .acc-tip{background:#e8f0fe;border-radius:6px;padding:8px 12px;font-size:12px;color:#1E2B6A;margin-top:8px;border-left:3px solid #2B5DA1}
 .team-header{background:#f0f2fb;border-radius:10px;padding:12px 16px;margin-bottom:14px;font-size:13px;color:#1E2B6A;border-left:3px solid #1E2B6A;font-weight:500}
 
+
+.rk-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.rk-card{background:#fff;border-radius:10px;padding:16px;border:1px solid #e0e4f0;text-align:center}
+.rk-card-label{font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.rk-card-value{font-size:24px;font-weight:600;color:#1a1a1a}
+.rk-card-sub{font-size:11px;color:#999;margin-top:3px}
+.rk-card.ok .rk-card-value{color:#2d7a2d}
+.rk-card.warn .rk-card-value{color:#a06000}
+.rk-card.alert .rk-card-value{color:#c0392b}
+.rk-charts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.rk-chart-box{background:#fff;border-radius:10px;padding:16px;border:1px solid #e0e4f0}
+.rk-chart-title{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+.rk-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:20px}
+.rk-table th{background:#f0f2f8;padding:8px 10px;text-align:left;font-size:10px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.04em}
+.rk-table td{padding:8px 10px;border-bottom:1px solid #f5f5f5;vertical-align:middle}
+.rk-table tr:hover td{background:#fafbff}
+.rk-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600}
+.rk-badge.ok{background:#e2efda;color:#375623}
+.rk-badge.warn{background:#fff2cc;color:#7d6608}
+.rk-badge.alert{background:#fde8e8;color:#8b1a1a}
+.rk-badge.miss{background:#f0f0f0;color:#888}
+.rk-bar-wrap{height:6px;background:#f0f2f8;border-radius:3px;overflow:hidden;min-width:80px}
+.rk-bar{height:6px;border-radius:3px;transition:width .5s}
+.rk-peso{display:inline-flex;gap:2px}
+.rk-peso-dot{width:8px;height:8px;border-radius:50%;background:#1E2B6A;display:inline-block}
+.rk-peso-dot.empty{background:#e0e4f0}
+.sim-wrap{background:#fff;border-radius:10px;padding:20px;border:1px solid #e0e4f0;margin-bottom:16px}
+.sim-title{font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:4px}
+.sim-sub{font-size:12px;color:#888;margin-bottom:16px}
+.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sim-item{margin-bottom:12px}
+.sim-label{font-size:12px;font-weight:500;color:#444;margin-bottom:4px;display:flex;justify-content:space-between}
+.sim-val{font-size:12px;font-weight:700;color:#1E2B6A}
+.sim-score-box{background:#f0f2fb;border-radius:10px;padding:16px;text-align:center;grid-column:1/-1;margin-top:8px}
+.sim-score-num{font-size:36px;font-weight:700;color:#1E2B6A}
+.sim-score-label{font-size:12px;color:#888;margin-top:4px}
+.rk-note{background:#fffbf0;border-radius:8px;padding:10px 14px;font-size:12px;color:#7d6608;border-left:3px solid #a06000;margin-bottom:16px}
+
 .footer{text-align:center;padding:24px;font-size:12px;color:#bbb}
 @media(max-width:600px){.cards{grid-template-columns:1fr 1fr}.selectors{grid-template-columns:1fr}.risks{grid-template-columns:1fr}}
 </style>
@@ -184,6 +222,7 @@ select:focus{outline:none;border-color:#1E2B6A}
   <div class="tab" onclick="switchTab('modelos',this)">Sugestão de Modelos</div>
   <div class="tab" onclick="switchTab('manual',this)">Manual da Equipe</div>
   <div class="tab" onclick="switchTab('fluxo',this)">Fluxo de Defesa</div>
+  <div class="tab" onclick="switchTab('ranking',this)">Ranking BMG</div>
 </div>
 
 <div class="container">
@@ -426,6 +465,122 @@ select:focus{outline:none;border-color:#1E2B6A}
           <div class="fdp-empty-icon">👆</div>
           <div style="font-size:14px;font-weight:500;color:#888;margin-bottom:6px">Clique em uma etapa</div>
           <div style="font-size:12px;color:#bbb">As instruções detalhadas aparecem aqui</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABA 6: RANKING BMG -->
+  <div id="ranking" class="panel">
+    <div class="rk-note">
+      <strong>Base de dados:</strong> 1.704 decisões analisadas · Abril 2026 &nbsp;|&nbsp; 
+      5 de 10 variáveis disponíveis · Atualiza automaticamente quando você traz o CSV do Alexandre.
+    </div>
+
+    <!-- Cards resumo -->
+    <div class="rk-cards">
+      <div class="rk-card ok">
+        <div class="rk-card-label">Pontuação estimada</div>
+        <div class="rk-card-value" id="rk-score-total">--</div>
+        <div class="rk-card-sub">de 100 pontos</div>
+      </div>
+      <div class="rk-card ok">
+        <div class="rk-card-label">Taxa de Êxito</div>
+        <div class="rk-card-value">60,4%</div>
+        <div class="rk-card-sub">peso 4 · acima da média</div>
+      </div>
+      <div class="rk-card warn">
+        <div class="rk-card-label">% Acordo Pós Sentença</div>
+        <div class="rk-card-value">1,2%</div>
+        <div class="rk-card-sub">peso 4 · oportunidade</div>
+      </div>
+      <div class="rk-card warn">
+        <div class="rk-card-label">% Condenação</div>
+        <div class="rk-card-value">38,4%</div>
+        <div class="rk-card-sub">peso 3 · reduzir</div>
+      </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="rk-charts">
+      <div class="rk-chart-box">
+        <div class="rk-chart-title">Perfil de performance — radar por variável</div>
+        <canvas id="radarChart" height="260"></canvas>
+      </div>
+      <div class="rk-chart-box">
+        <div class="rk-chart-title">Contribuição ponderada por variável (peso × score)</div>
+        <canvas id="barChart" height="260"></canvas>
+      </div>
+    </div>
+
+    <!-- Tabela das 10 variáveis -->
+    <table class="rk-table">
+      <thead>
+        <tr>
+          <th style="width:28px">#</th>
+          <th>Variável</th>
+          <th>Peso</th>
+          <th>Valor atual</th>
+          <th>Score (0–100)</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="rk-table-body"></tbody>
+    </table>
+
+    <!-- Simulador -->
+    <div class="sim-wrap">
+      <div class="sim-title">Simulador de cenários — e se melhorarmos?</div>
+      <div class="sim-sub">Ajuste os sliders para simular como mudanças nas variáveis impactam a pontuação estimada no ranking.</div>
+      <div class="sim-grid">
+        <div>
+          <div class="sim-item">
+            <div class="sim-label">Taxa de Êxito <span class="sim-val" id="sv-exito">60%</span></div>
+            <input type="range" min="30" max="90" value="60" step="1" oninput="updateSim('exito',this.value)" />
+          </div>
+          <div class="sim-item">
+            <div class="sim-label">% de Encerramento <span class="sim-val" id="sv-encerramento">?</span></div>
+            <input type="range" min="0" max="100" value="60" step="1" oninput="updateSim('encerramento',this.value)" />
+          </div>
+          <div class="sim-item">
+            <div class="sim-label">% Acordo Pós Sentença <span class="sim-val" id="sv-acordopos">1%</span></div>
+            <input type="range" min="0" max="30" value="1" step="1" oninput="updateSim('acordopos',this.value)" />
+          </div>
+          <div class="sim-item">
+            <div class="sim-label">% Acordo Pré Sentença <span class="sim-val" id="sv-acordopre">?</span></div>
+            <input type="range" min="0" max="20" value="3" step="1" oninput="updateSim('acordopre',this.value)" />
+          </div>
+          <div class="sim-item">
+            <div class="sim-label">% Condenação <span class="sim-val" id="sv-condenacao">38%</span></div>
+            <input type="range" min="10" max="70" value="38" step="1" oninput="updateSim('condenacao',this.value)" />
+          </div>
+        </div>
+        <div>
+          <div class="sim-item">
+            <div class="sim-label">Ticket Médio Geral (R$) <span class="sim-val" id="sv-ticket">22.829</span></div>
+            <input type="range" min="10000" max="40000" value="22829" step="500" oninput="updateSim('ticket',this.value)" />
+          </div>
+          <div class="sim-item">
+            <div class="sim-label">Ticket Médio Condenação (R$) <span class="sim-val" id="sv-ticketcond">21.844</span></div>
+            <input type="range" min="5000" max="40000" value="21844" step="500" oninput="updateSim('ticketcond',this.value)" />
+          </div>
+          <div class="sim-item">
+            <div class="sim-label">% Falhas Financeiras <span class="sim-val" id="sv-falhasfin">?</span></div>
+            <input type="range" min="0" max="15" value="3" step="1" oninput="updateSim('falhasfin',this.value)" />
+          </div>
+          <div class="sim-item">
+            <div class="sim-label">% Falhas Operacionais <span class="sim-val" id="sv-falhasop">?</span></div>
+            <input type="range" min="0" max="20" value="5" step="1" oninput="updateSim('falhasop',this.value)" />
+          </div>
+          <div class="sim-item">
+            <div class="sim-label">Aging Encerramento (dias) <span class="sim-val" id="sv-aging">800</span></div>
+            <input type="range" min="200" max="1500" value="800" step="50" oninput="updateSim('aging',this.value)" />
+          </div>
+        </div>
+        <div class="sim-score-box">
+          <div style="font-size:12px;color:#888;margin-bottom:4px">Pontuação estimada no simulador</div>
+          <div class="sim-score-num" id="sim-score">--</div>
+          <div class="sim-score-label">de 100 pontos &nbsp;|&nbsp; <span id="sim-delta" style="font-weight:600"></span></div>
         </div>
       </div>
     </div>
@@ -1483,5 +1638,199 @@ function toggleAcc(header) {
 renderTeam('cadastro');
 
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script>
+// ── RANKING DATA ─────────────────────────────────────────────────────────
+const RK_VARS = [
+  {id:'ticket',     nome:'Ticket Médio Geral',      peso:5, valor:22829, tipo:'currency', melhor:'menor', benchmark:20000, disponivel:true},
+  {id:'exito',      nome:'Taxa de Êxito',            peso:4, valor:60.4,  tipo:'percent',  melhor:'maior', benchmark:65,    disponivel:true},
+  {id:'encerramento',nome:'% de Encerramento',       peso:4, valor:null,  tipo:'percent',  melhor:'maior', benchmark:70,    disponivel:false},
+  {id:'acordopos',  nome:'% Acordo Pós Sentença',    peso:4, valor:1.2,   tipo:'percent',  melhor:'maior', benchmark:8,     disponivel:true},
+  {id:'ticketcond', nome:'Ticket Médio Condenação',  peso:3, valor:21844, tipo:'currency', melhor:'menor', benchmark:18000, disponivel:true},
+  {id:'condenacao', nome:'% de Condenação',          peso:3, valor:38.4,  tipo:'percent',  melhor:'menor', benchmark:35,    disponivel:true},
+  {id:'acordopre',  nome:'% de Acordo Pré',          peso:3, valor:null,  tipo:'percent',  melhor:'maior', benchmark:5,     disponivel:false},
+  {id:'falhasfin',  nome:'% Falhas Financeiras',     peso:2, valor:null,  tipo:'percent',  melhor:'menor', benchmark:2,     disponivel:false},
+  {id:'falhasop',   nome:'% Falhas Operacionais',    peso:2, valor:null,  tipo:'percent',  melhor:'menor', benchmark:5,     disponivel:false},
+  {id:'aging',      nome:'Aging Encerramento',       peso:1, valor:800,   tipo:'days',     melhor:'menor', benchmark:600,   disponivel:true},
+];
+
+// Default sim values
+const SIM_VALUES = {};
+RK_VARS.forEach(v => { SIM_VALUES[v.id] = v.valor !== null ? v.valor : v.benchmark; });
+
+function calcScore(val, v) {
+  if(val === null || val === undefined) return null;
+  let s;
+  if(v.melhor === 'maior') {
+    s = Math.min(100, (val / v.benchmark) * 80);
+  } else {
+    s = Math.max(0, 100 - ((val - v.benchmark) / v.benchmark) * 80);
+  }
+  return Math.max(0, Math.min(100, Math.round(s)));
+}
+
+function calcTotalScore(simVals) {
+  let totalPeso = 0, totalPonderado = 0;
+  RK_VARS.forEach(v => {
+    const val = simVals[v.id];
+    const s = calcScore(val, v);
+    if(s !== null) {
+      totalPeso += v.peso;
+      totalPonderado += s * v.peso;
+    }
+  });
+  return totalPeso > 0 ? Math.round(totalPonderado / totalPeso) : 0;
+}
+
+function scoreClass(s) {
+  if(s === null) return 'miss';
+  if(s >= 70) return 'ok';
+  if(s >= 45) return 'warn';
+  return 'alert';
+}
+
+function fmtVal(val, tipo) {
+  if(val === null) return '—';
+  if(tipo === 'currency') return 'R$ ' + Math.round(val).toLocaleString('pt-BR');
+  if(tipo === 'percent') return val.toFixed(1) + '%';
+  if(tipo === 'days') return Math.round(val) + ' dias';
+  return val;
+}
+
+function renderTable() {
+  const tbody = document.getElementById('rk-table-body');
+  if(!tbody) return;
+  tbody.innerHTML = RK_VARS.map((v, i) => {
+    const s = calcScore(v.valor, v);
+    const cls = scoreClass(s);
+    const statusLabel = s === null ? 'Sem dados' : s >= 70 ? 'Bom' : s >= 45 ? 'Atenção' : 'Melhorar';
+    const pesoHtml = Array.from({length:5}, (_,j) =>
+      `<span class="rk-peso-dot${j < v.peso ? '' : ' empty'}"></span>`).join('');
+    const barW = s !== null ? s : 0;
+    const barColor = cls === 'ok' ? '#2d7a2d' : cls === 'warn' ? '#a06000' : cls === 'alert' ? '#c0392b' : '#ccc';
+    return `<tr>
+      <td style="color:#aaa;font-size:11px">${i+1}</td>
+      <td style="font-weight:500">${v.nome}</td>
+      <td><div class="rk-peso">${pesoHtml}</div></td>
+      <td>${fmtVal(v.valor, v.tipo)}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="rk-bar-wrap"><div class="rk-bar" style="width:${barW}%;background:${barColor}"></div></div>
+          <span style="font-size:11px;font-weight:600;color:${barColor};min-width:28px">${s !== null ? s : '?'}</span>
+        </div>
+      </td>
+      <td><span class="rk-badge ${cls}">${statusLabel}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+let radarChart, barChart;
+
+function renderCharts() {
+  const labels = RK_VARS.map(v => v.nome.replace('Ticket Médio ', 'TM ').replace('% de ', '% ').replace('% ', '% ').substring(0,18));
+  const scores = RK_VARS.map(v => calcScore(v.valor, v) ?? 0);
+  const benchmarks = RK_VARS.map(() => 70);
+
+  // Radar
+  const radarCtx = document.getElementById('radarChart');
+  if(radarCtx) {
+    if(radarChart) radarChart.destroy();
+    radarChart = new Chart(radarCtx, {
+      type: 'radar',
+      data: {
+        labels,
+        datasets: [
+          {label:'Atual', data:scores, backgroundColor:'rgba(30,43,106,0.15)', borderColor:'#1E2B6A', borderWidth:2, pointBackgroundColor:'#1E2B6A', pointRadius:4},
+          {label:'Meta', data:benchmarks, backgroundColor:'rgba(45,122,45,0.05)', borderColor:'rgba(45,122,45,0.4)', borderWidth:1, borderDash:[5,5], pointRadius:2}
+        ]
+      },
+      options: {responsive:true, plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}, scales:{r:{min:0,max:100,ticks:{stepSize:25,font:{size:9}},pointLabels:{font:{size:9}}}}}
+    });
+  }
+
+  // Bar
+  const barCtx = document.getElementById('barChart');
+  if(barCtx) {
+    if(barChart) barChart.destroy();
+    const weighted = RK_VARS.map(v => {
+      const s = calcScore(v.valor, v);
+      return s !== null ? Math.round(s * v.peso / 5) : 0;
+    });
+    const colors = RK_VARS.map(v => {
+      const s = calcScore(v.valor, v);
+      return s === null ? '#ddd' : s >= 70 ? '#2d7a2d' : s >= 45 ? '#a06000' : '#c0392b';
+    });
+    barChart = new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{label:'Contribuição ponderada', data:weighted, backgroundColor:colors, borderRadius:4}]
+      },
+      options: {
+        responsive:true,
+        plugins:{legend:{display:false}},
+        scales:{y:{min:0,max:100,ticks:{font:{size:9}}},x:{ticks:{font:{size:8},maxRotation:45}}}
+      }
+    });
+  }
+
+  // Total score
+  const total = calcTotalScore(SIM_VALUES);
+  const el = document.getElementById('rk-score-total');
+  if(el) el.textContent = total;
+  const simEl = document.getElementById('sim-score');
+  if(simEl) simEl.textContent = total;
+}
+
+function updateSim(field, val) {
+  val = parseFloat(val);
+  SIM_VALUES[field] = val;
+  const labels = {
+    ticket: 'sv-ticket', ticketcond:'sv-ticketcond', exito:'sv-exito',
+    encerramento:'sv-encerramento', acordopos:'sv-acordopos', acordopre:'sv-acordopre',
+    condenacao:'sv-condenacao', falhasfin:'sv-falhasfin', falhasop:'sv-falhasop', aging:'sv-aging'
+  };
+  const el = document.getElementById(labels[field]);
+  if(el) {
+    const v = RK_VARS.find(x=>x.id===field);
+    el.textContent = v ? fmtVal(val, v.tipo) : val;
+  }
+  const newScore = calcTotalScore(SIM_VALUES);
+  const baseScore = calcTotalScore(Object.fromEntries(RK_VARS.map(v=>[v.id, v.valor ?? v.benchmark])));
+  const delta = newScore - baseScore;
+  const simEl = document.getElementById('sim-score');
+  if(simEl) {
+    simEl.textContent = newScore;
+    simEl.style.color = newScore > baseScore ? '#2d7a2d' : newScore < baseScore ? '#c0392b' : '#1E2B6A';
+  }
+  const deltaEl = document.getElementById('sim-delta');
+  if(deltaEl) {
+    deltaEl.textContent = delta === 0 ? 'sem alteração' : (delta > 0 ? '+' : '') + delta + ' pontos vs. atual';
+    deltaEl.style.color = delta > 0 ? '#2d7a2d' : delta < 0 ? '#c0392b' : '#888';
+  }
+  // Update radar with new sim values
+  if(radarChart) {
+    const simScores = RK_VARS.map(v => calcScore(SIM_VALUES[v.id], v) ?? 0);
+    if(radarChart.data.datasets.length > 2) radarChart.data.datasets.pop();
+    radarChart.data.datasets.push({
+      label:'Simulado', data:simScores,
+      backgroundColor:'rgba(45,122,45,0.1)', borderColor:'#2d7a2d',
+      borderWidth:2, borderDash:[4,4], pointBackgroundColor:'#2d7a2d', pointRadius:3
+    });
+    radarChart.update();
+  }
+}
+
+// Init ranking tab when clicked
+const origSwitchTab = window.switchTab;
+window.switchTab = function(id, el) {
+  origSwitchTab(id, el);
+  if(id === 'ranking') {
+    setTimeout(() => { renderTable(); renderCharts(); }, 100);
+  }
+};
+</script>
+
 </body>
 </html>

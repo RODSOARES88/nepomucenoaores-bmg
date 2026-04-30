@@ -100,6 +100,35 @@ select:focus{outline:none;border-color:#1E2B6A}
 .model-news-alert{background:#fde8e8;border:1px solid #f5c6c6;border-radius:8px;padding:10px 14px;font-size:12px;color:#8b1a1a;margin-bottom:14px;line-height:1.5}
 .model-news-ok{background:#f0faf0;border:1px solid #c8e6c8;border-radius:8px;padding:10px 14px;font-size:12px;color:#1a5c1a;margin-bottom:14px}
 
+
+.team-selector{display:flex;gap:12px;margin-bottom:24px}
+.team-btn{flex:1;padding:14px;border-radius:10px;border:1.5px solid #e0e4f0;background:#fff;cursor:pointer;text-align:center;transition:all .2s}
+.team-btn:hover{border-color:#1E2B6A}
+.team-btn.active{border-color:#1E2B6A;background:#f0f2fb}
+.team-btn .tb-icon{font-size:22px;margin-bottom:6px}
+.team-btn .tb-name{font-size:13px;font-weight:600;color:#1E2B6A}
+.team-btn .tb-desc{font-size:11px;color:#888;margin-top:2px}
+.search-box{position:relative;margin-bottom:20px}
+.search-box input{width:100%;padding:12px 16px 12px 42px;border:1.5px solid #d0d5e8;border-radius:10px;font-size:14px;background:#fff;color:#1a1a1a;transition:border .2s}
+.search-box input:focus{outline:none;border-color:#1E2B6A}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#aaa;font-size:16px}
+.faq-results{margin-bottom:16px}
+.faq-result{background:#fff;border-radius:10px;padding:16px 18px;margin-bottom:10px;border:1px solid #e0e4f0;cursor:pointer;transition:all .2s}
+.faq-result:hover{border-color:#1E2B6A;background:#fafbff}
+.faq-result.expanded{border-color:#1E2B6A}
+.faq-q{font-size:13px;font-weight:600;color:#1E2B6A;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq-q .faq-topico{font-size:10px;font-weight:600;padding:2px 8px;border-radius:8px;background:#f0f2f8;color:#555;white-space:nowrap;flex-shrink:0}
+.faq-a{font-size:13px;color:#333;line-height:1.7;margin-top:12px;padding-top:12px;border-top:1px solid #f0f2f8;display:none}
+.faq-result.expanded .faq-a{display:block}
+.faq-alert{background:#fde8e8;border-radius:8px;padding:8px 12px;font-size:12px;color:#8b1a1a;margin-top:8px;border-left:3px solid #c0392b}
+.faq-tip{background:#f0f8ff;border-radius:8px;padding:8px 12px;font-size:12px;color:#1E2B6A;margin-top:8px;border-left:3px solid #2B5DA1}
+.topicos-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.topico-btn{padding:5px 12px;border-radius:14px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #d0d5e8;background:#fff;color:#555;transition:all .2s}
+.topico-btn:hover{border-color:#1E2B6A;color:#1E2B6A}
+.topico-btn.active{background:#1E2B6A;color:#fff;border-color:#1E2B6A}
+.no-result{background:#fff;border-radius:10px;padding:24px;border:1px solid #e0e4f0;text-align:center;color:#888;font-size:13px}
+.manual-header{background:#f0f2fb;border-radius:10px;padding:14px 18px;margin-bottom:16px;border-left:3px solid #1E2B6A;font-size:13px;color:#1E2B6A}
+
 .footer{text-align:center;padding:24px;font-size:12px;color:#bbb}
 @media(max-width:600px){.cards{grid-template-columns:1fr 1fr}.selectors{grid-template-columns:1fr}.risks{grid-template-columns:1fr}}
 </style>
@@ -116,6 +145,7 @@ select:focus{outline:none;border-color:#1E2B6A}
   <div class="tab active" onclick="switchTab('inteligencia',this)">Plano de Inteligência</div>
   <div class="tab" onclick="switchTab('mercado',this)">Inteligência de Mercado</div>
   <div class="tab" onclick="switchTab('modelos',this)">Sugestão de Modelos</div>
+  <div class="tab" onclick="switchTab('manual',this)">Manual da Equipe</div>
 </div>
 
 <div class="container">
@@ -189,6 +219,28 @@ select:focus{outline:none;border-color:#1E2B6A}
       <div class="updated" style="grid-column:1/-1">Sugestões baseadas em dados estatísticos + inteligência de mercado · Abril 2026</div>
     </div>
     <div id="modelos-output"></div>
+  </div>
+
+  <!-- ABA 4: MANUAL DA EQUIPE -->
+  <div id="manual" class="panel">
+    <div class="team-selector">
+      <div class="team-btn active" id="btn-defesa" onclick="selectTeam('defesa')">
+        <div class="tb-icon">⚖</div>
+        <div class="tb-name">Equipe de Defesa</div>
+        <div class="tb-desc">Contestações, audiências, recursos</div>
+      </div>
+      <div class="team-btn" id="btn-intermediarios" onclick="selectTeam('intermediarios')">
+        <div class="tb-icon">⚙</div>
+        <div class="tb-name">Equipe de Intermediários</div>
+        <div class="tb-desc">Publicações, workflows, E-Xyon</div>
+      </div>
+    </div>
+    <div class="search-box">
+      <span class="search-icon">&#9906;</span>
+      <input type="text" id="faq-search" placeholder="Digite sua dúvida... ex: prazo contestação, como fazer acordo, OBF urgente" oninput="searchFaq()" />
+    </div>
+    <div id="topicos-bar" class="topicos-filter"></div>
+    <div id="faq-output"></div>
   </div>
 
 </div>
@@ -717,6 +769,230 @@ function renderModelos(){
 }
 
 renderModelos();
+renderFaq();
 </script>
+
+// ─── FAQ DATA ──────────────────────────────────────────────────────────────
+const FAQ = {
+  defesa: [
+    {topico:'Novo Processo', q:'O que fazer ao receber um novo processo?',
+     k:['novo','processo','receber','aceite','patrocínio','chegou'],
+     a:'Ao receber um novo patrocínio via E-Xyon, verifique imediatamente: (1) prazo judicial para defesa — se estiver vencido ou próximo, abra curso alternativo; (2) cumprimento de liminar — se houver, comunique OBF ao banco imediatamente; (3) correção do cadastro; (4) indício de óbito do autor. O WF "SANEAMENTO INICIAL" é instalado automaticamente junto ao patrocínio.',
+     alerta:'NUNCA aceite patrocínio de projetos fora da sua atuação. Leia com atenção antes de aceitar.',
+     dica:null},
+    {topico:'Prazos', q:'Qual o prazo para providenciar a contestação?',
+     k:['prazo','contestação','defesa','dias','documentos','citação'],
+     a:'Após receber o mandado de citação (apenas), você tem 3 dias úteis para providenciar a inicial e documentos. Se receber a citação completa com documentos, o prazo corre normalmente conforme o processo. Acesse o E-Xyon para vincular os documentos na aba "CONTRATO".',
+     alerta:null, dica:'Se os documentos estiverem incompletos, instale o WF "ESC - COMPLEMENTO/CORREÇÃO DE SUBSÍDIOS" imediatamente.'},
+    {topico:'Prazos', q:'O que fazer quando o prazo está vencido ou prestes a vencer?',
+     k:['prazo','vencido','urgente','vencer','revisar'],
+     a:'Abra o curso alternativo correspondente no E-Xyon para prazos críticos. Comunique ao escritório e ao banco com urgência via mensagem no E-Xyon. Nunca deixe prazo vencer sem comunicação — isso gera falha operacional.',
+     alerta:'Prazo vencido sem comunicação = falha operacional aplicada ao escritório.', dica:null},
+    {topico:'Óbito', q:'Como verificar e o que fazer em caso de óbito do autor?',
+     k:['óbito','faleceu','morreu','falecimento','CPF','receita'],
+     a:'Consulte o CPF do autor na Receita Federal (online). Se houver óbito confirmado: abra imediatamente o curso alternativo "SUSPEITA DE ÓBITO CONFIRMADO" no E-Xyon e peticione extinção do processo ou habilitação de herdeiros conforme o caso.',
+     alerta:null, dica:'Sempre fazer essa verificação no saneamento inicial — é obrigatório.'},
+    {topico:'Audiências', q:'Como devo me comportar nas audiências?',
+     k:['audiência','comparecer','depoimento','conciliação','desinteresse'],
+     a:'O escritório NUNCA deve manifestar desinteresse em audiências — comparecemos a todas, sem exceção. Em todas as audiências, solicite imprescindivelmente o depoimento da parte autora. Isso evita ações ajuizadas sem o conhecimento da própria parte. Após a audiência, vincule a ata no E-Xyon.',
+     alerta:'Manifestar desinteresse em audiência = falha operacional.', dica:null},
+    {topico:'OBF', q:'O que é OBF e como comunicar ao banco?',
+     k:['OBF','obrigação','fazer','liminar','cumprir','tutela','urgência'],
+     a:'OBF = Obrigação de Fazer. Após sentença condenatória ou liminar, comunique ao banco via mensagem no E-Xyon usando o formulário padrão. Informe: número do processo, tipo de OBF (cancelamento, estorno, exclusão de restrições), prazo judicial. A célula de OBF instala o workflow correspondente ao produto (Cartão, Consignado, BMG em Conta, Veículo).',
+     alerta:'SLA médio: mínimo 3 dias, máximo 7 dias. Para prazo de 24h/48h: envie e-mail à célula de OBF solicitando prioridade.', dica:'Confirme o cumprimento da OBF via WF "CONFIRMAR CUMPRIMENTO" assim que receber o retorno da área.'},
+    {topico:'OBF', q:'O que acontece se eu não confirmar o cumprimento da OBF?',
+     k:['confirmar','cumprimento','OBF','confirma','falha'],
+     a:'A confirmação do cumprimento é OBRIGATÓRIA. O escritório deve acompanhar o retorno da área (que sempre se dá pelo WF) e logo em seguida confirmar o cumprimento. Não confirmar gera falha de procedimento automaticamente.',
+     alerta:'Não confirmar OBF = falha de procedimento aplicada ao escritório.', dica:null},
+    {topico:'Acordo', q:'Quando posso fechar um acordo sem pedir autorização?',
+     k:['acordo','autorização','valor','alçada','fechar','negociar'],
+     a:'Você pode fechar acordo sem consulta prévia quando: (1) o valor for até R$ 4.999,99 E (2) o acordo se enquadrar em todos os termos da política de acordos do banco. Para valores iguais ou superiores a R$ 5.000, envie mensagem para "CONTROLE ACORDO" solicitando validação antes de fechar.',
+     alerta:'Acordo com advogado agressor: NUNCA fechar sem expressa autorização do banco, independentemente do valor. Penalidade: falha financeira de 100% do valor do acordo.', dica:null},
+    {topico:'Acordo', q:'Como formalizar uma proposta de acordo?',
+     k:['proposta','acordo','formalizar','enviar','pré','pós','sentença'],
+     a:'Envie mensagem no E-Xyon para "CONTROLE ACORDO" com o assunto padronizado: "PROPOSTA DE ACORDO – PRÉ SENTENÇA" (antes da sentença) ou "PROPOSTA DE ACORDO – APÓS SENTENÇA" (após a sentença). O SLA para tratamento é de 20 dias. O acordo deve ser fechado dentro do prazo de trânsito em julgado.',
+     alerta:null, dica:'Acordos acima de R$ 7.000 (pré-sentença) ou R$ 10.000 (pós-sentença) exigem recálculo financeiro pelo RHUMAS.'},
+    {topico:'Condenação', q:'O que fazer quando a condenação é acima de R$ 50.000?',
+     k:['condenação','R$50000','cinquenta','mil','alto','valor','sentença','comunicar'],
+     a:'Para sentenças condenatórias acima de R$ 50.000, você tem até o 3º dia da intimação para enviar mensagem à Célula de Cadastro/Subsídios no E-Xyon. A mensagem deve incluir: resumo do caso, valor da condenação, motivo da condenação elevada, planilha de cálculo e prazo final para recurso. Esse processo se chama "Projeto Middle".',
+     alerta:'Prazo: até o 3º dia da intimação da sentença. Não comunicar = falha operacional.', dica:'Recurso Especial: qualquer condenação acima de R$ 50.000 requer avaliação imediata de recurso especial conforme Manual BMG.'},
+    {topico:'Modelos', q:'Qual modelo usar para cada tipo de processo?',
+     k:['modelo','petição','usar','arquivo','sharepoint','qual','documento'],
+     a:'Acesse a pasta PETIÇÕES PADRONIZADAS - EQUIPE DE DEFESA no SharePoint:
+• Fraude (RMC): FRAUDE - CARTÃO RMC.docx
+• Fraude (RCC): FRAUDE - CARTÃO RCC.docx
+• Não Reconhecimento (RMC): MODALIDADE - CARTÃO RMC.docx
+• Não Reconhecimento (RCC): MODALIDADE - CARTÃO RCC.docx
+• 2 cartões diferentes: MODALIDADE - 2 CARTÕES DIFERENTES.docx
+• Revisão de juros: Contestação REVISIONAL DE JUROS CARTÃO RMC.doc
+• Seguros: SEGURO PRESTAMISTA E SEGURO PAPCARD JUNTOS NA MESMA AÇÃO.docx
+• Referência geral: MATERIAL DE APOIO DEFESA - TESES RECORRENTES.docx',
+     alerta:null, dica:'Consulte também a aba "Sugestão de Modelos" deste site para orientações específicas por estado e projeto.'},
+    {topico:'Jurisprudência', q:'O que é o Tema 1.414 do STJ e como impacta nossos processos?',
+     k:['Tema 1414','STJ','RMC','RCC','suspensão','cartão','consignado','repetitivo'],
+     a:'O Tema 1.414 do STJ discute a validade e abusividade de contratos de cartão de crédito consignado (RMC e RCC). Em 13/03/2026, o Ministro Raul Araújo determinou a SUSPENSÃO NACIONAL de todos os processos pendentes envolvendo RMC e RCC. Antes de protocolar qualquer contestação em processo de Não Reconhecimento Cartão ou Fraude envolvendo esses produtos, verifique se o processo está ou deveria estar sobrestado.',
+     alerta:'ATENÇÃO: A Circular 002 descreve o Tema 1.414 como sendo sobre "portabilidade de crédito" — isso está INCORRETO. O Tema trata de validade/abusividade dos contratos RMC/RCC. Não usar esse argumento nas peças.', dica:null},
+    {topico:'Subsídios', q:'Como obter documentos quando o contrato está incompleto?',
+     k:['subsídios','contrato','incompleto','documentos','faltando','CEDIF','CORBAN'],
+     a:'Se o contrato ou documentos estiverem incompletos ao receber o patrocínio: instale o WF "ESC - COMPLEMENTO/CORREÇÃO DE SUBSÍDIOS" no E-Xyon. A equipe CEDIF disponibiliza os contratos. Para casos de fraude, acione os Correspondentes (CORBAN) por e-mail para subsídios específicos. Para comprovantes de crédito por transferência, acione a SBK.',
+     alerta:null, dica:'Ao final, classifique os subsídios em: "Documentação completa", "Documentação parcialmente completa" ou "Documentação incompleta" — isso impacta os relatórios gerenciais.'},
+    {topico:'Falhas', q:'O que são falhas financeiras e operacionais?',
+     k:['falha','financeira','operacional','penalidade','multa','desconto'],
+     a:'FALHA FINANCEIRA: aplicada quando o escritório celebra acordo ultrapassando a alçada autorizada. No caso de advogados agressores, equivale a 100% do valor do acordo celebrado indevidamente.
+
+FALHA OPERACIONAL (de procedimento): aplicada quando o escritório descumpre regras operacionais — aceite indevido de patrocínio, OBF com dados incorretos, ausência de formulário padrão, instalação indevida de WF, acordo sem autorização.',
+     alerta:'Ambas as falhas impactam diretamente o ranking do escritório no BMG (variáveis com peso 2 cada).', dica:null},
+    {topico:'Encerramento', q:'Como registrar o encerramento de um processo?',
+     k:['encerramento','encerrar','fechar','concluir','registrar','finalizar'],
+     a:'Os dados de encerramento devem ser registrados na aba correspondente do E-Xyon assim que o processo for encerrado. Andamentos devem ser cadastrados como CONCLUÍDO (exceto recursos, que ficam "em curso" até o julgamento). A qualidade dos dados inseridos impacta diretamente os relatórios gerenciais e o ranking do escritório.',
+     alerta:null, dica:'Processos com acordo: após fechado, solicite pagamento à Célula de Pagamentos com o lançamento "PAGAMENTO ACORDO/GARANTIA". Prazo de pagamento: 7 dias úteis.'}
+  ],
+  intermediarios: [
+    {topico:'E-Xyon', q:'Como funciona o sistema E-Xyon?',
+     k:['E-Xyon','sistema','como','funciona','acessar','login'],
+     a:'O E-Xyon (acesso em juridico.bancobmg.com.br) é o sistema central de gestão jurídica do BMG. Pelo E-Xyon você: cadastra andamentos processuais, envia e recebe mensagens da célula interna do banco, instala e monitora workflows (WFs), vincula documentos e contratos, e emite relatórios gerenciais. Quanto melhor a qualidade das informações inseridas, melhores os relatórios gerados.',
+     alerta:null, dica:'As mensagens são visualizadas apenas pelo login do destinatário — use sempre o destinatário correto.'},
+    {topico:'Publicações', q:'Como funciona o recebimento de publicações?',
+     k:['publicação','intimação','receber','diário','oficial','prazo','publicado'],
+     a:'As publicações chegam via sistema e devem ser cadastradas no E-Xyon imediatamente. Verifique o prazo associado a cada publicação — prazos judiciais começam a correr a partir da publicação. Registre o andamento como CONCLUÍDO após cadastrar. Para recursos, o andamento fica "em curso" até o julgamento final.',
+     alerta:'Publicação não registrada no prazo = risco de prazo perdido = falha operacional.', dica:null},
+    {topico:'Saneamento', q:'O que verificar no saneamento inicial de um processo novo?',
+     k:['saneamento','inicial','novo','processo','verificar','checklist'],
+     a:'No WF "SANEAMENTO INICIAL" (instalado automaticamente ao aceitar patrocínio), verifique obrigatoriamente: (1) Prazo judicial para defesa — se vencido, abrir curso alternativo; (2) Cumprimento de liminar — se houver, comunicar OBF imediatamente; (3) Correção do cadastro — dados do processo corretos no sistema; (4) Indício de óbito do autor — consultar CPF na Receita Federal.',
+     alerta:null, dica:'Conclua a tarefa com justificativa "OK" apenas após verificar todos os pontos.'},
+    {topico:'Workflows', q:'Quais são os principais workflows e quando usar cada um?',
+     k:['workflow','WF','instalar','quando','usar','qual'],
+     a:'Principais WFs:
+• PATROCÍNIO: recebimento de novo processo
+• SANEAMENTO INICIAL: verificações obrigatórias ao aceitar patrocínio
+• ESC - COMPLEMENTO/CORREÇÃO DE SUBSÍDIOS: documentação incompleta
+• CONFIRMAR CUMPRIMENTO: após cumprir OBF, confirmar retorno da área
+• ACORDO PRÉ SENTENÇA: proposta de acordo antes da sentença (SLA: 20 dias)
+• ACORDO APÓS SENTENÇA: proposta de acordo pós-sentença (SLA: 20 dias)
+• SUSPEITA DE ÓBITO CONFIRMADO: quando CPF indica óbito na Receita Federal',
+     alerta:'Nunca instalar WF indevidamente — gera falha operacional.', dica:null},
+    {topico:'OBF', q:'Como registrar e acompanhar uma OBF?',
+     k:['OBF','obrigação','fazer','registrar','acompanhar','cumprimento','Interfile'],
+     a:'Após receber comunicação de OBF da equipe de defesa: (1) Instale o WF correspondente ao produto (Cartão, Consignado, BMG em Conta, Veículo); (2) Acione a Interfile ou área responsável; (3) Acompanhe o SLA (mínimo 3, máximo 7 dias); (4) Para urgência de 24h/48h, responda à mensagem com prioridade; (5) Retorne ao escritório via WF quando cumprida.',
+     alerta:'SLA de OBF urgente (24h/48h): o escritório deve informar por e-mail à célula de OBF solicitando prioridade.', dica:null},
+    {topico:'Acordos', q:'Como funciona o controle de acordos?',
+     k:['controle','acordo','processo','autorizar','validar','negociação'],
+     a:'O "CONTROLE ACORDO" recebe propostas via mensagem no E-Xyon. Prazo de tratamento: 20 dias (SLA). Quando a Célula Interna já estiver em tratativas, o escritório NÃO deve atuar em conjunto — aguarde ou informe que há negociação ativa para evitar conflito. Se acordo for fechado com advogado agressor sem autorização, falha financeira de 100% é aplicada ao escritório.',
+     alerta:'Jamais atuar em conjunto com a Célula Interna. Se souber que há tratativas ativas, informe ao escritório imediatamente.', dica:null},
+    {topico:'Sistemas', q:'Quais sistemas uso para consultar operações do cliente?',
+     k:['sistema','consultar','cliente','operações','contrato','histórico'],
+     a:'Sistemas disponíveis por função:
+• Posição de Clientes (PN): consulta de operações, verificação de cessão de contratos, CPF
+• Mastercold: extração de faturas e demonstrativos de cartão
+• McLiq: extração de comprovantes de crédito por transferência
+• BMG Card / BMG Card Plus: consulta de cartões, conta interna, relatórios de saque complementar
+• Receita Federal (online): verificação de CPF / óbito do autor
+• INSS / Convênios: exclusão/suspensão de margem consignável',
+     alerta:null, dica:null},
+    {topico:'Projetos', q:'O que é o Projeto Middle e como identificar um processo nele?',
+     k:['Middle','projeto','R$50000','cinquenta','valor','alto','identificar'],
+     a:'O Projeto Middle concentra ações com contratos de valores elevados ou descontos superiores a R$ 50.000. Quando identificar um processo nessa condição, aloque obrigatoriamente via mensagem no E-Xyon. A equipe de defesa deve comunicar condenações acima de R$ 50.000 à Célula de Cadastro/Subsídios até o 3º dia da intimação da sentença.',
+     alerta:null, dica:null},
+    {topico:'Projetos', q:'O que é um advogado agressor e como identificar?',
+     k:['advogado','agressor','identificar','lista','reincidente'],
+     a:'Advogado agressor é aquele que usa práticas abusivas na negociação de acordos. A lista de advogados agressores é atualizada trimestralmente pela Célula de Qualidade e distribuída por e-mail a todos. Nenhum acordo com advogado agressor pode ser fechado sem expressa autorização do banco via mensagem no E-Xyon.',
+     alerta:'Acordo com advogado agressor sem autorização = falha financeira de 100% do valor do acordo.', dica:null},
+    {topico:'Pagamentos', q:'Como solicitar pagamento após um acordo?',
+     k:['pagamento','acordo','solicitar','pagar','célula','prazo'],
+     a:'Após o acordo ser fechado, o escritório solicita o pagamento à Célula de Pagamentos via E-Xyon com o lançamento "PAGAMENTO ACORDO/GARANTIA". O prazo de pagamento é de 7 dias úteis após a solicitação. O acordo deve ser tratado dentro do prazo de trânsito em julgado.',
+     alerta:null, dica:null},
+    {topico:'Relatórios', q:'Como garantir qualidade nos relatórios gerenciais do E-Xyon?',
+     k:['relatório','gerencial','qualidade','dados','inserir','andamento'],
+     a:'A qualidade dos relatórios depende diretamente da qualidade dos dados inseridos no E-Xyon. Boas práticas: (1) Cadastre andamentos sempre no dia correto — duplicidade ocorre se mais de um andamento for cadastrado no mesmo dia; (2) O relatório "último andamento" mostra o andamento mais recente; (3) Use as categorias corretas para subsídios: "Documentação completa", "Documentação parcialmente completa" ou "Documentação incompleta".',
+     alerta:null, dica:'Dados corretos no E-Xyon = melhores relatórios para o banco = melhor posição no ranking.'}
+  ]
+};
+
+let currentTeam = 'defesa';
+let currentTopico = 'todos';
+
+function selectTeam(team){
+  currentTeam = team;
+  currentTopico = 'todos';
+  document.getElementById('btn-defesa').classList.toggle('active', team==='defesa');
+  document.getElementById('btn-intermediarios').classList.toggle('active', team==='intermediarios');
+  document.getElementById('faq-search').value = '';
+  renderFaq();
+}
+
+function searchFaq(){
+  currentTopico = 'todos';
+  document.querySelectorAll('.topico-btn').forEach(b=>{b.classList.remove('active');if(b.dataset.t==='todos')b.classList.add('active');});
+  renderFaq();
+}
+
+function filterTopico(t, btn){
+  currentTopico = t;
+  document.querySelectorAll('.topico-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('faq-search').value = '';
+  renderFaq();
+}
+
+function score(item, query){
+  if(!query) return 1;
+  const words = query.toLowerCase().split(/\s+/).filter(w=>w.length>2);
+  let s = 0;
+  words.forEach(w=>{
+    if(item.q.toLowerCase().includes(w)) s+=3;
+    if(item.a.toLowerCase().includes(w)) s+=1;
+    if(item.k.some(k=>k.toLowerCase().includes(w)||w.includes(k.toLowerCase()))) s+=4;
+    if(item.topico.toLowerCase().includes(w)) s+=2;
+  });
+  return s;
+}
+
+function renderFaq(){
+  const items = FAQ[currentTeam];
+  const query = document.getElementById('faq-search').value.trim();
+  
+  // Build topico filter
+  const topicos = ['todos', ...new Set(items.map(i=>i.topico))];
+  document.getElementById('topicos-bar').innerHTML = topicos.map(t=>
+    `<button class="topico-btn${t===currentTopico?' active':''}" data-t="${t}" onclick="filterTopico('${t}',this)">${t==='todos'?'Todos os tópicos':t}</button>`
+  ).join('');
+
+  let filtered = items;
+  if(currentTopico !== 'todos') filtered = filtered.filter(i=>i.topico===currentTopico);
+  
+  if(query){
+    filtered = filtered.map(i=>({...i,_score:score(i,query)})).filter(i=>i._score>0).sort((a,b)=>b._score-a._score);
+  }
+
+  const teamLabel = currentTeam==='defesa'?'Equipe de Defesa':'Equipe de Intermediários';
+  
+  if(filtered.length===0){
+    document.getElementById('faq-output').innerHTML = `<div class="no-result">Nenhuma resposta encontrada para "${query}".<br>Tente palavras diferentes ou navegue pelos tópicos acima.</div>`;
+    return;
+  }
+
+  const header = query 
+    ? `<div class="manual-header">${filtered.length} resultado(s) para "<strong>${query}</strong>" — ${teamLabel}</div>`
+    : `<div class="manual-header"><strong>${teamLabel}</strong> — ${filtered.length} orientações disponíveis</div>`;
+
+  document.getElementById('faq-output').innerHTML = header + '<div class="faq-results">' + filtered.map((item,idx)=>`
+    <div class="faq-result" id="faq-${idx}" onclick="toggleFaq(${idx})">
+      <div class="faq-q">
+        <span>${item.q}</span>
+        <span class="faq-topico">${item.topico}</span>
+      </div>
+      <div class="faq-a">
+        ${item.a.replace(/\n/g,'<br>')}
+        ${item.alerta?`<div class="faq-alert"><strong>Atenção:</strong> ${item.alerta}</div>`:''}
+        ${item.dica?`<div class="faq-tip"><strong>Dica:</strong> ${item.dica}</div>`:''}
+      </div>
+    </div>`).join('') + '</div>';
+}
+
+function toggleFaq(idx){
+  const el = document.getElementById('faq-'+idx);
+  el.classList.toggle('expanded');
+}
+
 </body>
 </html>

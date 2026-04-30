@@ -3,175 +3,206 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plano de Inteligência Jurídica — BMG</title>
+<title>Inteligência Jurídica BMG — Nepomuceno Soares</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#F4F6FA;color:#1a1a1a;min-height:100vh}
-  .topbar{background:#1E2B6A;color:#fff;padding:14px 32px;display:flex;align-items:center;gap:16px}
-  .topbar h1{font-size:16px;font-weight:500}
-  .topbar span{font-size:12px;opacity:.6;margin-left:auto}
-  .container{max-width:900px;margin:0 auto;padding:24px 16px}
-  .selectors{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;background:#fff;border-radius:12px;padding:20px;border:1px solid #e0e4f0}
-  .sel-group label{font-size:12px;color:#666;display:block;margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
-  select{width:100%;padding:10px 12px;border:1px solid #d0d5e8;border-radius:8px;font-size:14px;background:#fff;color:#1a1a1a;cursor:pointer}
-  select:focus{outline:none;border-color:#1E2B6A}
-  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-  .card{background:#fff;border-radius:10px;padding:16px;border:1px solid #e0e4f0}
-  .card-label{font-size:11px;color:#888;margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
-  .card-value{font-size:26px;font-weight:600}
-  .card-sub{font-size:11px;color:#999;margin-top:3px}
-  .card.ok .card-value{color:#2d7a2d}
-  .card.warn .card-value{color:#a06000}
-  .card.alert .card-value{color:#c0392b}
-  .section{background:#fff;border-radius:10px;padding:18px;margin-bottom:16px;border:1px solid #e0e4f0}
-  .section-title{font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
-  .risks{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .risk-item{background:#f8f9fc;border-radius:8px;padding:12px}
-  .risk-label{font-size:12px;color:#666;margin-bottom:6px}
-  .risk-bar-wrap{height:5px;background:#e0e4f0;border-radius:3px;margin-bottom:6px;overflow:hidden}
-  .risk-bar{height:5px;border-radius:3px;transition:width .5s}
-  .risk-pct{font-size:13px;font-weight:600}
-  .risk-pct.low{color:#2d7a2d}.risk-pct.mid{color:#a06000}.risk-pct.high{color:#c0392b}
-  .enc-rows{display:grid;gap:8px}
-  .enc-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f2f8}
-  .enc-row:last-child{border-bottom:none}
-  .enc-label{font-size:13px;color:#666}
-  .enc-value{font-size:13px;font-weight:600;color:#1a1a1a}
-  .args{display:grid;gap:8px}
-  .arg-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px}
-  .arg-row.vit{background:#f0faf0;border:1px solid #c8e6c8}
-  .arg-row.der{background:#fff5f5;border:1px solid #f5c6c6}
-  .arg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-  .arg-dot.vit{background:#2d7a2d}.arg-dot.der{background:#c0392b}
-  .arg-text{flex:1;color:#1a1a1a}
-  .arg-badge{font-size:10px;padding:2px 8px;border-radius:6px;font-weight:500;white-space:nowrap}
-  .arg-badge.vit{background:#c8e6c8;color:#1a5c1a}
-  .arg-badge.der{background:#f5c6c6;color:#8b1a1a}
-  .strat-box{border-radius:10px;padding:16px;border-left:4px solid}
-  .strat-box.manter{background:#f0faf0;border-color:#2d7a2d}
-  .strat-box.monitor{background:#fffbf0;border-color:#a06000}
-  .strat-box.revisar{background:#fff5f5;border-color:#c0392b}
-  .strat-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
-  .strat-box.manter .strat-label{color:#2d7a2d}
-  .strat-box.monitor .strat-label{color:#a06000}
-  .strat-box.revisar .strat-label{color:#c0392b}
-  .strat-desc{font-size:13px;color:#333;line-height:1.6}
-  .footer{text-align:center;padding:24px;font-size:12px;color:#999}
-  .updated{font-size:11px;color:#aaa;text-align:right;margin-top:4px}
-  @media(max-width:600px){
-    .cards{grid-template-columns:1fr 1fr}
-    .selectors{grid-template-columns:1fr}
-  }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#F4F6FA;color:#1a1a1a;min-height:100vh}
+.topbar{background:#1E2B6A;color:#fff;padding:14px 32px;display:flex;align-items:center;gap:16px}
+.topbar h1{font-size:16px;font-weight:500}
+.topbar span{font-size:12px;opacity:.6;margin-left:auto}
+.tabs{background:#fff;border-bottom:1px solid #e0e4f0;padding:0 24px;display:flex;gap:0}
+.tab{padding:14px 20px;font-size:13px;font-weight:500;color:#888;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.tab:hover{color:#1E2B6A}
+.tab.active{color:#1E2B6A;border-bottom-color:#1E2B6A}
+.container{max-width:960px;margin:0 auto;padding:24px 16px}
+.panel{display:none}.panel.active{display:block}
+.selectors{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;background:#fff;border-radius:12px;padding:20px;border:1px solid #e0e4f0}
+.sel-group label{font-size:11px;color:#666;display:block;margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+select{width:100%;padding:10px 12px;border:1px solid #d0d5e8;border-radius:8px;font-size:13px;background:#fff;color:#1a1a1a;cursor:pointer}
+select:focus{outline:none;border-color:#1E2B6A}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.card{background:#fff;border-radius:10px;padding:16px;border:1px solid #e0e4f0}
+.card-label{font-size:10px;color:#888;margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.card-value{font-size:26px;font-weight:600}
+.card-sub{font-size:11px;color:#999;margin-top:3px}
+.card.ok .card-value{color:#2d7a2d}.card.warn .card-value{color:#a06000}.card.alert .card-value{color:#c0392b}
+.section{background:#fff;border-radius:10px;padding:18px;margin-bottom:16px;border:1px solid #e0e4f0}
+.section-title{font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px}
+.risks{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.risk-item{background:#f8f9fc;border-radius:8px;padding:12px}
+.risk-label{font-size:12px;color:#555;margin-bottom:6px}
+.risk-bar-wrap{height:5px;background:#e0e4f0;border-radius:3px;margin-bottom:6px;overflow:hidden}
+.risk-bar{height:5px;border-radius:3px}
+.risk-pct{font-size:12px;font-weight:600}
+.risk-pct.low{color:#2d7a2d}.risk-pct.mid{color:#a06000}.risk-pct.high{color:#c0392b}
+.enc-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f2f8}
+.enc-row:last-child{border-bottom:none}
+.enc-label{font-size:13px;color:#666}.enc-value{font-size:13px;font-weight:600}
+.arg-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;margin-bottom:6px}
+.arg-row.vit{background:#f0faf0;border:1px solid #c8e6c8}
+.arg-row.der{background:#fff5f5;border:1px solid #f5c6c6}
+.arg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.arg-dot.vit{background:#2d7a2d}.arg-dot.der{background:#c0392b}
+.arg-text{flex:1}.arg-badge{font-size:10px;padding:2px 8px;border-radius:6px;font-weight:600}
+.arg-badge.vit{background:#c8e6c8;color:#1a5c1a}.arg-badge.der{background:#f5c6c6;color:#8b1a1a}
+.strat-box{border-radius:10px;padding:16px;border-left:4px solid}
+.strat-box.manter{background:#f0faf0;border-color:#2d7a2d}
+.strat-box.monitor{background:#fffbf0;border-color:#a06000}
+.strat-box.revisar{background:#fff5f5;border-color:#c0392b}
+.strat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.strat-box.manter .strat-label{color:#2d7a2d}.strat-box.monitor .strat-label{color:#a06000}.strat-box.revisar .strat-label{color:#c0392b}
+.strat-desc{font-size:13px;color:#333;line-height:1.6}
+.news-filters{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.nf-btn{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid #d0d5e8;background:#fff;color:#555;transition:all .2s}
+.nf-btn:hover{border-color:#1E2B6A;color:#1E2B6A}
+.nf-btn.active{background:#1E2B6A;color:#fff;border-color:#1E2B6A}
+.news-card{background:#fff;border-radius:12px;padding:20px;margin-bottom:14px;border:1px solid #e0e4f0;border-left:4px solid #e0e4f0}
+.news-card.critico{border-left-color:#c0392b}
+.news-card.relevante{border-left-color:#a06000}
+.news-card.informativo{border-left-color:#2B5DA1}
+.news-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}
+.news-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:12px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.news-badge.critico{background:#fde8e8;color:#c0392b}
+.news-badge.relevante{background:#fff3e0;color:#a06000}
+.news-badge.informativo{background:#e8f0fe;color:#2B5DA1}
+.news-title{font-size:14px;font-weight:600;color:#1a1a1a;line-height:1.4}
+.news-meta{font-size:11px;color:#999;margin-bottom:10px}
+.news-summary{font-size:13px;color:#444;line-height:1.6;margin-bottom:12px}
+.news-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.news-tag{font-size:11px;padding:2px 10px;border-radius:10px;background:#f0f2f8;color:#555;font-weight:500}
+.news-impact{background:#f8f9fc;border-radius:8px;padding:10px 12px;font-size:12px;color:#333;line-height:1.5}
+.news-impact strong{color:#1E2B6A}
+.updated{font-size:11px;color:#aaa;text-align:right;margin-top:4px}
+.footer{text-align:center;padding:24px;font-size:12px;color:#bbb}
+@media(max-width:600px){.cards{grid-template-columns:1fr 1fr}.selectors{grid-template-columns:1fr}.risks{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+
 <div class="topbar">
   <div style="width:32px;height:32px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">IA</div>
   <h1>Sistema de Inteligência Jurídica — Banco BMG</h1>
-  <span>Nepomuceno Soares Advogados Associados</span>
+  <span id="last-update">Atualizado: Abril 2026</span>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('inteligencia',this)">Plano de Inteligência</div>
+  <div class="tab" onclick="switchTab('mercado',this)">Inteligência de Mercado</div>
 </div>
 
 <div class="container">
-  <div class="selectors">
-    <div class="sel-group">
-      <label>Estado</label>
-      <select id="sel-uf" onchange="render()">
-        <option value="SC">Santa Catarina — SC</option>
-        <option value="RS">Rio Grande do Sul — RS</option>
-        <option value="MG">Minas Gerais — MG</option>
-        <option value="SP">São Paulo — SP</option>
-        <option value="PR">Paraná — PR</option>
-        <option value="RJ">Rio de Janeiro — RJ</option>
-        <option value="ES">Espírito Santo — ES</option>
-      </select>
+
+  <!-- ABA 1: PLANO DE INTELIGÊNCIA -->
+  <div id="inteligencia" class="panel active">
+    <div class="selectors">
+      <div class="sel-group">
+        <label>Estado</label>
+        <select id="sel-uf" onchange="render()">
+          <option value="SC">Santa Catarina — SC</option>
+          <option value="RS">Rio Grande do Sul — RS</option>
+          <option value="MG">Minas Gerais — MG</option>
+          <option value="SP">São Paulo — SP</option>
+          <option value="PR">Paraná — PR</option>
+          <option value="RJ">Rio de Janeiro — RJ</option>
+          <option value="ES">Espírito Santo — ES</option>
+        </select>
+      </div>
+      <div class="sel-group">
+        <label>Projeto (causa raiz)</label>
+        <select id="sel-causa" onchange="render()">
+          <option value="fraude">Alegação de fraude</option>
+          <option value="modalidade">Não reconhecimento cartão</option>
+          <option value="cadastro">Cadastro incompleto</option>
+          <option value="entrega">Entrega de contrato</option>
+        </select>
+      </div>
+      <div class="updated" style="grid-column:1/-1">Base: 1.704 decisões analisadas · Abril 2026</div>
     </div>
-    <div class="sel-group">
-      <label>Projeto (causa raiz)</label>
-      <select id="sel-causa" onchange="render()">
-        <option value="fraude">Alegação de fraude</option>
-        <option value="modalidade">Não reconhecimento cartão</option>
-        <option value="cadastro">Cadastro incompleto</option>
-        <option value="entrega">Entrega de contrato</option>
-      </select>
-    </div>
-    <div class="updated" style="grid-column:1/-1">Última atualização: Abril 2026 · Base: 1.704 decisões</div>
+    <div id="output"></div>
   </div>
 
-  <div id="output"></div>
+  <!-- ABA 2: INTELIGÊNCIA DE MERCADO -->
+  <div id="mercado" class="panel">
+    <div class="news-filters">
+      <button class="nf-btn active" onclick="filterNews('todos',this)">Todos</button>
+      <button class="nf-btn" onclick="filterNews('critico',this)">Crítico</button>
+      <button class="nf-btn" onclick="filterNews('relevante',this)">Relevante</button>
+      <button class="nf-btn" onclick="filterNews('fraude',this)">Fraude</button>
+      <button class="nf-btn" onclick="filterNews('modalidade',this)">Não Reconhecimento</button>
+    </div>
+    <div id="news-list"></div>
+  </div>
+
 </div>
 
-<div class="footer">Sistema de Inteligência Jurídica BMG · Nepomuceno Soares Advogados Associados · Uso interno</div>
+<div class="footer">Sistema de Inteligência Jurídica BMG · Nepomuceno Soares Advogados Associados · Uso interno exclusivo</div>
 
 <script>
+// ─── DADOS ESTATÍSTICOS ────────────────────────────────────────────────────
 const DATA = {
   SC:{
     fraude:{proc:75,exito:37,ticket:24484,ticketCond:25344,ticketDobro:20257,dm:3,dobro:8,acPre:2,acPos:3,aging:807,
-      args_vit:["Recurso negado provimento — ausência de provas do autor","Extinção por desistência do autor"],
+      args_vit:["Recurso negado — ausência de provas do autor","Extinção por desistência do autor"],
       args_der:["Devolução em dobro — Art. 42 CDC","Dano moral condenado (R$ 3.000–8.000)","Cancelamento do contrato"],
-      strat:"revisar",strat_txt:"Êxito crítico (37%). Revisar urgente a tese de fraude para SC. O tribunal local tende a responsabilizar o banco mesmo com medidas de segurança. Priorizar argumento de fortuito externo e ausência de nexo causal. Em derrotas prováveis, focar em reduzir dano moral abaixo de R$ 3.000 e evitar dobro."},
+      strat:"revisar",strat_txt:"Êxito crítico (37%). Revisar urgente a tese de fraude para SC. O tribunal local tende a responsabilizar o banco mesmo com medidas de segurança. Priorizar argumento de fortuito externo e ausência de nexo causal. Em derrotas prováveis, focar em reduzir dano moral e evitar dobro."},
     modalidade:{proc:55,exito:64,ticket:21008,ticketCond:18044,ticketDobro:16479,dm:2,dobro:3,acPre:1,acPos:2,aging:807,
       args_vit:["Prova de contratação regular","Recurso negado provimento"],
       args_der:["Art. 389/406 CC — inadimplemento","Dano moral condenado"],
-      strat:"monitor",strat_txt:"Êxito razoável (64%). Manter tese atual com atenção. Reforçar prova de contratação nos modelos de peça para SC. Monitorar tendência de condenação em inadimplemento (Art. 389 CC)."},
+      strat:"monitor",strat_txt:"Êxito razoável (64%). Atenção: processos RMC/RCC estão com suspensão nacional pelo STJ (Tema 1.414 — março/2026). Verificar se este processo se enquadra na suspensão antes de prosseguir."},
     cadastro:{proc:46,exito:39,ticket:17417,ticketCond:20604,ticketDobro:15522,dm:2,dobro:4,acPre:0,acPos:1,aging:807,
       args_vit:["Irregularidade formal sem dano efetivo"],
       args_der:["CDC — vulnerabilidade do consumidor","Dano moral condenado"],
-      strat:"revisar",strat_txt:"Êxito crítico (39%). SC aplica CDC de forma ampla em cadastro incompleto. Reforçar que o contrato foi executado normalmente e ausência de dano real ao consumidor."},
+      strat:"revisar",strat_txt:"Êxito crítico (39%). SC aplica CDC amplamente em cadastro incompleto. Reforçar execução normal do contrato e ausência de dano real ao consumidor."},
     entrega:{proc:7,exito:29,ticket:3247,ticketCond:3864,ticketDobro:3864,dm:0,dobro:1,acPre:0,acPos:0,aging:807,
       args_vit:["Entrega comprovada no sistema"],
       args_der:["Ausência de prova de entrega"],
-      strat:"revisar",strat_txt:"Êxito muito baixo (29%) com ticket reduzido. Avaliar acordo pré-sentença. Reforçar comprovação de entrega nos modelos."}
-  },
+      strat:"revisar",strat_txt:"Êxito muito baixo (29%) com ticket reduzido. Avaliar acordo pré-sentença. Reforçar comprovação de entrega nos modelos."}},
   RS:{
     fraude:{proc:108,exito:47,ticket:23524,ticketCond:25914,ticketDobro:30792,dm:10,dobro:14,acPre:2,acPos:3,aging:1112,
       args_vit:["Fortuito externo — fraude de terceiro","Recurso negado provimento"],
       args_der:["Restituição em dobro (Art. 42 CDC)","Dano moral condenado (R$ 5.000–10.000)","Art. 389/406 CC — inadimplemento"],
-      strat:"revisar",strat_txt:"Êxito abaixo da média (47%). Estado com maior incidência de restituição em dobro (14 casos) e dano moral (10 casos) nas derrotas. Ticket de derrota plena o mais alto do portfólio (R$ 30.792). Priorizar argumentos contra o dobro e reduzir valor do dano moral. Considerar acordo pré-sentença em casos de alto valor."},
+      strat:"revisar",strat_txt:"Êxito abaixo da média (47%). Estado com maior incidência de restituição em dobro (14 casos) e maior ticket de derrota plena do portfólio (R$ 30.792). Atenção: nova tendência de uso de geolocalização para invalidar biometria (TJMT/2026) pode migrar para RS. Verificar nos casos se a geolocalização da assinatura é consistente com o endereço do cliente."},
     modalidade:{proc:120,exito:55,ticket:18436,ticketCond:15635,ticketDobro:15223,dm:4,dobro:5,acPre:3,acPos:4,aging:1112,
-      args_vit:["Prova de contratação regular","Recurso negado provimento"],
+      args_vit:["Prova de contratação regular","Recurso negado"],
       args_der:["Art. 389/406 CC","Dano moral condenado"],
-      strat:"monitor",strat_txt:"Êxito razoável (55%). Ticket de condenação mais baixo do estado. Focar em vitória, não em reduzir condenação. Reforçar prova documental de contratação."},
+      strat:"monitor",strat_txt:"Êxito razoável (55%). Atenção à suspensão nacional do Tema 1.414 STJ para processos RMC/RCC. Verificar elegibilidade para suspensão antes de prosseguir."},
     cadastro:{proc:51,exito:55,ticket:19940,ticketCond:20666,ticketDobro:22613,dm:3,dobro:4,acPre:1,acPos:2,aging:1112,
       args_vit:["Execução normal do contrato","Ausência de dano efetivo"],
       args_der:["CDC — responsabilidade objetiva","Dano moral condenado"],
-      strat:"monitor",strat_txt:"Êxito médio (55%) com ticket de condenação alto. Reforçar argumento de ausência de dano real ao consumidor."},
+      strat:"monitor",strat_txt:"Êxito médio (55%). Ticket de condenação alto. Reforçar ausência de dano real ao consumidor."},
     entrega:{proc:2,exito:50,ticket:7161,ticketCond:13323,ticketDobro:13323,dm:0,dobro:0,acPre:0,acPos:0,aging:1112,
-      args_vit:["Comprovante de entrega"],args_der:["Ausência de prova de entrega"],
-      strat:"monitor",strat_txt:"Amostra insuficiente (2 processos). Sem dados estatísticos confiáveis para este projeto no RS."}
-  },
+      args_vit:["Comprovante de entrega"],args_der:["Ausência de prova"],
+      strat:"monitor",strat_txt:"Amostra insuficiente (2 processos). Sem dados estatísticos confiáveis para o RS."}},
   MG:{
     fraude:{proc:194,exito:57,ticket:24985,ticketCond:21969,ticketDobro:21761,dm:14,dobro:16,acPre:4,acPos:5,aging:936,
       args_vit:["Fortuito externo","Ausência de nexo causal","Prova de contratação por correspondente"],
       args_der:["Dano moral condenado","Restituição em dobro","Cancelamento do contrato"],
-      strat:"monitor",strat_txt:"Êxito aceitável (57%) com maior volume do portfólio (194 processos). Manter tese de fortuito externo. Atenção para os 16 casos com restituição em dobro — reforçar argumento contra o dobro nos modelos de MG."},
+      strat:"monitor",strat_txt:"Êxito aceitável (57%) com maior volume do portfólio. Manter tese de fortuito externo. Reforçar documentação da contratação via CORBAN para combater o argumento de geolocalização (nova tendência 2026)."},
     modalidade:{proc:300,exito:75,ticket:25632,ticketCond:25400,ticketDobro:25362,dm:5,dobro:6,acPre:4,acPos:5,aging:936,
       args_vit:["Contratação regular documentada","Prova de utilização do cartão","Recurso negado provimento"],
       args_der:["Contrato não reconhecido pelo autor","Art. 389/406 CC"],
-      strat:"manter",strat_txt:"Melhor resultado do portfólio (75%). Modelo atual funcionando muito bem em MG para Não Reconhecimento Cartão. Usar como referência para outros estados — especialmente prova de contratação e extrato de utilização."},
+      strat:"manter",strat_txt:"Melhor resultado do portfólio (75%). Modelo atual funcionando muito bem. Atenção à suspensão do Tema 1.414 STJ — verificar se os processos RMC/RCC se enquadram na suspensão nacional."},
     cadastro:{proc:15,exito:80,ticket:7964,ticketCond:333,ticketDobro:333,dm:0,dobro:0,acPre:0,acPos:0,aging:936,
       args_vit:["Contrato executado normalmente","Ausência de dano efetivo"],
       args_der:["Irregularidade formal"],
-      strat:"manter",strat_txt:"Êxito excelente (80%) com ticket de condenação irrisório (R$ 333). Manter estratégia. Derrota não gera impacto financeiro relevante."},
+      strat:"manter",strat_txt:"Êxito excelente (80%) com ticket de condenação irrisório. Manter estratégia."},
     entrega:{proc:2,exito:50,ticket:1054,ticketCond:789,ticketDobro:789,dm:0,dobro:0,acPre:0,acPos:0,aging:936,
       args_vit:["Entrega comprovada"],args_der:["Ausência de prova"],
-      strat:"monitor",strat_txt:"Amostra insuficiente (2 processos). Ticket muito baixo — sem relevância financeira."}
-  },
+      strat:"monitor",strat_txt:"Amostra insuficiente. Ticket muito baixo — sem relevância financeira."}},
   SP:{
     fraude:{proc:148,exito:60,ticket:23400,ticketCond:22577,ticketDobro:21587,dm:7,dobro:8,acPre:1,acPos:2,aging:483,
       args_vit:["Fortuito externo","Medidas de segurança adotadas","Culpa exclusiva do autor/terceiro"],
       args_der:["Dano moral condenado","Cancelamento do contrato","Art. 389/406 CC"],
-      strat:"monitor",strat_txt:"Êxito razoável (60%). SP tem processo mais rápido (483 dias). Manter tese de fortuito externo. Reforçar que o banco não é responsável pela manutenção contratual em casos de fraude."},
+      strat:"monitor",strat_txt:"Êxito razoável (60%). SP tem o processo mais rápido do portfólio (483 dias). Manter tese de fortuito externo com evidência das medidas de segurança adotadas (videochamada, biometria, geolocalização consistente)."},
     modalidade:{proc:128,exito:67,ticket:21284,ticketCond:20774,ticketDobro:23259,dm:4,dobro:5,acPre:2,acPos:3,aging:483,
-      args_vit:["Prova de contratação","Extrato de utilização do cartão","Recurso negado provimento"],
+      args_vit:["Prova de contratação","Extrato de utilização","Recurso negado"],
       args_der:["Art. 389/406 CC","Dano moral condenado"],
-      strat:"manter",strat_txt:"Bom desempenho (67%). Manter modelo atual para SP. Processo rápido (483 dias) favorece resolução ágil."},
+      strat:"manter",strat_txt:"Bom desempenho (67%). Verificar suspensão Tema 1.414 para processos RMC/RCC. Processo rápido (483 dias) favorece resolução ágil."},
     cadastro:{proc:5,exito:100,ticket:22390,ticketCond:0,ticketDobro:0,dm:0,dobro:0,acPre:0,acPos:0,aging:483,
       args_vit:["Ausência de dano efetivo","Contrato executado normalmente"],args_der:[],
-      strat:"manter",strat_txt:"Êxito perfeito (100%) — amostra pequena (5 processos). Manter estratégia atual."},
+      strat:"manter",strat_txt:"Êxito perfeito (100%) — amostra pequena. Manter estratégia."},
     entrega:{proc:4,exito:50,ticket:6500,ticketCond:7500,ticketDobro:5000,dm:0,dobro:0,acPre:0,acPos:0,aging:483,
-      args_vit:["Entrega comprovada"],args_der:["Ausência de prova de entrega"],
-      strat:"monitor",strat_txt:"Amostra pequena (4 processos). Monitorar."}
-  },
+      args_vit:["Entrega comprovada"],args_der:["Ausência de prova"],strat:"monitor",strat_txt:"Amostra pequena. Monitorar."}},
   PR:{
     fraude:{proc:95,exito:58,ticket:23207,ticketCond:24649,ticketDobro:28013,dm:5,dobro:8,acPre:1,acPos:2,aging:649,
       args_vit:["Fortuito externo","Prova de contratação via correspondente"],
@@ -180,47 +211,128 @@ const DATA = {
     modalidade:{proc:83,exito:71,ticket:23138,ticketCond:20901,ticketDobro:21492,dm:3,dobro:4,acPre:2,acPos:3,aging:649,
       args_vit:["Contratação regular","Prova documental","Recurso negado"],
       args_der:["Art. 389/406 CC","Dano moral"],
-      strat:"manter",strat_txt:"Bom resultado (71%). Modelo funcionando bem para Não Reconhecimento no PR. Manter estratégia atual."},
+      strat:"manter",strat_txt:"Bom resultado (71%). Verificar suspensão Tema 1.414 para processos RMC/RCC. Manter modelo atual."},
     cadastro:{proc:11,exito:64,ticket:12194,ticketCond:14579,ticketDobro:10000,dm:0,dobro:0,acPre:0,acPos:0,aging:649,
-      args_vit:["Contrato executado normalmente"],
-      args_der:["Irregularidade formal"],
+      args_vit:["Contrato executado normalmente"],args_der:["Irregularidade formal"],
       strat:"manter",strat_txt:"Bom resultado (64%) com ticket baixo. Manter estratégia."},
     entrega:{proc:6,exito:33,ticket:2359,ticketCond:3038,ticketDobro:718,dm:0,dobro:0,acPre:0,acPos:0,aging:649,
       args_vit:["Comprovante de entrega"],args_der:["Ausência de prova"],
-      strat:"revisar",strat_txt:"Êxito baixo (33%) com amostra pequena. Ticket muito baixo — considerar acordo pré-sentença."}
-  },
+      strat:"revisar",strat_txt:"Êxito baixo (33%) — ticket muito baixo. Considerar acordo pré-sentença."}},
   RJ:{
     fraude:{proc:31,exito:61,ticket:30044,ticketCond:34348,ticketDobro:42226,dm:2,dobro:7,acPre:1,acPos:2,aging:698,
       args_vit:["Fortuito externo","Ausência de nexo causal"],
       args_der:["Dano moral condenado","Restituição em dobro","Cancelamento contrato"],
-      strat:"monitor",strat_txt:"Êxito razoável (61%) mas TICKET DE DERROTA PLENA MUITO ALTO (R$ 42.226 — maior do portfólio). RJ representa o maior risco financeiro em casos de fraude. Prioridade máxima em evitar restituição em dobro. Recurso especial obrigatório em qualquer condenação acima de R$ 50.000."},
+      strat:"monitor",strat_txt:"Êxito razoável (61%) mas MAIOR RISCO FINANCEIRO do portfólio (derrota plena R$ 42.226). Atenção: TJRJ entende que banco deve identificar transações fora do perfil do cliente — incluir argumento nos modelos. Recurso especial obrigatório em condenações acima de R$ 50.000."},
     modalidade:{proc:64,exito:70,ticket:29704,ticketCond:30866,ticketDobro:33696,dm:3,dobro:4,acPre:2,acPos:3,aging:698,
-      args_vit:["Prova de contratação","Extrato de utilização do cartão"],
+      args_vit:["Prova de contratação","Extrato de utilização"],
       args_der:["Art. 389/406 CC","Dano moral condenado"],
-      strat:"manter",strat_txt:"Bom resultado (70%) mas ticket alto (R$ 29.704). Manter modelo atual. Dano moral tende a ser mais alto no RJ — incluir argumento específico contra quantum indenizatório."},
+      strat:"manter",strat_txt:"Bom resultado (70%). Verificar suspensão Tema 1.414. Dano moral tende a ser mais alto no RJ — incluir argumento específico contra o quantum."},
     cadastro:{proc:4,exito:75,ticket:7705,ticketCond:1000,ticketDobro:1000,dm:0,dobro:0,acPre:0,acPos:0,aging:698,
       args_vit:["Ausência de dano efetivo"],args_der:["Irregularidade formal"],
       strat:"manter",strat_txt:"Bom resultado (75%) — amostra pequena. Manter estratégia."},
     entrega:{proc:0,exito:0,ticket:0,ticketCond:0,ticketDobro:0,dm:0,dobro:0,acPre:0,acPos:0,aging:698,
-      args_vit:[],args_der:[],
-      strat:"monitor",strat_txt:"Sem processos registrados para este projeto no RJ."}
-  },
+      args_vit:[],args_der:[],strat:"monitor",strat_txt:"Sem processos registrados no RJ."}},
   ES:{
     fraude:{proc:26,exito:65,ticket:28501,ticketCond:28617,ticketDobro:22107,dm:1,dobro:1,acPre:0,acPos:1,aging:470,
-      args_vit:["Fortuito externo","Medidas de segurança do banco","Prova de contratação"],
+      args_vit:["Fortuito externo","Medidas de segurança","Prova de contratação"],
       args_der:["Dano moral condenado","CDC aplicado"],
-      strat:"manter",strat_txt:"Melhor resultado para Fraude (65%). ES tem o menor risco de restituição em dobro (1 caso) e menor duração média (470 dias). Modelo atual funcionando — manter tese e usar como referência."},
+      strat:"manter",strat_txt:"Melhor resultado para Fraude (65%) com menor risco de dobro (1 caso) e processos mais rápidos (470 dias). Modelo atual funcionando — usar como referência."},
     modalidade:{proc:46,exito:61,ticket:23618,ticketCond:22412,ticketDobro:20202,dm:2,dobro:2,acPre:1,acPos:2,aging:470,
       args_vit:["Prova de contratação regular","Recurso negado"],
       args_der:["Art. 389/406 CC","Dano moral"],
-      strat:"manter",strat_txt:"Bom resultado (61%) com processos mais rápidos do portfólio (470 dias). Manter modelo atual."},
+      strat:"manter",strat_txt:"Bom resultado (61%) com processos rápidos. Verificar suspensão Tema 1.414 para processos RMC/RCC."},
     cadastro:{proc:4,exito:75,ticket:15820,ticketCond:19261,ticketDobro:19261,dm:0,dobro:0,acPre:0,acPos:0,aging:470,
       args_vit:["Contrato executado normalmente"],args_der:["Irregularidade formal"],
       strat:"manter",strat_txt:"Bom resultado (75%) — amostra pequena. Manter estratégia."},
     entrega:{proc:0,exito:0,ticket:0,ticketCond:0,ticketDobro:0,dm:0,dobro:0,acPre:0,acPos:0,aging:470,
-      args_vit:[],args_der:[],strat:"monitor",strat_txt:"Sem processos registrados para entrega de contrato no ES."}
-  }
+      args_vit:[],args_der:[],strat:"monitor",strat_txt:"Sem processos registrados no ES."}}
 };
+
+// ─── NOTÍCIAS ──────────────────────────────────────────────────────────────
+const NEWS = [
+  {
+    id:'n1', impacto:'critico', causas:['modalidade','fraude'],
+    titulo:'STJ suspende TODOS os processos RMC e RCC no país — Tema 1.414',
+    fonte:'STJ / Conjur', data:'13 mar 2026',
+    resumo:'O Ministro Raul Araújo determinou a suspensão nacional de todos os processos pendentes — individuais e coletivos — que discutem a validade e abusividade dos contratos de cartão de crédito consignado (RMC e RCC). A suspensão vale para todas as instâncias. O STJ vai definir: (1) validade dos contratos, (2) forma de restituição, (3) configuração e valor do dano moral, (4) fixação dos juros moratórios.',
+    impactoModelos:'AÇÃO IMEDIATA: Verificar em TODOS os processos de Não Reconhecimento Cartão e Fraude envolvendo RMC/RCC se a suspensão se aplica. Peticionar sobrestamento onde cabível. Circular 002 precisa ser atualizada — o Tema trata de validade/abusividade dos contratos, NÃO de portabilidade.',
+    url:'https://www.stj.jus.br/sites/portalp/Paginas/Comunicacao/Noticias/2026/10032026-Repetitivo-discute-criterios-para-avaliar-abuso-em-contratos-de-cartao-de-credito-consignado.aspx'
+  },
+  {
+    id:'n2', impacto:'critico', causas:['fraude'],
+    titulo:'TCU determina suspensão de consignados INSS até reforço de segurança',
+    fonte:'TCU / Tribuna do Sertão', data:'29 abr 2026',
+    resumo:'O TCU determinou que a Dataprev priorize mecanismos de segurança no e-Consignado antes de retomar operações. As medidas exigidas incluem: bloqueio de averbações sem documentação mínima, impedimento de operações em nome de falecidos, validação biométrica reforçada, proibição de depósitos em contas não vinculadas ao benefício e restrições à venda casada de produtos como seguros.',
+    impactoModelos:'FAVORÁVEL AO BANCO: O TCU está exigindo dos bancos exatamente as medidas que usamos como defesa (biometria, validação documental). Usar essa determinação como prova de que o sistema de segurança do BMG está alinhado com o padrão exigido pelo regulador. Incluir nos modelos de Fraude.',
+    url:'https://www.tribunadosertao.com.br/geral/2026/04/29/894259-tcu-determina-suspensao-de-consignados-do-inss-ate-reforco-de-seguranca-contra-fraudes'
+  },
+  {
+    id:'n3', impacto:'relevante', causas:['fraude'],
+    titulo:'TJMT invalida biometria por geolocalização contraditória em fraude consignado',
+    fonte:'TJMT', data:'Mar 2026',
+    resumo:'Em dois casos no Tribunal de Justiça de Mato Grosso, bancos alegaram contratação por biometria facial, mas a geolocalização da assinatura digital apontava local diferente do endereço do cliente. Os tribunais invalidaram a biometria e condenaram os bancos a indenizar por danos morais (R$ 10 mil). O entendimento segue a tese do STJ de responsabilidade objetiva por falha na segurança.',
+    impactoModelos:'NOVA TESE ADVERSÁRIA: Autores passarão a usar geolocalização para atacar a biometria. Verificar nos processos se a localização da assinatura é consistente. Incluir nos modelos de Fraude a comprovação de que a geolocalização da contratação é compatível com o endereço do cliente ou local de trabalho.',
+    url:'https://www.tjmt.jus.br/noticias/2026/3/prova-obtida-por-geolocalizacao-revela-fraude-em-consignado-e-garante-indenizacao-a-aposentada'
+  },
+  {
+    id:'n4', impacto:'relevante', causas:['fraude','modalidade'],
+    titulo:'TJRJ: banco deve identificar transações fora do perfil do cliente',
+    fonte:'TJRJ / Portal do Conhecimento', data:'2026',
+    resumo:'O Tribunal de Justiça do Rio de Janeiro consolidou entendimento, baseado em decisão do STF, de que os bancos têm o dever de evitar fraudes identificando e impedindo transações que não condizem com o perfil do cliente. A ausência de mecanismos eficazes de verificação caracteriza falha na prestação do serviço e atrai responsabilidade objetiva.',
+    impactoModelos:'RELEVANTE PARA RJ: Reforça a necessidade de incluir nos modelos de defesa para RJ a demonstração de que o perfil do cliente era consistente com a operação contratada (histórico de crédito, renda, operações anteriores). Argumento preventivo contra a tese de "fora do perfil".',
+    url:'https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/339995944'
+  },
+  {
+    id:'n5', impacto:'relevante', causas:['modalidade'],
+    titulo:'STJ admite ABRADEB como amicus curiae no Tema 1.414',
+    fonte:'ABRADEB / STJ', data:'2026',
+    resumo:'O STJ admitiu a Associação Brasileira de Defesa do Consumidor Bancário (ABRADEB) como "amiga da corte" no julgamento do Tema 1.414. A entidade defende a tese de abusividade estrutural dos contratos RMC/RCC, argumentando que o modelo de cobrança com juros rotativos sobre margem consignada cria dívida perpétua.',
+    impactoModelos:'MONITORAR: A participação da ABRADEB sinaliza que o julgamento do Tema 1.414 terá forte pressão pela invalidação dos contratos. Preparar peças defensivas que demonstrem transparência na contratação e possibilidade real de amortização do saldo.',
+    url:'https://abradeb.com.br/stj-admite-a-abradeb-como-amiga-da-corte-emjulgamento-decisivo-sobre-dano-moral-em-contratos-decartao-de-credito-consignado-rmc/'
+  }
+];
+
+let currentFilter = 'todos';
+
+function renderNews(){
+  const filtered = NEWS.filter(n => {
+    if(currentFilter==='todos') return true;
+    if(currentFilter==='critico') return n.impacto==='critico';
+    if(currentFilter==='relevante') return n.impacto==='relevante';
+    if(currentFilter==='fraude') return n.causas.includes('fraude');
+    if(currentFilter==='modalidade') return n.causas.includes('modalidade');
+    return true;
+  });
+  const tagLabels={fraude:'Alegação de Fraude',modalidade:'Não Reconhecimento Cartão',cadastro:'Cadastro Incompleto'};
+  document.getElementById('news-list').innerHTML = filtered.length===0
+    ? '<div style="background:#fff;border-radius:10px;padding:24px;border:1px solid #e0e4f0;color:#888;font-size:14px;text-align:center">Nenhuma notícia encontrada para este filtro.</div>'
+    : filtered.map(n=>`
+    <div class="news-card ${n.impacto}">
+      <div class="news-header">
+        <span class="news-badge ${n.impacto}">${n.impacto==='critico'?'CRÍTICO':n.impacto==='relevante'?'RELEVANTE':'INFORMATIVO'}</span>
+        <div class="news-title">${n.titulo}</div>
+      </div>
+      <div class="news-meta">${n.fonte} &nbsp;·&nbsp; ${n.data}</div>
+      <div class="news-summary">${n.resumo}</div>
+      <div class="news-tags">${n.causas.map(c=>`<span class="news-tag">${tagLabels[c]||c}</span>`).join('')}</div>
+      <div class="news-impact"><strong>Impacto nos modelos:</strong> ${n.impactoModelos}</div>
+      ${n.url?`<div style="margin-top:10px"><a href="${n.url}" style="font-size:12px;color:#2B5DA1">Ver fonte original</a></div>`:''}
+    </div>`).join('');
+}
+
+function filterNews(filter, btn){
+  currentFilter=filter;
+  document.querySelectorAll('.nf-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderNews();
+}
+
+function switchTab(id, el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
 
 function fmt(n){return n>0?'R$ '+n.toLocaleString('pt-BR'):'-'}
 function pctC(p){return p<=15?'low':p<=30?'mid':'high'}
@@ -230,26 +342,22 @@ function render(){
   const uf=document.getElementById('sel-uf').value;
   const causa=document.getElementById('sel-causa').value;
   const d=DATA[uf][causa];
-  if(!d||d.proc===0){
-    document.getElementById('output').innerHTML='<div style="background:#fff;border-radius:10px;padding:24px;border:1px solid #e0e4f0;color:#888;font-size:14px">Sem processos registrados para esta combinação.</div>';
-    return;
-  }
+  if(!d||d.proc===0){document.getElementById('output').innerHTML='<div style="background:#fff;border-radius:10px;padding:24px;border:1px solid #e0e4f0;color:#888;font-size:14px">Sem processos registrados para esta combinação.</div>';return;}
   const derrota=100-d.exito;
   const dmPct=d.proc>0?Math.round(d.dm/d.proc*100):0;
   const dobroPct=d.proc>0?Math.round(d.dobro/d.proc*100):0;
-  const exitoClass=d.exito>=60?'ok':d.exito>=45?'warn':'alert';
-  const derrotaClass=derrota<=40?'ok':derrota<=55?'warn':'alert';
-  const ticketClass=d.ticketDobro>30000?'alert':d.ticketDobro>20000?'warn':'ok';
-  const stratIcon=d.strat==='manter'?'Manter estratégia':d.strat==='monitor'?'Monitorar e ajustar':'Revisar tese — urgente';
-
+  const relevantNews=NEWS.filter(n=>n.causas.includes(causa)).slice(0,2);
+  const newsAlert=relevantNews.filter(n=>n.impacto==='critico').length>0
+    ?`<div style="background:#fde8e8;border:1px solid #f5c6c6;border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:13px;color:#8b1a1a"><strong>Alerta:</strong> Há ${relevantNews.filter(n=>n.impacto==='critico').length} notícia(s) crítica(s) para este projeto. <span style="cursor:pointer;text-decoration:underline" onclick="document.querySelector('[onclick*=mercado]').click()">Ver Inteligência de Mercado</span></div>`:''
   document.getElementById('output').innerHTML=`
+    ${newsAlert}
     <div class="cards">
-      <div class="card ${exitoClass}">
+      <div class="card ${d.exito>=60?'ok':d.exito>=45?'warn':'alert'}">
         <div class="card-label">Chance de vitória</div>
         <div class="card-value">${d.exito}%</div>
-        <div class="card-sub">${d.proc} processos analisados</div>
+        <div class="card-sub">${d.proc} processos</div>
       </div>
-      <div class="card ${derrotaClass}">
+      <div class="card ${derrota<=40?'ok':derrota<=55?'warn':'alert'}">
         <div class="card-label">Chance de derrota</div>
         <div class="card-value">${derrota}%</div>
         <div class="card-sub">plena ou parcial</div>
@@ -259,13 +367,12 @@ function render(){
         <div class="card-value" style="font-size:18px;margin-top:4px">${fmt(d.ticket)}</div>
         <div class="card-sub">valor da causa</div>
       </div>
-      <div class="card ${ticketClass}">
+      <div class="card ${d.ticketDobro>30000?'alert':d.ticketDobro>20000?'warn':'ok'}">
         <div class="card-label">Possível condenação</div>
         <div class="card-value" style="font-size:18px;margin-top:4px">${fmt(d.ticketCond)}</div>
         <div class="card-sub">média nas derrotas</div>
       </div>
     </div>
-
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
       <div class="section">
         <div class="section-title">Riscos financeiros nas derrotas</div>
@@ -284,45 +391,28 @@ function render(){
       </div>
       <div class="section">
         <div class="section-title">Encerramento e acordo</div>
-        <div class="enc-rows">
-          <div class="enc-row">
-            <span class="enc-label">Tempo médio do processo</span>
-            <span class="enc-value">${d.aging} dias (~${Math.round(d.aging/30)} meses)</span>
-          </div>
-          <div class="enc-row">
-            <span class="enc-label">Acordos pré-sentença</span>
-            <span class="enc-value">${d.acPre} registrados</span>
-          </div>
-          <div class="enc-row">
-            <span class="enc-label">Acordos pós-sentença</span>
-            <span class="enc-value">${d.acPos} registrados</span>
-          </div>
-          <div class="enc-row">
-            <span class="enc-label">Ticket médio derrota plena</span>
-            <span class="enc-value">${fmt(d.ticketDobro)}</span>
-          </div>
-        </div>
+        <div class="enc-row"><span class="enc-label">Tempo médio do processo</span><span class="enc-value">${d.aging} dias (~${Math.round(d.aging/30)} meses)</span></div>
+        <div class="enc-row"><span class="enc-label">Acordos pré-sentença</span><span class="enc-value">${d.acPre} registrados</span></div>
+        <div class="enc-row"><span class="enc-label">Acordos pós-sentença</span><span class="enc-value">${d.acPos} registrados</span></div>
+        <div class="enc-row"><span class="enc-label">Ticket médio derrota plena</span><span class="enc-value">${fmt(d.ticketDobro)}</span></div>
       </div>
     </div>
-
     <div class="section" style="margin-bottom:16px">
       <div class="section-title">Fundamentos jurídicos identificados nas decisões</div>
-      <div class="args">
-        ${d.args_vit.map(a=>`<div class="arg-row vit"><div class="arg-dot vit"></div><span class="arg-text">${a}</span><span class="arg-badge vit">nas vitórias</span></div>`).join('')}
-        ${d.args_der.map(a=>`<div class="arg-row der"><div class="arg-dot der"></div><span class="arg-text">${a}</span><span class="arg-badge der">nas derrotas</span></div>`).join('')}
-      </div>
+      <div>${d.args_vit.map(a=>`<div class="arg-row vit"><div class="arg-dot vit"></div><span class="arg-text">${a}</span><span class="arg-badge vit">nas vitórias</span></div>`).join('')}
+      ${d.args_der.map(a=>`<div class="arg-row der"><div class="arg-dot der"></div><span class="arg-text">${a}</span><span class="arg-badge der">nas derrotas</span></div>`).join('')}</div>
     </div>
-
     <div class="section">
       <div class="section-title">Diretriz estratégica</div>
       <div class="strat-box ${d.strat}">
-        <div class="strat-label">${stratIcon}</div>
+        <div class="strat-label">${d.strat==='manter'?'Manter estratégia':d.strat==='monitor'?'Monitorar e ajustar':'Revisar tese — urgente'}</div>
         <div class="strat-desc">${d.strat_txt}</div>
       </div>
-    </div>
-  `;
+    </div>`;
 }
+
 render();
+renderNews();
 </script>
 </body>
 </html>

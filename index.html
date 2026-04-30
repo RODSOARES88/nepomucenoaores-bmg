@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano de Inteligência Jurídica — BMG</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#F4F6FA;color:#1a1a1a;min-height:100vh}
+  .topbar{background:#1E2B6A;color:#fff;padding:14px 32px;display:flex;align-items:center;gap:16px}
+  .topbar h1{font-size:16px;font-weight:500}
+  .topbar span{font-size:12px;opacity:.6;margin-left:auto}
+  .container{max-width:900px;margin:0 auto;padding:24px 16px}
+  .selectors{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;background:#fff;border-radius:12px;padding:20px;border:1px solid #e0e4f0}
+  .sel-group label{font-size:12px;color:#666;display:block;margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+  select{width:100%;padding:10px 12px;border:1px solid #d0d5e8;border-radius:8px;font-size:14px;background:#fff;color:#1a1a1a;cursor:pointer}
+  select:focus{outline:none;border-color:#1E2B6A}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+  .card{background:#fff;border-radius:10px;padding:16px;border:1px solid #e0e4f0}
+  .card-label{font-size:11px;color:#888;margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+  .card-value{font-size:26px;font-weight:600}
+  .card-sub{font-size:11px;color:#999;margin-top:3px}
+  .card.ok .card-value{color:#2d7a2d}
+  .card.warn .card-value{color:#a06000}
+  .card.alert .card-value{color:#c0392b}
+  .section{background:#fff;border-radius:10px;padding:18px;margin-bottom:16px;border:1px solid #e0e4f0}
+  .section-title{font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+  .risks{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .risk-item{background:#f8f9fc;border-radius:8px;padding:12px}
+  .risk-label{font-size:12px;color:#666;margin-bottom:6px}
+  .risk-bar-wrap{height:5px;background:#e0e4f0;border-radius:3px;margin-bottom:6px;overflow:hidden}
+  .risk-bar{height:5px;border-radius:3px;transition:width .5s}
+  .risk-pct{font-size:13px;font-weight:600}
+  .risk-pct.low{color:#2d7a2d}.risk-pct.mid{color:#a06000}.risk-pct.high{color:#c0392b}
+  .enc-rows{display:grid;gap:8px}
+  .enc-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f2f8}
+  .enc-row:last-child{border-bottom:none}
+  .enc-label{font-size:13px;color:#666}
+  .enc-value{font-size:13px;font-weight:600;color:#1a1a1a}
+  .args{display:grid;gap:8px}
+  .arg-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px}
+  .arg-row.vit{background:#f0faf0;border:1px solid #c8e6c8}
+  .arg-row.der{background:#fff5f5;border:1px solid #f5c6c6}
+  .arg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .arg-dot.vit{background:#2d7a2d}.arg-dot.der{background:#c0392b}
+  .arg-text{flex:1;color:#1a1a1a}
+  .arg-badge{font-size:10px;padding:2px 8px;border-radius:6px;font-weight:500;white-space:nowrap}
+  .arg-badge.vit{background:#c8e6c8;color:#1a5c1a}
+  .arg-badge.der{background:#f5c6c6;color:#8b1a1a}
+  .strat-box{border-radius:10px;padding:16px;border-left:4px solid}
+  .strat-box.manter{background:#f0faf0;border-color:#2d7a2d}
+  .strat-box.monitor{background:#fffbf0;border-color:#a06000}
+  .strat-box.revisar{background:#fff5f5;border-color:#c0392b}
+  .strat-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+  .strat-box.manter .strat-label{color:#2d7a2d}
+  .strat-box.monitor .strat-label{color:#a06000}
+  .strat-box.revisar .strat-label{color:#c0392b}
+  .strat-desc{font-size:13px;color:#333;line-height:1.6}
+  .footer{text-align:center;padding:24px;font-size:12px;color:#999}
+  .updated{font-size:11px;color:#aaa;text-align:right;margin-top:4px}
+  @media(max-width:600px){
+    .cards{grid-template-columns:1fr 1fr}
+    .selectors{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div style="width:32px;height:32px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">IA</div>
+  <h1>Sistema de Inteligência Jurídica — Banco BMG</h1>
+  <span>Nepomuceno Soares Advogados Associados</span>
+</div>
+
+<div class="container">
+  <div class="selectors">
+    <div class="sel-group">
+      <label>Estado</label>
+      <select id="sel-uf" onchange="render()">
+        <option value="SC">Santa Catarina — SC</option>
+        <option value="RS">Rio Grande do Sul — RS</option>
+        <option value="MG">Minas Gerais — MG</option>
+        <option value="SP">São Paulo — SP</option>
+        <option value="PR">Paraná — PR</option>
+        <option value="RJ">Rio de Janeiro — RJ</option>
+        <option value="ES">Espírito Santo — ES</option>
+      </select>
+    </div>
+    <div class="sel-group">
+      <label>Projeto (causa raiz)</label>
+      <select id="sel-causa" onchange="render()">
+        <option value="fraude">Alegação de fraude</option>
+        <option value="modalidade">Não reconhecimento cartão</option>
+        <option value="cadastro">Cadastro incompleto</option>
+        <option value="entrega">Entrega de contrato</option>
+      </select>
+    </div>
+    <div class="updated" style="grid-column:1/-1">Última atualização: Abril 2026 · Base: 1.704 decisões</div>
+  </div>
+
+  <div id="output"></div>
+</div>
+
+<div class="footer">Sistema de Inteligência Jurídica BMG · Nepomuceno Soares Advogados Associados · Uso interno</div>
+
+<script>
+const DATA = {
+  SC:{
+    fraude:{proc:75,exito:37,ticket:24484,ticketCond:25344,ticketDobro:20257,dm:3,dobro:8,acPre:2,acPos:3,aging:807,
+      args_vit:["Recurso negado provimento — ausência de provas do autor","Extinção por desistência do autor"],
+      args_der:["Devolução em dobro — Art. 42 CDC","Dano moral condenado (R$ 3.000–8.000)","Cancelamento do contrato"],
+      strat:"revisar",strat_txt:"Êxito crítico (37%). Revisar urgente a tese de fraude para SC. O tribunal local tende a responsabilizar o banco mesmo com medidas de segurança. Priorizar argumento de fortuito externo e ausência de nexo causal. Em derrotas prováveis, focar em reduzir dano moral abaixo de R$ 3.000 e evitar dobro."},
+    modalidade:{proc:55,exito:64,ticket:21008,ticketCond:18044,ticketDobro:16479,dm:2,dobro:3,acPre:1,acPos:2,aging:807,
+      args_vit:["Prova de contratação regular","Recurso negado provimento"],
+      args_der:["Art. 389/406 CC — inadimplemento","Dano moral condenado"],
+      strat:"monitor",strat_txt:"Êxito razoável (64%). Manter tese atual com atenção. Reforçar prova de contratação nos modelos de peça para SC. Monitorar tendência de condenação em inadimplemento (Art. 389 CC)."},
+    cadastro:{proc:46,exito:39,ticket:17417,ticketCond:20604,ticketDobro:15522,dm:2,dobro:4,acPre:0,acPos:1,aging:807,
+      args_vit:["Irregularidade formal sem dano efetivo"],
+      args_der:["CDC — vulnerabilidade do consumidor","Dano moral condenado"],
+      strat:"revisar",strat_txt:"Êxito crítico (39%). SC aplica CDC de forma ampla em cadastro incompleto. Reforçar que o contrato foi executado normalmente e ausência de dano real ao consumidor."},
+    entrega:{proc:7,exito:29,ticket:3247,ticketCond:3864,ticketDobro:3864,dm:0,dobro:1,acPre:0,acPos:0,aging:807,
+      args_vit:["Entrega comprovada no sistema"],
+      args_der:["Ausência de prova de entrega"],
+      strat:"revisar",strat_txt:"Êxito muito baixo (29%) com ticket reduzido. Avaliar acordo pré-sentença. Reforçar comprovação de entrega nos modelos."}
+  },
+  RS:{
+    fraude:{proc:108,exito:47,ticket:23524,ticketCond:25914,ticketDobro:30792,dm:10,dobro:14,acPre:2,acPos:3,aging:1112,
+      args_vit:["Fortuito externo — fraude de terceiro","Recurso negado provimento"],
+      args_der:["Restituição em dobro (Art. 42 CDC)","Dano moral condenado (R$ 5.000–10.000)","Art. 389/406 CC — inadimplemento"],
+      strat:"revisar",strat_txt:"Êxito abaixo da média (47%). Estado com maior incidência de restituição em dobro (14 casos) e dano moral (10 casos) nas derrotas. Ticket de derrota plena o mais alto do portfólio (R$ 30.792). Priorizar argumentos contra o dobro e reduzir valor do dano moral. Considerar acordo pré-sentença em casos de alto valor."},
+    modalidade:{proc:120,exito:55,ticket:18436,ticketCond:15635,ticketDobro:15223,dm:4,dobro:5,acPre:3,acPos:4,aging:1112,
+      args_vit:["Prova de contratação regular","Recurso negado provimento"],
+      args_der:["Art. 389/406 CC","Dano moral condenado"],
+      strat:"monitor",strat_txt:"Êxito razoável (55%). Ticket de condenação mais baixo do estado. Focar em vitória, não em reduzir condenação. Reforçar prova documental de contratação."},
+    cadastro:{proc:51,exito:55,ticket:19940,ticketCond:20666,ticketDobro:22613,dm:3,dobro:4,acPre:1,acPos:2,aging:1112,
+      args_vit:["Execução normal do contrato","Ausência de dano efetivo"],
+      args_der:["CDC — responsabilidade objetiva","Dano moral condenado"],
+      strat:"monitor",strat_txt:"Êxito médio (55%) com ticket de condenação alto. Reforçar argumento de ausência de dano real ao consumidor."},
+    entrega:{proc:2,exito:50,ticket:7161,ticketCond:13323,ticketDobro:13323,dm:0,dobro:0,acPre:0,acPos:0,aging:1112,
+      args_vit:["Comprovante de entrega"],args_der:["Ausência de prova de entrega"],
+      strat:"monitor",strat_txt:"Amostra insuficiente (2 processos). Sem dados estatísticos confiáveis para este projeto no RS."}
+  },
+  MG:{
+    fraude:{proc:194,exito:57,ticket:24985,ticketCond:21969,ticketDobro:21761,dm:14,dobro:16,acPre:4,acPos:5,aging:936,
+      args_vit:["Fortuito externo","Ausência de nexo causal","Prova de contratação por correspondente"],
+      args_der:["Dano moral condenado","Restituição em dobro","Cancelamento do contrato"],
+      strat:"monitor",strat_txt:"Êxito aceitável (57%) com maior volume do portfólio (194 processos). Manter tese de fortuito externo. Atenção para os 16 casos com restituição em dobro — reforçar argumento contra o dobro nos modelos de MG."},
+    modalidade:{proc:300,exito:75,ticket:25632,ticketCond:25400,ticketDobro:25362,dm:5,dobro:6,acPre:4,acPos:5,aging:936,
+      args_vit:["Contratação regular documentada","Prova de utilização do cartão","Recurso negado provimento"],
+      args_der:["Contrato não reconhecido pelo autor","Art. 389/406 CC"],
+      strat:"manter",strat_txt:"Melhor resultado do portfólio (75%). Modelo atual funcionando muito bem em MG para Não Reconhecimento Cartão. Usar como referência para outros estados — especialmente prova de contratação e extrato de utilização."},
+    cadastro:{proc:15,exito:80,ticket:7964,ticketCond:333,ticketDobro:333,dm:0,dobro:0,acPre:0,acPos:0,aging:936,
+      args_vit:["Contrato executado normalmente","Ausência de dano efetivo"],
+      args_der:["Irregularidade formal"],
+      strat:"manter",strat_txt:"Êxito excelente (80%) com ticket de condenação irrisório (R$ 333). Manter estratégia. Derrota não gera impacto financeiro relevante."},
+    entrega:{proc:2,exito:50,ticket:1054,ticketCond:789,ticketDobro:789,dm:0,dobro:0,acPre:0,acPos:0,aging:936,
+      args_vit:["Entrega comprovada"],args_der:["Ausência de prova"],
+      strat:"monitor",strat_txt:"Amostra insuficiente (2 processos). Ticket muito baixo — sem relevância financeira."}
+  },
+  SP:{
+    fraude:{proc:148,exito:60,ticket:23400,ticketCond:22577,ticketDobro:21587,dm:7,dobro:8,acPre:1,acPos:2,aging:483,
+      args_vit:["Fortuito externo","Medidas de segurança adotadas","Culpa exclusiva do autor/terceiro"],
+      args_der:["Dano moral condenado","Cancelamento do contrato","Art. 389/406 CC"],
+      strat:"monitor",strat_txt:"Êxito razoável (60%). SP tem processo mais rápido (483 dias). Manter tese de fortuito externo. Reforçar que o banco não é responsável pela manutenção contratual em casos de fraude."},
+    modalidade:{proc:128,exito:67,ticket:21284,ticketCond:20774,ticketDobro:23259,dm:4,dobro:5,acPre:2,acPos:3,aging:483,
+      args_vit:["Prova de contratação","Extrato de utilização do cartão","Recurso negado provimento"],
+      args_der:["Art. 389/406 CC","Dano moral condenado"],
+      strat:"manter",strat_txt:"Bom desempenho (67%). Manter modelo atual para SP. Processo rápido (483 dias) favorece resolução ágil."},
+    cadastro:{proc:5,exito:100,ticket:22390,ticketCond:0,ticketDobro:0,dm:0,dobro:0,acPre:0,acPos:0,aging:483,
+      args_vit:["Ausência de dano efetivo","Contrato executado normalmente"],args_der:[],
+      strat:"manter",strat_txt:"Êxito perfeito (100%) — amostra pequena (5 processos). Manter estratégia atual."},
+    entrega:{proc:4,exito:50,ticket:6500,ticketCond:7500,ticketDobro:5000,dm:0,dobro:0,acPre:0,acPos:0,aging:483,
+      args_vit:["Entrega comprovada"],args_der:["Ausência de prova de entrega"],
+      strat:"monitor",strat_txt:"Amostra pequena (4 processos). Monitorar."}
+  },
+  PR:{
+    fraude:{proc:95,exito:58,ticket:23207,ticketCond:24649,ticketDobro:28013,dm:5,dobro:8,acPre:1,acPos:2,aging:649,
+      args_vit:["Fortuito externo","Prova de contratação via correspondente"],
+      args_der:["Dano moral condenado","Restituição em dobro","Cancelamento contrato"],
+      strat:"monitor",strat_txt:"Êxito aceitável (58%). Ticket de derrota plena alto (R$ 28.013). Focar em evitar restituição em dobro nos modelos do PR."},
+    modalidade:{proc:83,exito:71,ticket:23138,ticketCond:20901,ticketDobro:21492,dm:3,dobro:4,acPre:2,acPos:3,aging:649,
+      args_vit:["Contratação regular","Prova documental","Recurso negado"],
+      args_der:["Art. 389/406 CC","Dano moral"],
+      strat:"manter",strat_txt:"Bom resultado (71%). Modelo funcionando bem para Não Reconhecimento no PR. Manter estratégia atual."},
+    cadastro:{proc:11,exito:64,ticket:12194,ticketCond:14579,ticketDobro:10000,dm:0,dobro:0,acPre:0,acPos:0,aging:649,
+      args_vit:["Contrato executado normalmente"],
+      args_der:["Irregularidade formal"],
+      strat:"manter",strat_txt:"Bom resultado (64%) com ticket baixo. Manter estratégia."},
+    entrega:{proc:6,exito:33,ticket:2359,ticketCond:3038,ticketDobro:718,dm:0,dobro:0,acPre:0,acPos:0,aging:649,
+      args_vit:["Comprovante de entrega"],args_der:["Ausência de prova"],
+      strat:"revisar",strat_txt:"Êxito baixo (33%) com amostra pequena. Ticket muito baixo — considerar acordo pré-sentença."}
+  },
+  RJ:{
+    fraude:{proc:31,exito:61,ticket:30044,ticketCond:34348,ticketDobro:42226,dm:2,dobro:7,acPre:1,acPos:2,aging:698,
+      args_vit:["Fortuito externo","Ausência de nexo causal"],
+      args_der:["Dano moral condenado","Restituição em dobro","Cancelamento contrato"],
+      strat:"monitor",strat_txt:"Êxito razoável (61%) mas TICKET DE DERROTA PLENA MUITO ALTO (R$ 42.226 — maior do portfólio). RJ representa o maior risco financeiro em casos de fraude. Prioridade máxima em evitar restituição em dobro. Recurso especial obrigatório em qualquer condenação acima de R$ 50.000."},
+    modalidade:{proc:64,exito:70,ticket:29704,ticketCond:30866,ticketDobro:33696,dm:3,dobro:4,acPre:2,acPos:3,aging:698,
+      args_vit:["Prova de contratação","Extrato de utilização do cartão"],
+      args_der:["Art. 389/406 CC","Dano moral condenado"],
+      strat:"manter",strat_txt:"Bom resultado (70%) mas ticket alto (R$ 29.704). Manter modelo atual. Dano moral tende a ser mais alto no RJ — incluir argumento específico contra quantum indenizatório."},
+    cadastro:{proc:4,exito:75,ticket:7705,ticketCond:1000,ticketDobro:1000,dm:0,dobro:0,acPre:0,acPos:0,aging:698,
+      args_vit:["Ausência de dano efetivo"],args_der:["Irregularidade formal"],
+      strat:"manter",strat_txt:"Bom resultado (75%) — amostra pequena. Manter estratégia."},
+    entrega:{proc:0,exito:0,ticket:0,ticketCond:0,ticketDobro:0,dm:0,dobro:0,acPre:0,acPos:0,aging:698,
+      args_vit:[],args_der:[],
+      strat:"monitor",strat_txt:"Sem processos registrados para este projeto no RJ."}
+  },
+  ES:{
+    fraude:{proc:26,exito:65,ticket:28501,ticketCond:28617,ticketDobro:22107,dm:1,dobro:1,acPre:0,acPos:1,aging:470,
+      args_vit:["Fortuito externo","Medidas de segurança do banco","Prova de contratação"],
+      args_der:["Dano moral condenado","CDC aplicado"],
+      strat:"manter",strat_txt:"Melhor resultado para Fraude (65%). ES tem o menor risco de restituição em dobro (1 caso) e menor duração média (470 dias). Modelo atual funcionando — manter tese e usar como referência."},
+    modalidade:{proc:46,exito:61,ticket:23618,ticketCond:22412,ticketDobro:20202,dm:2,dobro:2,acPre:1,acPos:2,aging:470,
+      args_vit:["Prova de contratação regular","Recurso negado"],
+      args_der:["Art. 389/406 CC","Dano moral"],
+      strat:"manter",strat_txt:"Bom resultado (61%) com processos mais rápidos do portfólio (470 dias). Manter modelo atual."},
+    cadastro:{proc:4,exito:75,ticket:15820,ticketCond:19261,ticketDobro:19261,dm:0,dobro:0,acPre:0,acPos:0,aging:470,
+      args_vit:["Contrato executado normalmente"],args_der:["Irregularidade formal"],
+      strat:"manter",strat_txt:"Bom resultado (75%) — amostra pequena. Manter estratégia."},
+    entrega:{proc:0,exito:0,ticket:0,ticketCond:0,ticketDobro:0,dm:0,dobro:0,acPre:0,acPos:0,aging:470,
+      args_vit:[],args_der:[],strat:"monitor",strat_txt:"Sem processos registrados para entrega de contrato no ES."}
+  }
+};
+
+function fmt(n){return n>0?'R$ '+n.toLocaleString('pt-BR'):'-'}
+function pctC(p){return p<=15?'low':p<=30?'mid':'high'}
+function barC(p){return p<=15?'#2d7a2d':p<=30?'#a06000':'#c0392b'}
+
+function render(){
+  const uf=document.getElementById('sel-uf').value;
+  const causa=document.getElementById('sel-causa').value;
+  const d=DATA[uf][causa];
+  if(!d||d.proc===0){
+    document.getElementById('output').innerHTML='<div style="background:#fff;border-radius:10px;padding:24px;border:1px solid #e0e4f0;color:#888;font-size:14px">Sem processos registrados para esta combinação.</div>';
+    return;
+  }
+  const derrota=100-d.exito;
+  const dmPct=d.proc>0?Math.round(d.dm/d.proc*100):0;
+  const dobroPct=d.proc>0?Math.round(d.dobro/d.proc*100):0;
+  const exitoClass=d.exito>=60?'ok':d.exito>=45?'warn':'alert';
+  const derrotaClass=derrota<=40?'ok':derrota<=55?'warn':'alert';
+  const ticketClass=d.ticketDobro>30000?'alert':d.ticketDobro>20000?'warn':'ok';
+  const stratIcon=d.strat==='manter'?'Manter estratégia':d.strat==='monitor'?'Monitorar e ajustar':'Revisar tese — urgente';
+
+  document.getElementById('output').innerHTML=`
+    <div class="cards">
+      <div class="card ${exitoClass}">
+        <div class="card-label">Chance de vitória</div>
+        <div class="card-value">${d.exito}%</div>
+        <div class="card-sub">${d.proc} processos analisados</div>
+      </div>
+      <div class="card ${derrotaClass}">
+        <div class="card-label">Chance de derrota</div>
+        <div class="card-value">${derrota}%</div>
+        <div class="card-sub">plena ou parcial</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Ticket médio geral</div>
+        <div class="card-value" style="font-size:18px;margin-top:4px">${fmt(d.ticket)}</div>
+        <div class="card-sub">valor da causa</div>
+      </div>
+      <div class="card ${ticketClass}">
+        <div class="card-label">Possível condenação</div>
+        <div class="card-value" style="font-size:18px;margin-top:4px">${fmt(d.ticketCond)}</div>
+        <div class="card-sub">média nas derrotas</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <div class="section">
+        <div class="section-title">Riscos financeiros nas derrotas</div>
+        <div style="display:grid;gap:12px">
+          <div class="risk-item">
+            <div class="risk-label">Dano moral condenado</div>
+            <div class="risk-bar-wrap"><div class="risk-bar" style="width:${Math.min(dmPct*3,100)}%;background:${barC(dmPct)}"></div></div>
+            <div class="risk-pct ${pctC(dmPct)}">${dmPct}% das derrotas · ${d.dm} casos</div>
+          </div>
+          <div class="risk-item">
+            <div class="risk-label">Restituição em dobro</div>
+            <div class="risk-bar-wrap"><div class="risk-bar" style="width:${Math.min(dobroPct*3,100)}%;background:${barC(dobroPct)}"></div></div>
+            <div class="risk-pct ${pctC(dobroPct)}">${dobroPct}% das derrotas · ${d.dobro} casos</div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">Encerramento e acordo</div>
+        <div class="enc-rows">
+          <div class="enc-row">
+            <span class="enc-label">Tempo médio do processo</span>
+            <span class="enc-value">${d.aging} dias (~${Math.round(d.aging/30)} meses)</span>
+          </div>
+          <div class="enc-row">
+            <span class="enc-label">Acordos pré-sentença</span>
+            <span class="enc-value">${d.acPre} registrados</span>
+          </div>
+          <div class="enc-row">
+            <span class="enc-label">Acordos pós-sentença</span>
+            <span class="enc-value">${d.acPos} registrados</span>
+          </div>
+          <div class="enc-row">
+            <span class="enc-label">Ticket médio derrota plena</span>
+            <span class="enc-value">${fmt(d.ticketDobro)}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" style="margin-bottom:16px">
+      <div class="section-title">Fundamentos jurídicos identificados nas decisões</div>
+      <div class="args">
+        ${d.args_vit.map(a=>`<div class="arg-row vit"><div class="arg-dot vit"></div><span class="arg-text">${a}</span><span class="arg-badge vit">nas vitórias</span></div>`).join('')}
+        ${d.args_der.map(a=>`<div class="arg-row der"><div class="arg-dot der"></div><span class="arg-text">${a}</span><span class="arg-badge der">nas derrotas</span></div>`).join('')}
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Diretriz estratégica</div>
+      <div class="strat-box ${d.strat}">
+        <div class="strat-label">${stratIcon}</div>
+        <div class="strat-desc">${d.strat_txt}</div>
+      </div>
+    </div>
+  `;
+}
+render();
+</script>
+</body>
+</html>

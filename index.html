@@ -129,6 +129,50 @@ select:focus{outline:none;border-color:#1E2B6A}
 .no-result{background:#fff;border-radius:10px;padding:24px;border:1px solid #e0e4f0;text-align:center;color:#888;font-size:13px}
 .manual-header{background:#f0f2fb;border-radius:10px;padding:14px 18px;margin-bottom:16px;border-left:3px solid #1E2B6A;font-size:13px;color:#1E2B6A}
 
+
+.flow-wrap{display:grid;grid-template-columns:320px 1fr;gap:16px;align-items:start}
+.flow-chart{background:#fff;border-radius:10px;padding:16px;border:1px solid #e0e4f0;position:sticky;top:16px}
+.flow-chart-title{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.flow-item{display:flex;flex-direction:column;align-items:center;margin:0}
+.flow-task{background:#E8F0FE;border:2px solid #2B5DA1;border-radius:8px;padding:8px 12px;font-size:11px;font-weight:600;color:#2B5DA1;cursor:pointer;text-align:center;width:100%;transition:all .2s;line-height:1.3}
+.flow-task:hover{background:#2B5DA1;color:#fff}
+.flow-task.active{background:#1E2B6A;color:#fff;border-color:#1E2B6A}
+.flow-task.pink{background:#FCE4D6;border-color:#c0392b;color:#c0392b}
+.flow-task.pink:hover{background:#c0392b;color:#fff}
+.flow-task.pink.active{background:#8B0000;color:#fff;border-color:#8B0000}
+.flow-task.green{background:#E2EFDA;border-color:#2d7a2d;color:#2d7a2d}
+.flow-decision{width:100px;height:100px;background:#FFF2CC;border:2px solid #a06000;transform:rotate(45deg);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;margin:6px auto;flex-shrink:0}
+.flow-decision:hover{background:#a06000}
+.flow-decision:hover .flow-decision-label{color:#fff}
+.flow-decision.active{background:#7D6608}
+.flow-decision.active .flow-decision-label{color:#fff}
+.flow-decision-label{transform:rotate(-45deg);font-size:10px;font-weight:700;color:#7D6608;text-align:center;line-height:1.2;padding:4px}
+.flow-arrow{width:2px;height:20px;background:#aaa;margin:0 auto}
+.flow-arrow-h{display:flex;align-items:center;gap:0;margin:4px 0}
+.flow-branch{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;margin:4px 0}
+.flow-branch-label{font-size:9px;color:#888;text-align:center;margin-bottom:2px}
+.flow-start-end{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin:0 auto;cursor:pointer}
+.flow-start{background:#2d7a2d;color:#fff}
+.flow-end{background:#c0392b;color:#fff}
+.flow-detail-panel{background:#fff;border-radius:10px;padding:20px;border:1px solid #e0e4f0;min-height:400px}
+.fdp-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:300px;color:#bbb;text-align:center}
+.fdp-empty-icon{font-size:40px;margin-bottom:12px}
+.fdp-step-num{font-size:11px;font-weight:700;color:#2B5DA1;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.fdp-title{font-size:18px;font-weight:600;color:#1a1a1a;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #f0f2f8}
+.fdp-section{margin-bottom:14px}
+.fdp-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:6px}
+.fdp-content{font-size:13px;color:#333;line-height:1.7}
+.fdp-step-item{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid #f8f9fc}
+.fdp-step-item:last-child{border-bottom:none}
+.fdp-step-num-circle{width:22px;height:22px;border-radius:50%;background:#1E2B6A;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.fdp-alert{background:#fde8e8;border-radius:8px;padding:10px 12px;font-size:12px;color:#8b1a1a;margin-top:10px;border-left:3px solid #c0392b}
+.fdp-tip{background:#e8f0fe;border-radius:8px;padding:10px 12px;font-size:12px;color:#1E2B6A;margin-top:8px;border-left:3px solid #2B5DA1}
+.fdp-decision-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.fdp-opt{border-radius:8px;padding:10px 12px;font-size:12px;line-height:1.5}
+.fdp-opt.sim{background:#f0faf0;border:1px solid #c8e6c8;color:#1a5c1a}
+.fdp-opt.nao{background:#fff5f5;border:1px solid #f5c6c6;color:#8b1a1a}
+.fdp-opt-label{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+
 .footer{text-align:center;padding:24px;font-size:12px;color:#bbb}
 @media(max-width:600px){.cards{grid-template-columns:1fr 1fr}.selectors{grid-template-columns:1fr}.risks{grid-template-columns:1fr}}
 </style>
@@ -146,6 +190,7 @@ select:focus{outline:none;border-color:#1E2B6A}
   <div class="tab" onclick="switchTab('mercado',this)">Inteligência de Mercado</div>
   <div class="tab" onclick="switchTab('modelos',this)">Sugestão de Modelos</div>
   <div class="tab" onclick="switchTab('manual',this)">Manual da Equipe</div>
+  <div class="tab" onclick="switchTab('fluxo',this)">Fluxo de Defesa</div>
 </div>
 
 <div class="container">
@@ -261,6 +306,141 @@ select:focus{outline:none;border-color:#1E2B6A}
     </div>
     <div id="topicos-bar" class="topicos-filter"></div>
     <div id="faq-output"></div>
+  </div>
+
+  <!-- ABA 5: FLUXO DE DEFESA -->
+  <div id="fluxo" class="panel">
+    <div style="background:#f0f2fb;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#1E2B6A;border-left:3px solid #1E2B6A">
+      Clique em qualquer etapa do fluxo para ver as instruções detalhadas do manual.
+    </div>
+    <div class="flow-wrap">
+      <!-- FLUXOGRAMA -->
+      <div class="flow-chart">
+        <div class="flow-chart-title">Fluxo de Defesa — Nepomuceno Soares</div>
+
+        <div class="flow-item">
+          <div class="flow-start-end flow-start" onclick="showFlow('inicio')" title="Início">▶</div>
+          <div style="font-size:9px;color:#2d7a2d;font-weight:600;margin:2px 0">NOVO PROCESSO</div>
+          <div class="flow-arrow"></div>
+        </div>
+
+        <div class="flow-item">
+          <div class="flow-task" onclick="showFlow('aceite')">1. Verificar Aceite<br><span style="font-weight:400;font-size:10px">X-JUS + Exyon</span></div>
+          <div class="flow-arrow"></div>
+        </div>
+
+        <div class="flow-item">
+          <div class="flow-decision" onclick="showFlow('dec-aceitar')">
+            <div class="flow-decision-label">Aceitar<br>patrocínio?</div>
+          </div>
+        </div>
+
+        <div class="flow-branch">
+          <div>
+            <div class="flow-branch-label" style="color:#c0392b">NÃO</div>
+            <div class="flow-task pink" onclick="showFlow('recusar')">Recusar no Exyon</div>
+            <div style="margin:4px auto;display:flex;align-items:center;justify-content:center">
+              <div class="flow-start-end flow-end" style="width:22px;height:22px;font-size:9px">■</div>
+            </div>
+          </div>
+          <div>
+            <div class="flow-branch-label" style="color:#2d7a2d">SIM ↓</div>
+            <div class="flow-task green" style="height:100%;display:flex;align-items:center;justify-content:center;font-size:10px">continua abaixo</div>
+          </div>
+        </div>
+
+        <div style="text-align:center;font-size:9px;color:#888;margin:4px 0">↓ SIM</div>
+
+        <div class="flow-item">
+          <div class="flow-task" onclick="showFlow('saneamento')">2. Saneamento Inicial<br><span style="font-weight:400;font-size:10px">Prazo · Liminar · Óbito · Cadastro</span></div>
+          <div class="flow-arrow"></div>
+        </div>
+
+        <div class="flow-item">
+          <div class="flow-decision" onclick="showFlow('dec-prazo')">
+            <div class="flow-decision-label">Prazo<br>regular?</div>
+          </div>
+        </div>
+
+        <div class="flow-branch" style="margin-bottom:4px">
+          <div>
+            <div class="flow-branch-label" style="color:#c0392b">NÃO</div>
+            <div class="flow-task pink" onclick="showFlow('irr-prazo')">Comunicar Irregularidade</div>
+          </div>
+          <div>
+            <div class="flow-branch-label" style="color:#2d7a2d">SIM ↓</div>
+            <div class="flow-task" onclick="showFlow('liminar')" style="height:100%;display:flex;align-items:center;justify-content:center;font-size:10px;background:#FFF8E1;border-color:#a06000;color:#a06000">Verificar Liminar</div>
+          </div>
+        </div>
+
+        <div style="text-align:center;font-size:9px;color:#888;margin:4px 0">↓</div>
+
+        <div class="flow-item">
+          <div class="flow-task" onclick="showFlow('baixar-docs')">3. Baixar Documentos<br><span style="font-weight:400;font-size:10px">Exyon — contrato, faturas, TEDs</span></div>
+          <div class="flow-arrow"></div>
+        </div>
+
+        <div class="flow-item">
+          <div class="flow-decision" onclick="showFlow('dec-tipo')">
+            <div class="flow-decision-label">Tipo de<br>processo?</div>
+          </div>
+        </div>
+
+        <div class="flow-branch" style="margin-bottom:4px">
+          <div>
+            <div class="flow-branch-label">FRAUDE</div>
+            <div class="flow-task pink" onclick="showFlow('tipo-fraude')" style="font-size:10px">Solicitar ofício +<br>Perícia (se laudo OK)</div>
+          </div>
+          <div>
+            <div class="flow-branch-label">MODALIDADE</div>
+            <div class="flow-task" onclick="showFlow('tipo-modalidade')" style="font-size:10px;background:#E8F0FE">Solicitar AIJ +<br>ofício (se impugnar)</div>
+          </div>
+        </div>
+
+        <div style="text-align:center;font-size:9px;color:#888;margin:4px 0">↓ (convergência)</div>
+
+        <div class="flow-item">
+          <div class="flow-task" onclick="showFlow('looplex')">4. Elaborar Contestação<br><span style="font-weight:400;font-size:10px">Looplex — 20 passos</span></div>
+          <div class="flow-arrow"></div>
+        </div>
+
+        <div class="flow-item">
+          <div class="flow-task" onclick="showFlow('protocolar')">5. Protocolar no Tribunal</div>
+          <div class="flow-arrow"></div>
+        </div>
+
+        <div class="flow-item">
+          <div class="flow-task" onclick="showFlow('andamento')">6. Inserir Andamento no Exyon</div>
+          <div class="flow-arrow"></div>
+        </div>
+
+        <div class="flow-item">
+          <div class="flow-task" onclick="showFlow('fechar-wf')">7. Fechar Workflow</div>
+          <div class="flow-arrow"></div>
+        </div>
+
+        <div class="flow-item">
+          <div class="flow-task" onclick="showFlow('docs-pasta')">8. Colocar Documentos na Pasta</div>
+          <div class="flow-arrow"></div>
+        </div>
+
+        <div class="flow-item">
+          <div class="flow-task" onclick="showFlow('concluir-xjus')">9. Concluir Prazo no X-JUS</div>
+          <div class="flow-arrow"></div>
+          <div class="flow-start-end flow-end" title="Fim">■</div>
+          <div style="font-size:9px;color:#c0392b;font-weight:600;margin-top:2px">CONCLUÍDO</div>
+        </div>
+      </div>
+
+      <!-- PAINEL DE DETALHE -->
+      <div class="flow-detail-panel" id="flow-detail-panel">
+        <div class="fdp-empty">
+          <div class="fdp-empty-icon">👆</div>
+          <div style="font-size:14px;font-weight:500;color:#888;margin-bottom:6px">Clique em uma etapa</div>
+          <div style="font-size:12px;color:#bbb">As instruções detalhadas aparecem aqui</div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
@@ -790,6 +970,222 @@ function renderModelos(){
 
 renderModelos();
 renderFaq();
+</script>
+<script>
+
+const FLOW_DATA = {
+  'inicio': {num:'',title:'Novo Processo Recebido',
+   steps:[
+     'O robô busca diariamente no Exyon os workflows de Aceite de Patrocínio.',
+     'O workflow é fechado automaticamente e a pasta é cadastrada no X-JUS.',
+     'Você recebe a notificação de novo processo no seu painel.',
+     'Próximo passo: verificar se deve aceitar ou recusar o patrocínio.'
+   ],
+   tip:'Acesse o X-JUS (https://app.xjus.com.br/nepomucenosoares) para ver os novos processos no painel de controle.',
+   alert:null},
+  'aceite': {num:'Etapa 1',title:'Verificar Aceite de Patrocínio',
+   steps:[
+     'Verificar se o estado do processo está nos patrocinados pelo NS: MG, RS, SC, RJ, SP, ES, PR.',
+     'Verificar se o projeto é atendido pela assessoria (não aceitar: BMG Digital, BMG Corinthians, BMG Barcelona, BMG Galo, BMG Vasco, Consignado Novo set/2019, Veículo, cedidos Omni/Itaú, Lendico).',
+     'Verificar se não é ação trabalhista, penal, ACP ou de pessoa jurídica — recusar obrigatoriamente.',
+     'Se aprovado para aceite: verificar no X-JUS se a pasta foi cadastrada corretamente.'
+   ],
+   alert:'Aceite indevido = falha de procedimento automática. Leia com atenção antes de aceitar.',
+   tip:'Para recusar: no Exyon, WF Questionamento de Patrocínio > ação Recusa de Patrocínio > motivo + seu nome.'},
+  'dec-aceitar': {num:'Decisão',title:'Aceitar o Patrocínio?',
+   decision:true,
+   sim:'Prosseguir para o Saneamento Inicial.',
+   nao:'Recusar o patrocínio no Exyon usando o WF de Questionamento de Patrocínio. O processo será encerrado sem atuar.',
+   steps:[],alert:null,tip:null},
+  'recusar': {num:'',title:'Recusar Patrocínio',
+   steps:[
+     'No Exyon, localizar o workflow de Patrocínio do processo.',
+     'Clicar no ID do workflow > Ação: Recusa de Patrocínio.',
+     'Na justificativa: informar o motivo (ex: "trata-se de produto/projeto que não atuamos") + assinar seu nome.',
+     'Clicar em Realizar. O patrocínio será devolvido.'
+   ],
+   alert:'Ausência de recusa em casos que deveriam ser recusados = falha de procedimento.',
+   tip:null},
+  'saneamento': {num:'Etapa 2',title:'Saneamento Inicial',
+   steps:[
+     'Tarefa 1 — COM PRAZO PARA DEFESA: verificar se há prazo. Se houver: concluir a tarefa. Se não houver: curso alternativo PROCESSO COM IRREGULARIDADE.',
+     'Tarefa 2 — CADASTRO CORRETO: verificar nome da parte, advogado, vara/município, produto, motivo/sub-motivo, valor da causa, contratos.',
+     'Tarefa 3 — LIMINAR: sempre realizar curso alternativo adequado à decisão (OBF provisória, indeferida, etc.).',
+     'Tarefa 4 — INDÍCIO DE ÓBITO: consultar CPF na Receita Federal. Regular: justificativa CPF REGULAR. Óbito: curso alternativo SUSPEITA DE ÓBITO CONFIRMADA.',
+     'Ao finalizar: concluir o compromisso no X-JUS com observação "saneamento realizado" + fase processual.'
+   ],
+   alert:'Liminares: cada OBF tem peculiaridades. Não instalar OBF definitiva sem certeza — é irreversível.',
+   tip:'No X-JUS, o ícone de tarefas já exibe o compromisso de saneamento e o prazo de defesa automaticamente.'},
+  'dec-prazo': {num:'Decisão',title:'O prazo para defesa está regular?',
+   decision:true,
+   sim:'Prosseguir normalmente para baixar os documentos e elaborar a defesa.',
+   nao:'Abrir curso alternativo no WF de Saneamento: PROCESSO COM IRREGULARIDADE – PRAZO VENCIDO REVELIA. Informar: tipo de citação (eletrônica/física), endereço, data de citação e prazo.',
+   steps:[],alert:null,tip:null},
+  'irr-prazo': {num:'',title:'Comunicar Irregularidade de Prazo',
+   steps:[
+     'No WF Saneamento Inicial, selecionar curso alternativo: PROCESSO COM IRREGULARIDADE – PRAZO VENCIDO REVELIA.',
+     'Informar na justificativa: data da citação, data final do prazo, modalidade da citação (eletrônica ou física) e endereço de citação.',
+     'Vincular cópia integral do processo.',
+     'Comunicar a gestão imediatamente.'
+   ],
+   alert:'Prazo perdido sem comunicação = responsabilidade do advogado. Comunicar a gestão imediatamente.',
+   tip:null},
+  'liminar': {num:'',title:'Verificar Liminar/Tutela',
+   steps:[
+     'Verificar se há decisão de liminar ou tutela de urgência no processo.',
+     'Se houver: abrir o Controle de Liminar no X-JUS (+ > tipo de liminar > preencher datas).',
+     'A tarefa SOLICITAR CUMPRIMENTO DA LIMINAR é gerada automaticamente.',
+     'Consultar no PN (Citrix) os dados do contrato para comunicar ao banco: Conta, Nº Cartão, CPF, ADE, Matrícula.',
+     'Comunicar ao banco via Exyon — ATENÇÃO: OBF definitiva é IRREVERSÍVEL.'
+   ],
+   alert:'A instalação de OBF definitiva incorreta causa prejuízos irreversíveis e falha grave.',
+   tip:'OBF Provisória = suspensão de descontos / exclusão temporária de negativação (pode ser convertida). Definitiva = cancelamento permanente.'},
+  'baixar-docs': {num:'Etapa 3',title:'Baixar Documentos no Exyon',
+   steps:[
+     'Acessar: https://juridico.bancobmg.com.br/ com login bmg.cnrr (salve o login/senha na primeira vez).',
+     'Selecionar unidade CÍVEL > Jurídico > Pesquisa Causa > Código da Causa > colar a CIV.',
+     'Clicar no processo > Processo > número > ícone Documentos.',
+     'Baixar obrigatoriamente: Contrato de Adesão, Faturas (cartão) ou Demonstrativo (empréstimo), TEDs.',
+     'PROIBIDO anexar: laudo de fraude, laudo de subsídios, documentos de controle interno.'
+   ],
+   alert:'Nunca anexar documentos de controle interno do banco ou do escritório junto com a contestação.',
+   tip:'Se documentos estiverem faltando: instalar WF ESC – COMPLEMENTO/CORREÇÃO DE SUBSÍDIOS.'},
+  'dec-tipo': {num:'Decisão',title:'Qual é o tipo do processo?',
+   decision:true,
+   sim:'FRAUDE: o autor alega não ter contratado (terceiro contratou em seu nome).',
+   nao:'MODALIDADE (Não Reconhecimento): o autor alega não reconhecer o produto, mas existe contrato firmado.',
+   steps:[],alert:null,tip:'O tipo define quais provas serão requeridas e qual path do Looplex será usado.'},
+  'tipo-fraude': {num:'',title:'Processo de Fraude — Providências Específicas',
+   steps:[
+     'Solicitar expedição de ofício para comprovar recebimento dos valores (saque).',
+     'Solicitar perícia técnica SOMENTE SE: ação iniciou como fraude E laudo interno da SUAUD indica fraude improcedente.',
+     'No Looplex (Passo 2): selecionar Juizado Especial Cível se for JESP — isso ativa o pedido de perícia grafotécnica automaticamente.',
+     'Tese principal: fortuito externo — fraude praticada por terceiro sem participação do banco.',
+     'Incluir: geolocalização consistente da contratação (resposta à nova tese adversária TJMT/2026).'
+   ],
+   alert:'NÃO solicitar laudo de fraude em casos classificados como Modalidade. NÃO realizar pagamento de honorários periciais em casos de Modalidade.',
+   tip:'Se o banco classificou como Modalidade mas é Fraude: solicitar WF Correção de Cadastro.'},
+  'tipo-modalidade': {num:'',title:'Processo de Modalidade — Providências Específicas',
+   steps:[
+     'Solicitar AIJ (Audiência de Instrução e Julgamento).',
+     'Solicitar expedição de ofício para comprovar recebimento dos valores SOMENTE SE o autor impugnar alegando não ter recebido.',
+     'Tese principal: contratação regular documentada + prova de utilização do cartão.',
+     'No Looplex (Passo 14 — Alegações): selecionar NÃO (não é fraude).'
+   ],
+   alert:null,
+   tip:'MG Não Reconhecimento Cartão tem 75% de êxito — o modelo atual funciona bem. Manter tese de contratação regular com prova documental.'},
+  'looplex': {num:'Etapa 4',title:'Elaborar Contestação no Looplex',
+   steps:[
+     'Acessar: https://app.looplex.com/ e selecionar CONTESTAÇÃO BANCÁRIA (BMG).',
+     'Passo 1 — CIV: colar o número CIV do processo.',
+     'Passo 2 — Dados do Processo: preencher. Selecionar Justiça Comum ou Juizado Especial.',
+     'Passo 3 — Tempestividade: sempre HABILITAÇÃO DO BANCO (data hoje = elaboração, data início = dia seguinte).',
+     'Passo 4 — Dados do Autor: atenção ao analfabetismo (verificar se há assinatura no contrato).',
+     'Passo 5 — Ré: selecionar SIM em Deseja qualificar a Ré, NÃO inserir e-mail.',
+     'Passo 6 — Caso Concreto: resumo do caso substituindo textos em negrito.',
+     'Passo 8 — Dados do Contrato: verificar no PN/Citrix (ADE, RMC, conta, cartão, matrícula).',
+     'Passo 11 — Prejudiciais: Decadência = 4 anos, Prescrição = 3 anos.',
+     'Passo 18 — Assinatura: MG, Belo Horizonte, CRISTIANA NEPOMUCENO DE SOUSA SOARES e PATRICIA GONÇALVES MACEDO.',
+     'Passo 20 — Anexos: inserir prints conforme o caso.',
+     'Verificar: todas as teses obrigatórias foram incluídas (prescrição, decadência, litispendência, etc.).'
+   ],
+   alert:'Salve seu login/senha no Looplex na primeira vez — tentativas erradas bloqueiam o acesso.',
+   tip:'Sempre incluir na defesa a solicitação de compensação/desconto do valor recebido pelo autor a título de empréstimo/saque.'},
+  'protocolar': {num:'Etapa 5',title:'Protocolar no Tribunal',
+   steps:[
+     'Acessar o portal do tribunal correspondente ao estado do processo.',
+     'Protocolar a contestação com todos os documentos obrigatórios (contrato, faturas, TEDs).',
+     'Caso necessário (agravo de instrumento): emitir guia de custas e pagar antes de protocolar.',
+     'Guardar o comprovante de protocolo.',
+     'Comprovar distribuição na 1ª instância quando necessário (Art. 1018 CPC) para agravos.'
+   ],
+   alert:null,
+   tip:'Processos de habilitação: verificar se Cristiana Nepomuceno já está habilitada nos autos. Se não: protocolar habilitação junto com a contestação.'},
+  'andamento': {num:'Etapa 6',title:'Inserir Andamento no Exyon',
+   steps:[
+     'Acessar o Exyon: https://juridico.bancobmg.com.br/',
+     'Localizar o processo pela CIV.',
+     'Aba Andamentos > Novo Andamento.',
+     'Selecionar o tipo correto de andamento (DEFESA APRESENTADA, CONTESTAÇÃO PROTOCOLADA, etc.).',
+     'Vincular o advogado do escritório responsável.',
+     'Status: sempre CONCLUÍDO (exceto recursos, que ficam EM CURSO até o julgamento).',
+     'Vincular os documentos clicando em DOCS.',
+     'Salvar.'
+   ],
+   alert:'Não cadastrar mais de um andamento no mesmo dia — gera duplicidade nos relatórios gerenciais.',
+   tip:'Qualidade dos andamentos no Exyon impacta diretamente os relatórios do banco e o ranking do escritório.'},
+  'fechar-wf': {num:'Etapa 7',title:'Fechar Workflow no Exyon',
+   steps:[
+     'No Exyon, localizar o workflow correspondente ao processo.',
+     'Verificar se há tarefas pendentes no workflow.',
+     'Concluir/fechar o workflow de defesa.',
+     'Se houver workflow de OBF ativo: verificar confirmação de cumprimento antes de fechar.'
+   ],
+   alert:null,
+   tip:null},
+  'docs-pasta': {num:'Etapa 8',title:'Colocar Documentos na Pasta',
+   steps:[
+     'Acessar a pasta do processo no SharePoint do escritório.',
+     'Organizar os documentos: contestação, habilitação, procuração, contrato, faturas, TEDs.',
+     'Verificar se a pasta está categorizada corretamente (estado, vara, tipo de processo).',
+     'Garantir que os documentos estão em PDF e com nomenclatura correta.'
+   ],
+   alert:null,
+   tip:null},
+  'concluir-xjus': {num:'Etapa 9',title:'Concluir Prazo no X-JUS',
+   steps:[
+     'Acessar: https://app.xjus.com.br/nepomucenosoares/',
+     'Localizar o prazo de defesa na lista de tarefas.',
+     'Clicar em Concluir.',
+     'Responder o checklist obrigatório:',
+     '— ✓ Analisado comunicação de liminar?',
+     '— ✓ Conferido agendamento de audiência?',
+     '— ✓ Defesa protocolada?',
+     '— ✓ Habilitação confirmada?',
+     'Salvar e confirmar a conclusão.'
+   ],
+   alert:'NÃO concluir o prazo antes de verificar todos os itens do checklist.',
+   tip:'Após concluir, o processo fica aguardando a próxima publicação — monitorar na equipe de Publicação.'}
+};
+
+function showFlow(id){
+  const d = FLOW_DATA[id];
+  if(!d){ return; }
+  
+  // Highlight active node
+  document.querySelectorAll('.flow-task,.flow-decision').forEach(el=>el.classList.remove('active'));
+  event && event.currentTarget && event.currentTarget.classList.add('active');
+
+  let html = '';
+  if(d.num) html += `<div class="fdp-step-num">${d.num}</div>`;
+  html += `<div class="fdp-title">${d.title}</div>`;
+
+  if(d.decision){
+    html += `<div class="fdp-section"><div class="fdp-section-label">Ponto de decisão</div>
+    <div class="fdp-decision-options">
+      <div class="fdp-opt sim"><div class="fdp-opt-label">✓ Sim / Caminho A</div>${d.sim}</div>
+      <div class="fdp-opt nao"><div class="fdp-opt-label">✗ Não / Caminho B</div>${d.nao}</div>
+    </div></div>`;
+    if(d.tip) html += `<div class="fdp-tip"><strong>Dica:</strong> ${d.tip}</div>`;
+  } else {
+    if(d.steps && d.steps.length > 0){
+      html += `<div class="fdp-section"><div class="fdp-section-label">Passo a passo</div>`;
+      d.steps.forEach((s,i)=>{
+        if(s.startsWith('—')){
+          html += `<div style="padding:4px 0 4px 32px;font-size:12px;color:#555">${s}</div>`;
+        } else {
+          html += `<div class="fdp-step-item"><div class="fdp-step-num-circle">${i+1}</div><div class="fdp-content">${s}</div></div>`;
+        }
+      });
+      html += '</div>';
+    }
+    if(d.alert) html += `<div class="fdp-alert"><strong>Atenção:</strong> ${d.alert}</div>`;
+    if(d.tip) html += `<div class="fdp-tip"><strong>Dica:</strong> ${d.tip}</div>`;
+  }
+
+  document.getElementById('flow-detail-panel').innerHTML = html;
+}
+
 </script>
 
 const FAQ = {

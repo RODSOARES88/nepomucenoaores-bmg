@@ -223,16 +223,31 @@ select:focus{outline:none;border-color:#1E2B6A}
 
   <!-- ABA 4: MANUAL DA EQUIPE -->
   <div id="manual" class="panel">
-    <div class="team-selector">
-      <div class="team-btn active" id="btn-defesa" onclick="selectTeam('defesa')">
+    <div class="team-selector" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px">
+      <div class="team-btn active" id="btn-cadastro" onclick="selectTeam('cadastro')">
+        <div class="tb-icon">📋</div>
+        <div class="tb-name">Cadastro</div>
+        <div class="tb-desc">Patrocínio, subsídios, saneamento</div>
+      </div>
+      <div class="team-btn" id="btn-publicacao" onclick="selectTeam('publicacao')">
+        <div class="tb-icon">📰</div>
+        <div class="tb-name">Publicação</div>
+        <div class="tb-desc">Intimações, prazos, andamentos</div>
+      </div>
+      <div class="team-btn" id="btn-defesa" onclick="selectTeam('defesa')">
         <div class="tb-icon">⚖</div>
-        <div class="tb-name">Equipe de Defesa</div>
+        <div class="tb-name">Defesa</div>
         <div class="tb-desc">Contestações, audiências, recursos</div>
       </div>
       <div class="team-btn" id="btn-intermediarios" onclick="selectTeam('intermediarios')">
-        <div class="tb-icon">⚙</div>
-        <div class="tb-name">Equipe de Intermediários</div>
-        <div class="tb-desc">Publicações, workflows, E-Xyon</div>
+        <div class="tb-icon">📄</div>
+        <div class="tb-name">Intermediários</div>
+        <div class="tb-desc">Petições do meio do processo</div>
+      </div>
+      <div class="team-btn" id="btn-cumprimento" onclick="selectTeam('cumprimento')">
+        <div class="tb-icon">✅</div>
+        <div class="tb-name">Cumprimento</div>
+        <div class="tb-desc">OBF, sentenças, pagamentos</div>
       </div>
     </div>
     <div class="search-box">
@@ -774,51 +789,103 @@ renderFaq();
 
 // ─── FAQ DATA ──────────────────────────────────────────────────────────────
 const FAQ = {
-  defesa: [
-    {topico:'Novo Processo', q:'O que fazer ao receber um novo processo?',
-     k:['novo','processo','receber','aceite','patrocínio','chegou'],
-     a:'Ao receber um novo patrocínio via E-Xyon, verifique imediatamente: (1) prazo judicial para defesa — se estiver vencido ou próximo, abra curso alternativo; (2) cumprimento de liminar — se houver, comunique OBF ao banco imediatamente; (3) correção do cadastro; (4) indício de óbito do autor. O WF "SANEAMENTO INICIAL" é instalado automaticamente junto ao patrocínio.',
-     alerta:'NUNCA aceite patrocínio de projetos fora da sua atuação. Leia com atenção antes de aceitar.',
+  cadastro: [
+    {topico:'Patrocínio', q:'Como aceitar um novo patrocínio corretamente?',
+     k:['patrocínio','aceitar','receber','novo','processo','aceite'],
+     a:'Ao receber o patrocínio via E-Xyon, verifique ANTES de aceitar: (1) se o processo é ação cível de consumidor contra o Grupo BMG — ações trabalhistas, penais, ACPs e de pessoa jurídica devem ser RECUSADAS; (2) se o projeto está dentro da sua área de atuação; (3) se não há determinação de recusa. O WF SANEAMENTO INICIAL é instalado automaticamente junto ao patrocínio.',
+     alerta:'Aceite indevido de patrocínio = falha de procedimento. Leia com atenção o projeto antes de aceitar.',
+     dica:'Reclamações de PROCON e demandas CEJUSC NÃO são do Massificado — são de competência da Ouvidoria e de equipes específicas.'},
+    {topico:'Patrocínio', q:'Como recusar um patrocínio?',
+     k:['recusar','recusa','patrocínio','não','aceitar','devolver'],
+     a:'Use o curso alternativo "Recusa de Patrocínio" dentro do WF PATROCÍNIO no E-Xyon. Indique o motivo da recusa: projeto fora da área de atuação, tipo de ação (trabalhista, penal, ACP), ação de pessoa jurídica, ou outro motivo aplicável.',
+     alerta:null, dica:null},
+    {topico:'Saneamento', q:'O que verificar no saneamento inicial?',
+     k:['saneamento','inicial','verificar','checklist','obrigatório'],
+     a:'No WF SANEAMENTO INICIAL, verifique obrigatoriamente:
+1. Prazo judicial para defesa — se vencido ou prestes a vencer, abra o curso alternativo correspondente
+2. Cumprimento de liminar — se houver, comunicar OBF imediatamente
+3. Correção do cadastro — dados corretos no sistema
+4. Indício de óbito do autor — consultar CPF na Receita Federal
+
+Conclua a tarefa com justificativa "OK" apenas após verificar todos os pontos.',
+     alerta:'Prazo vencido sem comunicação = falha operacional. Liminar não comunicada = falha de procedimento.',
      dica:null},
-    {topico:'Prazos', q:'Qual o prazo para providenciar a contestação?',
-     k:['prazo','contestação','defesa','dias','documentos','citação'],
-     a:'Após receber o mandado de citação (apenas), você tem 3 dias úteis para providenciar a inicial e documentos. Se receber a citação completa com documentos, o prazo corre normalmente conforme o processo. Acesse o E-Xyon para vincular os documentos na aba "CONTRATO".',
-     alerta:null, dica:'Se os documentos estiverem incompletos, instale o WF "ESC - COMPLEMENTO/CORREÇÃO DE SUBSÍDIOS" imediatamente.'},
-    {topico:'Prazos', q:'O que fazer quando o prazo está vencido ou prestes a vencer?',
-     k:['prazo','vencido','urgente','vencer','revisar'],
-     a:'Abra o curso alternativo correspondente no E-Xyon para prazos críticos. Comunique ao escritório e ao banco com urgência via mensagem no E-Xyon. Nunca deixe prazo vencer sem comunicação — isso gera falha operacional.',
-     alerta:'Prazo vencido sem comunicação = falha operacional aplicada ao escritório.', dica:null},
-    {topico:'Óbito', q:'Como verificar e o que fazer em caso de óbito do autor?',
-     k:['óbito','faleceu','morreu','falecimento','CPF','receita'],
-     a:'Consulte o CPF do autor na Receita Federal (online). Se houver óbito confirmado: abra imediatamente o curso alternativo "SUSPEITA DE ÓBITO CONFIRMADO" no E-Xyon e peticione extinção do processo ou habilitação de herdeiros conforme o caso.',
-     alerta:null, dica:'Sempre fazer essa verificação no saneamento inicial — é obrigatório.'},
-    {topico:'Audiências', q:'Como devo me comportar nas audiências?',
-     k:['audiência','comparecer','depoimento','conciliação','desinteresse'],
-     a:'O escritório NUNCA deve manifestar desinteresse em audiências — comparecemos a todas, sem exceção. Em todas as audiências, solicite imprescindivelmente o depoimento da parte autora. Isso evita ações ajuizadas sem o conhecimento da própria parte. Após a audiência, vincule a ata no E-Xyon.',
-     alerta:'Manifestar desinteresse em audiência = falha operacional.', dica:null},
-    {topico:'OBF', q:'O que é OBF e como comunicar ao banco?',
-     k:['OBF','obrigação','fazer','liminar','cumprir','tutela','urgência'],
-     a:'OBF = Obrigação de Fazer. Após sentença condenatória ou liminar, comunique ao banco via mensagem no E-Xyon usando o formulário padrão. Informe: número do processo, tipo de OBF (cancelamento, estorno, exclusão de restrições), prazo judicial. A célula de OBF instala o workflow correspondente ao produto (Cartão, Consignado, BMG em Conta, Veículo).',
-     alerta:'SLA médio: mínimo 3 dias, máximo 7 dias. Para prazo de 24h/48h: envie e-mail à célula de OBF solicitando prioridade.', dica:'Confirme o cumprimento da OBF via WF "CONFIRMAR CUMPRIMENTO" assim que receber o retorno da área.'},
-    {topico:'OBF', q:'O que acontece se eu não confirmar o cumprimento da OBF?',
-     k:['confirmar','cumprimento','OBF','confirma','falha'],
-     a:'A confirmação do cumprimento é OBRIGATÓRIA. O escritório deve acompanhar o retorno da área (que sempre se dá pelo WF) e logo em seguida confirmar o cumprimento. Não confirmar gera falha de procedimento automaticamente.',
-     alerta:'Não confirmar OBF = falha de procedimento aplicada ao escritório.', dica:null},
-    {topico:'Acordo', q:'Quando posso fechar um acordo sem pedir autorização?',
-     k:['acordo','autorização','valor','alçada','fechar','negociar'],
-     a:'Você pode fechar acordo sem consulta prévia quando: (1) o valor for até R$ 4.999,99 E (2) o acordo se enquadrar em todos os termos da política de acordos do banco. Para valores iguais ou superiores a R$ 5.000, envie mensagem para "CONTROLE ACORDO" solicitando validação antes de fechar.',
-     alerta:'Acordo com advogado agressor: NUNCA fechar sem expressa autorização do banco, independentemente do valor. Penalidade: falha financeira de 100% do valor do acordo.', dica:null},
-    {topico:'Acordo', q:'Como formalizar uma proposta de acordo?',
-     k:['proposta','acordo','formalizar','enviar','pré','pós','sentença'],
-     a:'Envie mensagem no E-Xyon para "CONTROLE ACORDO" com o assunto padronizado: "PROPOSTA DE ACORDO – PRÉ SENTENÇA" (antes da sentença) ou "PROPOSTA DE ACORDO – APÓS SENTENÇA" (após a sentença). O SLA para tratamento é de 20 dias. O acordo deve ser fechado dentro do prazo de trânsito em julgado.',
-     alerta:null, dica:'Acordos acima de R$ 7.000 (pré-sentença) ou R$ 10.000 (pós-sentença) exigem recálculo financeiro pelo RHUMAS.'},
-    {topico:'Condenação', q:'O que fazer quando a condenação é acima de R$ 50.000?',
-     k:['condenação','R$50000','cinquenta','mil','alto','valor','sentença','comunicar'],
-     a:'Para sentenças condenatórias acima de R$ 50.000, você tem até o 3º dia da intimação para enviar mensagem à Célula de Cadastro/Subsídios no E-Xyon. A mensagem deve incluir: resumo do caso, valor da condenação, motivo da condenação elevada, planilha de cálculo e prazo final para recurso. Esse processo se chama "Projeto Middle".',
-     alerta:'Prazo: até o 3º dia da intimação da sentença. Não comunicar = falha operacional.', dica:'Recurso Especial: qualquer condenação acima de R$ 50.000 requer avaliação imediata de recurso especial conforme Manual BMG.'},
-    {topico:'Modelos', q:'Qual modelo usar para cada tipo de processo?',
-     k:['modelo','petição','usar','arquivo','sharepoint','qual','documento'],
-     a:'Acesse a pasta PETIÇÕES PADRONIZADAS - EQUIPE DE DEFESA no SharePoint:
+    {topico:'Saneamento', q:'Como verificar se o autor faleceu?',
+     k:['óbito','faleceu','morreu','CPF','receita','falecimento'],
+     a:'Consulte o CPF do autor no site da Receita Federal (online). Se o resultado indicar óbito: abra imediatamente o curso alternativo "SUSPEITA DE ÓBITO CONFIRMADO" no E-Xyon. A equipe deverá peticionar extinção do processo ou habilitação de herdeiros conforme o caso.',
+     alerta:null, dica:'Sempre fazer essa verificação no saneamento inicial — é obrigatório em todo processo novo.'},
+    {topico:'Subsídios', q:'O que fazer quando os documentos ou contratos estão incompletos?',
+     k:['subsídios','contrato','incompleto','documentos','faltando','complemento','correção'],
+     a:'Instale o WF "ESC - COMPLEMENTO/CORREÇÃO DE SUBSÍDIOS" no E-Xyon. A equipe CEDIF é responsável por disponibilizar contratos. Para comprovantes de crédito por transferência, acione a SBK. Para casos de fraude, acione os Correspondentes (CORBAN) por e-mail para subsídios específicos.
+
+Ao finalizar, classifique os subsídios em: "Documentação completa", "Documentação parcialmente completa" ou "Documentação incompleta".',
+     alerta:null,
+     dica:'Prazo para vincular documentos após receber o mandado de citação: 3 dias úteis.'},
+    {topico:'Subsídios', q:'Como solicitar correção de dados do processo no sistema?',
+     k:['correção','cadastro','erro','dados','nome','número','vara','divergência'],
+     a:'Instale o WF "ESC - CORREÇÃO DE CADASTRO" no E-Xyon quando identificar divergências de dados (nome da parte, número do processo, Vara, etc.). Se a Célula de Cadastro retornar como "solicitação indevida" e você discordar, envie mensagem com assunto "REVER RETORNO SBK" para reanálise.',
+     alerta:'Correções solicitadas indevidamente são passíveis de falha de procedimento.',
+     dica:null},
+    {topico:'Subsídios', q:'Como solicitar as 3 últimas faturas do cartão?',
+     k:['fatura','três','últimas','cartão','Mastercold','extrato'],
+     a:'O WF "TRÊS ÚLTIMAS FATURAS" só pode ser acionado após receber mensagem específica da Célula de Cadastro autorizando a solicitação. Não instale esse WF sem a mensagem prévia de autorização.',
+     alerta:'Instalação indevida deste WF = falha de procedimento.',
+     dica:'Para consultar faturas individualmente use o sistema Mastercold.'},
+    {topico:'Projeto Middle', q:'Quando e como comunicar o Projeto Middle?',
+     k:['Middle','R$50000','cinquenta','condenação','alto','valor','sentença','comunicar','prazo'],
+     a:'Para sentenças condenatórias acima de R$ 50.000,00, envie mensagem à Célula de Cadastro/Subsídios no E-Xyon com o assunto: "MAPEAMENTO CARTEIRA - CONDENAÇÃO ACIMA DE R$ 50.000,00 (Cinquenta mil reais)". Inclua: resumo do caso, valor da condenação, sentença, motivo da condenação elevada, planilha de cálculo e prazo final para recurso.',
+     alerta:'Prazo: ATÉ o 3º dia da intimação da sentença. Não comunicar = falha operacional.',
+     dica:'A responsabilidade pelo recurso é do escritório atual até o banco comunicar formalmente eventual migração.'},
+    {topico:'Contratos cedidos', q:'Como identificar e tratar contratos cedidos a outros bancos?',
+     k:['cedido','cessão','OMNI','Itaú','contrato','banco','origem'],
+     a:'Para identificar contratos cedidos, consulte o sistema PN (Posição de Cliente) — verifique a coluna "ORIGEM BAIXA". Contratos cedidos ao Banco OMNI (Veículos): recuse o patrocínio, salvo recompra autorizada. Contratos cedidos ao Itaú: a Célula de OBF intermediará a comunicação com o Itaú — não tente contato direto.',
+     alerta:'Contratos iguais (mesmo CPF/mesmo contrato) devem ser vinculados em apenas uma CIV. Justificativa padrão: "CONTRATO VINCULADO EM CIV ANTERIOR".',
+     dica:null}
+  ],
+  publicacao: [
+    {topico:'Publicações', q:'Como monitorar e registrar publicações?',
+     k:['publicação','intimação','diário','oficial','monitorar','registrar','andamento'],
+     a:'As publicações devem ser monitoradas diariamente no Diário Oficial e cadastradas no E-Xyon imediatamente após identificadas. Registre o andamento correspondente (audiência designada, sentença proferida, decisão interlocutória, etc.) e calcule o prazo processual que começa a correr a partir da data da publicação.',
+     alerta:'Publicação não registrada no prazo pode resultar em prazo perdido = falha operacional grave.',
+     dica:'O andamento deve ser cadastrado como CONCLUÍDO após o registro. Recursos ficam "em curso" até o julgamento final.'},
+    {topico:'Prazos', q:'Como calcular e controlar os prazos processuais?',
+     k:['prazo','calcular','controlar','dias','úteis','suspensão','recesso'],
+     a:'Os prazos processuais são contados em dias úteis a partir da data da publicação. Verifique: (1) se há suspensão de prazos (recesso forense, feriados locais); (2) a natureza do prazo — defesa, recurso, manifestação; (3) se há prazo diferenciado para a Fazenda Pública. Comunique os prazos à equipe de defesa imediatamente após a publicação.',
+     alerta:'Comunicação de prazo à equipe de defesa deve ser feita no mesmo dia da publicação, especialmente para prazos curtos (48h, 5 dias).',
+     dica:null},
+    {topico:'Prazos', q:'O que fazer quando um prazo está prestes a vencer?',
+     k:['urgente','vencer','prazo','fatal','iminente','acabar'],
+     a:'Quando um prazo estiver vencendo: (1) Comunique IMEDIATAMENTE à equipe de defesa por mensagem no E-Xyon; (2) Se o escritório não responder, escale para o responsável; (3) Registre a comunicação no sistema. Para prazos fatalíssimos de 24h/48h, use também comunicação direta (telefone/e-mail) além do E-Xyon.',
+     alerta:'Prazo perdido sem comunicação registrada = responsabilidade da equipe de publicação.',
+     dica:null},
+    {topico:'Andamentos', q:'Como registrar andamentos processuais corretamente?',
+     k:['andamento','registrar','cadastrar','E-Xyon','sistema','conclusão'],
+     a:'Registre o andamento no E-Xyon com: tipo correto de andamento, data exata da publicação/evento, e observações relevantes. Atenção: se mais de um andamento for cadastrado no mesmo dia, ocorre duplicidade nos relatórios gerenciais. O relatório "último andamento" exibe apenas o mais recente.',
+     alerta:'Andamentos duplicados no mesmo dia comprometem os relatórios gerenciais e o ranking do escritório.',
+     dica:'Quanto melhor a qualidade dos dados inseridos no E-Xyon, melhores os relatórios para o banco.'},
+    {topico:'Liminares', q:'O que fazer ao identificar uma liminar ou tutela de urgência?',
+     k:['liminar','tutela','urgência','urgente','decisão','cumprimento'],
+     a:'Ao identificar liminar ou tutela de urgência nas publicações: (1) Cadastre o andamento imediatamente; (2) Comunique à equipe de Cumprimento de Sentença/OBF com URGÊNCIA — em casos de 24h/48h use também e-mail direto; (3) Comunique à equipe de defesa para acompanhar o processo. A liminar precisa ser cumprida no prazo determinado pelo juiz.',
+     alerta:'Liminar não comunicada no mesmo dia = risco de descumprimento = multa diária por descumprimento.',
+     dica:null},
+    {topico:'Audiências', q:'Como registrar a pauta de audiências?',
+     k:['audiência','pauta','data','hora','designada','registrar','confirmar'],
+     a:'Ao encontrar designação de audiência nas publicações: registre o andamento com data, hora e local da audiência no E-Xyon. Comunique à equipe de defesa com antecedência mínima de 5 dias úteis. Para audiências de conciliação, verificar se a equipe de defesa precisa de subsídios específicos para negociação.',
+     alerta:null, dica:'Incluir o tipo de audiência (conciliação, instrução, julgamento) no andamento para facilitar o preparo da defesa.'},
+    {topico:'Recursos', q:'Como tratar a publicação de acórdãos e decisões de 2ª instância?',
+     k:['acórdão','recurso','segunda','instância','tribunal','TJ','apelação','agravo'],
+     a:'Ao identificar publicação de acórdão ou decisão de 2ª instância: (1) Registre o andamento com o resultado (provido, negado, parcialmente provido); (2) Comunique à equipe de defesa imediatamente — há prazos para Embargos de Declaração (5 dias) e Recurso Especial/Extraordinário; (3) Se for acórdão condenatório acima de R$ 50.000, acione também o Projeto Middle.',
+     alerta:'Prazo para Embargos de Declaração: 5 dias úteis da publicação. Prazo para REsp/RE: 15 dias úteis. Prazos fatais — comunicação imediata.',
+     dica:null}
+  ],
+  defesa: [
+    {topico:'Novo Processo', q:'O que fazer ao receber um novo processo para defender?',
+     k:['novo','processo','receber','contestação','defesa','inicial'],
+     a:'Ao receber o processo: (1) Verifique o prazo judicial para defesa — se vencido ou próximo, comunique imediatamente; (2) Acesse os subsídios no E-Xyon (aba CONTRATO); (3) Identifique a causa raiz (Fraude, Não Reconhecimento, Cadastro, Entrega); (4) Selecione o modelo de contestação adequado na pasta PETIÇÕES PADRONIZADAS - EQUIPE DE DEFESA no SharePoint; (5) Consulte a aba "Sugestão de Modelos" deste site para orientações específicas por estado.',
+     alerta:null, dica:'Prazo para providenciar documentos após receber apenas o mandado de citação: 3 dias úteis.'},
+    {topico:'Modelos', q:'Qual modelo de contestação usar para cada tipo de processo?',
+     k:['modelo','petição','usar','arquivo','sharepoint','qual','contestação','documento'],
+     a:'Na pasta PETIÇÕES PADRONIZADAS - EQUIPE DE DEFESA no SharePoint:
 • Fraude (RMC): FRAUDE - CARTÃO RMC.docx
 • Fraude (RCC): FRAUDE - CARTÃO RCC.docx
 • Não Reconhecimento (RMC): MODALIDADE - CARTÃO RMC.docx
@@ -827,95 +894,151 @@ const FAQ = {
 • Revisão de juros: Contestação REVISIONAL DE JUROS CARTÃO RMC.doc
 • Seguros: SEGURO PRESTAMISTA E SEGURO PAPCARD JUNTOS NA MESMA AÇÃO.docx
 • Referência geral: MATERIAL DE APOIO DEFESA - TESES RECORRENTES.docx',
-     alerta:null, dica:'Consulte também a aba "Sugestão de Modelos" deste site para orientações específicas por estado e projeto.'},
-    {topico:'Jurisprudência', q:'O que é o Tema 1.414 do STJ e como impacta nossos processos?',
-     k:['Tema 1414','STJ','RMC','RCC','suspensão','cartão','consignado','repetitivo'],
-     a:'O Tema 1.414 do STJ discute a validade e abusividade de contratos de cartão de crédito consignado (RMC e RCC). Em 13/03/2026, o Ministro Raul Araújo determinou a SUSPENSÃO NACIONAL de todos os processos pendentes envolvendo RMC e RCC. Antes de protocolar qualquer contestação em processo de Não Reconhecimento Cartão ou Fraude envolvendo esses produtos, verifique se o processo está ou deveria estar sobrestado.',
-     alerta:'ATENÇÃO: A Circular 002 descreve o Tema 1.414 como sendo sobre "portabilidade de crédito" — isso está INCORRETO. O Tema trata de validade/abusividade dos contratos RMC/RCC. Não usar esse argumento nas peças.', dica:null},
-    {topico:'Subsídios', q:'Como obter documentos quando o contrato está incompleto?',
-     k:['subsídios','contrato','incompleto','documentos','faltando','CEDIF','CORBAN'],
-     a:'Se o contrato ou documentos estiverem incompletos ao receber o patrocínio: instale o WF "ESC - COMPLEMENTO/CORREÇÃO DE SUBSÍDIOS" no E-Xyon. A equipe CEDIF disponibiliza os contratos. Para casos de fraude, acione os Correspondentes (CORBAN) por e-mail para subsídios específicos. Para comprovantes de crédito por transferência, acione a SBK.',
-     alerta:null, dica:'Ao final, classifique os subsídios em: "Documentação completa", "Documentação parcialmente completa" ou "Documentação incompleta" — isso impacta os relatórios gerenciais.'},
-    {topico:'Falhas', q:'O que são falhas financeiras e operacionais?',
-     k:['falha','financeira','operacional','penalidade','multa','desconto'],
-     a:'FALHA FINANCEIRA: aplicada quando o escritório celebra acordo ultrapassando a alçada autorizada. No caso de advogados agressores, equivale a 100% do valor do acordo celebrado indevidamente.
+     alerta:null, dica:'Consulte a aba "Sugestão de Modelos" para orientações específicas por estado e jurisprudência recente.'},
+    {topico:'Audiências', q:'Como devo me comportar nas audiências?',
+     k:['audiência','comparecer','depoimento','conciliação','desinteresse','ausência'],
+     a:'NUNCA manifeste desinteresse em audiências — comparecemos a todas, sem exceção. Em todas, solicite imprescindivelmente o depoimento da parte autora. Isso evita ações ajuizadas sem o conhecimento da própria parte. Após a audiência, vincule a ata no E-Xyon imediatamente.',
+     alerta:'Manifestar desinteresse = falha operacional automática.',
+     dica:'Para audiências de conciliação com BMG em Conta: verifique se a Área de Cobrança disponibilizou proposta de alçada de acordo no sistema.'},
+    {topico:'Acordo', q:'Quando posso fechar um acordo sem pedir autorização prévia?',
+     k:['acordo','autorização','valor','alçada','fechar','negociar','limites'],
+     a:'Você pode fechar acordo sem consulta prévia quando: (1) O valor for ATÉ R$ 4.999,99 E (2) O acordo se enquadrar em todos os termos da política de acordos. Para R$ 5.000 ou mais, envie mensagem a "CONTROLE ACORDO" para validação antes de fechar.
 
-FALHA OPERACIONAL (de procedimento): aplicada quando o escritório descumpre regras operacionais — aceite indevido de patrocínio, OBF com dados incorretos, ausência de formulário padrão, instalação indevida de WF, acordo sem autorização.',
-     alerta:'Ambas as falhas impactam diretamente o ranking do escritório no BMG (variáveis com peso 2 cada).', dica:null},
-    {topico:'Encerramento', q:'Como registrar o encerramento de um processo?',
-     k:['encerramento','encerrar','fechar','concluir','registrar','finalizar'],
-     a:'Os dados de encerramento devem ser registrados na aba correspondente do E-Xyon assim que o processo for encerrado. Andamentos devem ser cadastrados como CONCLUÍDO (exceto recursos, que ficam "em curso" até o julgamento). A qualidade dos dados inseridos impacta diretamente os relatórios gerenciais e o ranking do escritório.',
-     alerta:null, dica:'Processos com acordo: após fechado, solicite pagamento à Célula de Pagamentos com o lançamento "PAGAMENTO ACORDO/GARANTIA". Prazo de pagamento: 7 dias úteis.'}
+Acordos acima de R$ 7.000 (pré-sentença) ou R$ 10.000 (pós-sentença) exigem recálculo pelo RHUMAS.',
+     alerta:'Acordo com advogado agressor: NUNCA fechar sem expressa autorização do banco, independentemente do valor. Penalidade: falha financeira de 100%.',
+     dica:null},
+    {topico:'Acordo', q:'Como formalizar proposta de acordo no E-Xyon?',
+     k:['proposta','acordo','formalizar','enviar','mensagem','assunto','pré','pós'],
+     a:'Envie mensagem no E-Xyon para "CONTROLE ACORDO" com o assunto exato:
+• Antes da sentença: "PROPOSTA DE ACORDO – PRÉ SENTENÇA"
+• Após a sentença: "PROPOSTA DE ACORDO – APÓS SENTENÇA"
+
+SLA de tratamento: 20 dias. O acordo deve ser tratado dentro do prazo de trânsito em julgado. Nunca atue em conjunto quando a Célula Interna já estiver em tratativas.',
+     alerta:'Atuação conjunta com Célula Interna sem autorização = falha de procedimento.',
+     dica:null},
+    {topico:'Condenação', q:'O que fazer quando a condenação supera R$ 50.000?',
+     k:['condenação','R$50000','cinquenta','mil','alto','sentença','comunicar','Middle','recurso'],
+     a:'Até o 3º dia da intimação da sentença, envie mensagem à Célula de Cadastro com assunto "MAPEAMENTO CARTEIRA - CONDENAÇÃO ACIMA DE R$ 50.000,00". Inclua: resumo do caso, valor, sentença, motivo, planilha de cálculo e prazo para recurso. Avalie imediatamente Recurso Especial.',
+     alerta:'A responsabilidade pelo recurso é do escritório até o banco comunicar migração formalmente.',
+     dica:'Consulte a aba "Plano de Inteligência" deste site para entender o risco financeiro por estado e projeto.'},
+    {topico:'Jurisprudência', q:'O que é o Tema 1.414 do STJ?',
+     k:['Tema 1414','STJ','RMC','RCC','suspensão','cartão','consignado'],
+     a:'Tema 1.414 do STJ discute a validade e abusividade de contratos RMC e RCC. Em 13/03/2026, o STJ determinou SUSPENSÃO NACIONAL de todos os processos pendentes envolvendo RMC/RCC. Verifique o sobrestamento antes de protocolar qualquer contestação nesses processos.',
+     alerta:'A Circular 002 descreve incorretamente o Tema 1.414 como sendo sobre "portabilidade". O Tema trata de validade/abusividade. Não usar esse argumento nas peças.',
+     dica:null},
+    {topico:'Falhas', q:'O que são falhas e como evitá-las?',
+     k:['falha','financeira','operacional','penalidade','evitar','ranking'],
+     a:'FALHA FINANCEIRA: acordo acima da alçada autorizada. Em advogado agressor: 100% do valor.
+
+FALHA OPERACIONAL: descumprir regras do workflow — OBF errada, WF instalado indevidamente, acordo sem autorização, não confirmar cumprimento, prazo vencido sem comunicação, aceite indevido de patrocínio.
+
+Ambas impactam diretamente o ranking do escritório no BMG (peso 2 cada).',
+     alerta:'Falhas acumuladas afetam o posicionamento no ranking trimestral do BMG.',
+     dica:null}
   ],
   intermediarios: [
-    {topico:'E-Xyon', q:'Como funciona o sistema E-Xyon?',
-     k:['E-Xyon','sistema','como','funciona','acessar','login'],
-     a:'O E-Xyon (acesso em juridico.bancobmg.com.br) é o sistema central de gestão jurídica do BMG. Pelo E-Xyon você: cadastra andamentos processuais, envia e recebe mensagens da célula interna do banco, instala e monitora workflows (WFs), vincula documentos e contratos, e emite relatórios gerenciais. Quanto melhor a qualidade das informações inseridas, melhores os relatórios gerados.',
-     alerta:null, dica:'As mensagens são visualizadas apenas pelo login do destinatário — use sempre o destinatário correto.'},
-    {topico:'Publicações', q:'Como funciona o recebimento de publicações?',
-     k:['publicação','intimação','receber','diário','oficial','prazo','publicado'],
-     a:'As publicações chegam via sistema e devem ser cadastradas no E-Xyon imediatamente. Verifique o prazo associado a cada publicação — prazos judiciais começam a correr a partir da publicação. Registre o andamento como CONCLUÍDO após cadastrar. Para recursos, o andamento fica "em curso" até o julgamento final.',
-     alerta:'Publicação não registrada no prazo = risco de prazo perdido = falha operacional.', dica:null},
-    {topico:'Saneamento', q:'O que verificar no saneamento inicial de um processo novo?',
-     k:['saneamento','inicial','novo','processo','verificar','checklist'],
-     a:'No WF "SANEAMENTO INICIAL" (instalado automaticamente ao aceitar patrocínio), verifique obrigatoriamente: (1) Prazo judicial para defesa — se vencido, abrir curso alternativo; (2) Cumprimento de liminar — se houver, comunicar OBF imediatamente; (3) Correção do cadastro — dados do processo corretos no sistema; (4) Indício de óbito do autor — consultar CPF na Receita Federal.',
-     alerta:null, dica:'Conclua a tarefa com justificativa "OK" apenas após verificar todos os pontos.'},
-    {topico:'Workflows', q:'Quais são os principais workflows e quando usar cada um?',
-     k:['workflow','WF','instalar','quando','usar','qual'],
-     a:'Principais WFs:
-• PATROCÍNIO: recebimento de novo processo
-• SANEAMENTO INICIAL: verificações obrigatórias ao aceitar patrocínio
-• ESC - COMPLEMENTO/CORREÇÃO DE SUBSÍDIOS: documentação incompleta
-• CONFIRMAR CUMPRIMENTO: após cumprir OBF, confirmar retorno da área
-• ACORDO PRÉ SENTENÇA: proposta de acordo antes da sentença (SLA: 20 dias)
-• ACORDO APÓS SENTENÇA: proposta de acordo pós-sentença (SLA: 20 dias)
-• SUSPEITA DE ÓBITO CONFIRMADO: quando CPF indica óbito na Receita Federal',
-     alerta:'Nunca instalar WF indevidamente — gera falha operacional.', dica:null},
-    {topico:'OBF', q:'Como registrar e acompanhar uma OBF?',
-     k:['OBF','obrigação','fazer','registrar','acompanhar','cumprimento','Interfile'],
-     a:'Após receber comunicação de OBF da equipe de defesa: (1) Instale o WF correspondente ao produto (Cartão, Consignado, BMG em Conta, Veículo); (2) Acione a Interfile ou área responsável; (3) Acompanhe o SLA (mínimo 3, máximo 7 dias); (4) Para urgência de 24h/48h, responda à mensagem com prioridade; (5) Retorne ao escritório via WF quando cumprida.',
-     alerta:'SLA de OBF urgente (24h/48h): o escritório deve informar por e-mail à célula de OBF solicitando prioridade.', dica:null},
-    {topico:'Acordos', q:'Como funciona o controle de acordos?',
-     k:['controle','acordo','processo','autorizar','validar','negociação'],
-     a:'O "CONTROLE ACORDO" recebe propostas via mensagem no E-Xyon. Prazo de tratamento: 20 dias (SLA). Quando a Célula Interna já estiver em tratativas, o escritório NÃO deve atuar em conjunto — aguarde ou informe que há negociação ativa para evitar conflito. Se acordo for fechado com advogado agressor sem autorização, falha financeira de 100% é aplicada ao escritório.',
-     alerta:'Jamais atuar em conjunto com a Célula Interna. Se souber que há tratativas ativas, informe ao escritório imediatamente.', dica:null},
-    {topico:'Sistemas', q:'Quais sistemas uso para consultar operações do cliente?',
-     k:['sistema','consultar','cliente','operações','contrato','histórico'],
-     a:'Sistemas disponíveis por função:
-• Posição de Clientes (PN): consulta de operações, verificação de cessão de contratos, CPF
-• Mastercold: extração de faturas e demonstrativos de cartão
-• McLiq: extração de comprovantes de crédito por transferência
-• BMG Card / BMG Card Plus: consulta de cartões, conta interna, relatórios de saque complementar
-• Receita Federal (online): verificação de CPF / óbito do autor
-• INSS / Convênios: exclusão/suspensão de margem consignável',
+    {topico:'Função', q:'Qual é o papel da equipe de intermediários?',
+     k:['função','papel','responsabilidade','intermediários','o que','faz'],
+     a:'A equipe de intermediários é responsável pelas petições e manifestações do meio do processo — após a contestação e antes do encerramento. Isso inclui: respostas a despachos e decisões interlocutórias, manifestações sobre documentos juntados pela parte autora, impugnações a laudos periciais, petições de juntada de documentos, e acompanhamento do andamento processual entre as fases.',
+     alerta:null, dica:'Use os modelos da pasta PETIÇÕES PADRONIZADAS (não a pasta de Defesa) no SharePoint.'},
+    {topico:'Petições', q:'Quais petições cabem aos intermediários?',
+     k:['petição','manifestação','despacho','decisão','resposta','interlocutória'],
+     a:'Cabem aos intermediários:
+• Resposta a despachos de complementação de documentos
+• Manifestação sobre documentos da parte autora
+• Impugnação a laudos periciais
+• Petição de juntada de novos subsídios
+• Pedido de prazo para manifestação
+• Acompanhamento de publicações entre defesa e sentença
+• Petições de questões processuais (suspeição, impedimento, nulidades)',
      alerta:null, dica:null},
-    {topico:'Projetos', q:'O que é o Projeto Middle e como identificar um processo nele?',
-     k:['Middle','projeto','R$50000','cinquenta','valor','alto','identificar'],
-     a:'O Projeto Middle concentra ações com contratos de valores elevados ou descontos superiores a R$ 50.000. Quando identificar um processo nessa condição, aloque obrigatoriamente via mensagem no E-Xyon. A equipe de defesa deve comunicar condenações acima de R$ 50.000 à Célula de Cadastro/Subsídios até o 3º dia da intimação da sentença.',
+    {topico:'E-Xyon', q:'Como registrar manifestações e andamentos no E-Xyon?',
+     k:['E-Xyon','registrar','andamento','manifestação','vincular','sistema'],
+     a:'Após protocolar qualquer petição: (1) Registre o andamento no E-Xyon com o tipo correto (manifestação, juntada, impugnação); (2) Vincule o documento protocolado na aba correspondente; (3) Acompanhe a publicação da resposta do juiz via equipe de Publicação. Sempre use o destinatário correto nas mensagens — elas só são vistas pelo login do destinatário.',
+     alerta:'Andamentos não registrados comprometem os relatórios gerenciais e o ranking.',
+     dica:null},
+    {topico:'Subsídios', q:'O que fazer quando precisar de novos documentos durante o processo?',
+     k:['subsídios','documentos','novos','solicitar','durante','processo','complementar'],
+     a:'Para solicitar novos documentos durante o processo: instale o WF "ESC - COMPLEMENTO/CORREÇÃO DE SUBSÍDIOS" no E-Xyon. Para contratos originais, use o WF "ESC - PEDIDO DE CONTRATO ORIGINAL" — atenção: o escritório é responsável pelas tarefas 1, 3 e 4 desse workflow. Para faturas, use o Mastercold diretamente.',
      alerta:null, dica:null},
-    {topico:'Projetos', q:'O que é um advogado agressor e como identificar?',
-     k:['advogado','agressor','identificar','lista','reincidente'],
-     a:'Advogado agressor é aquele que usa práticas abusivas na negociação de acordos. A lista de advogados agressores é atualizada trimestralmente pela Célula de Qualidade e distribuída por e-mail a todos. Nenhum acordo com advogado agressor pode ser fechado sem expressa autorização do banco via mensagem no E-Xyon.',
-     alerta:'Acordo com advogado agressor sem autorização = falha financeira de 100% do valor do acordo.', dica:null},
-    {topico:'Pagamentos', q:'Como solicitar pagamento após um acordo?',
-     k:['pagamento','acordo','solicitar','pagar','célula','prazo'],
-     a:'Após o acordo ser fechado, o escritório solicita o pagamento à Célula de Pagamentos via E-Xyon com o lançamento "PAGAMENTO ACORDO/GARANTIA". O prazo de pagamento é de 7 dias úteis após a solicitação. O acordo deve ser tratado dentro do prazo de trânsito em julgado.',
+    {topico:'Perícia', q:'Como acompanhar processos com perícia?',
+     k:['perícia','laudo','perito','pericial','técnico','SUAUD'],
+     a:'Em processos com perícia: acompanhe a nomeação do perito, os prazos para quesitos, e a publicação do laudo. Ao receber o laudo pericial, analise e manifeste-se dentro do prazo. Para casos de fraude onde o laudo SUAUD indicar "Fraude Improcedente" mas você identificar divergências (ex: assinaturas diferentes), informe a Célula de Cadastro COM EVIDÊNCIAS para reanálise.',
+     alerta:'O escritório NÃO está autorizado a instalar workflows de fraude diretamente.',
+     dica:null},
+    {topico:'Prazos', q:'Como controlar os prazos para manifestações intermediárias?',
+     k:['prazo','manifestação','controlar','dias','publicação','resposta'],
+     a:'Os prazos para manifestações intermediárias são geralmente de 5 dias úteis (manifestações simples) ou 15 dias úteis (impugnações mais complexas). Monitore as publicações com a equipe de Publicação. Nunca deixe prazo de manifestação vencer sem providência — registre sempre no E-Xyon.',
+     alerta:'Prazo perdido sem comunicação = falha operacional.',
+     dica:null}
+  ],
+  cumprimento: [
+    {topico:'OBF', q:'O que é OBF e como comunicar ao banco?',
+     k:['OBF','obrigação','fazer','comunicar','banco','E-Xyon','liminar','sentença'],
+     a:'OBF = Obrigação de Fazer. Toda vez que houver decisão judicial determinando uma ação do banco (cancelar cartão, suspender desconto, excluir negativação, etc.), você deve comunicar via mensagem no E-Xyon com o relatório padrão obrigatório.
+
+O relatório deve conter: (1) Resumo da Inicial; (2) Resumo dos Subsídios; (3) Liminar (se houver); (4) Data da Intimação; (5) Parte Dispositiva da sentença/acórdão; (6) Obrigação de Fazer a ser cumprida; (7) Dados contratuais (contrato, conta, margem, cartão, CPF); (8) Documentos em anexo.',
+     alerta:'NUNCA insira trechos de decisões judiciais no campo "Justificativa" dos workflows — use apenas o texto padrão.',
+     dica:null},
+    {topico:'OBF', q:'Quais são os assuntos padronizados para comunicar OBF?',
+     k:['assunto','padronizado','mensagem','OBF','definitiva','provisória','cartão','consignado'],
+     a:'Use exatamente os assuntos padronizados ao enviar mensagens de OBF:
+• OBF – DEFINITIVA – CARTÃO – OUTROS – COM MULTA
+• OBF – PROVISÓRIA – CONSIGNADO – COM MULTA
+• OBF – DEFINITIVA – BMG EM CONTA – SEM MULTA
+• EXCLUSÃO SCR – DETERMINAÇÃO JUDICIAL
+• PEDIDO DE DESCUMPRIMENTO DE OBRIGAÇÃO DE FAZER
+• MONITORAMENTO RISCO MULTA DE OBF
+• MULTA POR DESCUMPRIMENTO DE OBF – VERIFICAR
+
+O assunto errado pode causar atraso no cumprimento.',
+     alerta:null, dica:'Use sempre OBF DEFINITIVA para cumprimentos permanentes e OBF PROVISÓRIA para liminares — a distinção é crítica pois OBF definitiva pode ser irreversível.'},
+    {topico:'OBF', q:'Qual o SLA para cumprimento de OBF?',
+     k:['SLA','prazo','cumprimento','OBF','dias','urgência','tempo'],
+     a:'O SLA de cada tarefa é exibido no sistema após a instalação do workflow. Em média: mínimo 3 dias, máximo 7 dias. Para urgências de 24h ou 48h determinadas pelo juiz: envie e-mail À CÉLULA DE OBF (apenas para urgências/alta complexidade) solicitando prioridade — para o fluxo rotineiro, use exclusivamente o E-Xyon.',
+     alerta:'Desde 06/12/2022: SEM acionamento por e-mail para fluxo do Itaú. Use exclusivamente o E-Xyon.',
+     dica:null},
+    {topico:'OBF', q:'O que fazer quando a OBF é devolvida pelo backoffice?',
+     k:['devolução','devolvida','backoffice','OBF','retorno','inerte','falha'],
+     a:'NUNCA fique inerte diante de uma devolução. O backoffice pode devolver por: dados incompletos, trechos de decisão no campo justificativa, ausência de checklist, dados incorretos. Leia o motivo da devolução, corrija e reinstale o workflow. Após pelo menos 2 tentativas sem resposta, use o workflow "OBF – DIFICULDADE NO CUMPRIMENTO".',
+     alerta:'Ausência de providência diante de uma devolução = falha de procedimento automática.',
+     dica:null},
+    {topico:'Confirmação', q:'Como confirmar o cumprimento de uma OBF?',
+     k:['confirmar','cumprimento','confirma','obrigatório','WF','concluir'],
+     a:'Após o backoffice cumprir a OBF e retornar via workflow, você DEVE confirmar o cumprimento usando a tarefa "CONFIRMAR CUMPRIMENTO" no E-Xyon. Verifique se o cumprimento foi feito corretamente antes de confirmar. Essa confirmação é obrigatória — sem ela, o processo fica aberto e pode gerar novas multas.',
+     alerta:'Não confirmar o cumprimento = falha de procedimento. O banco pode ser punido por descumprimento judicial mesmo após a OBF ter sido executada.',
+     dica:'É através dessa confirmação que verificamos se houve cumprimento correto. Se o backoffice não cumpriu corretamente, NÃO confirme e comunique a divergência.'},
+    {topico:'Multa', q:'Como monitorar risco de multa por descumprimento?',
+     k:['multa','descumprimento','risco','astreintes','monitorar','diária'],
+     a:'Sempre que houver risco de multa por descumprimento (astreintes): instale o WF "ACOMPANHAR OBF MULTA" no E-Xyon — conclua com justificativa "ok". Envie mensagem com assunto "MONITORAMENTO RISCO MULTA DE OBF" informando o valor da multa diária e o prazo judicial. Para multa já incidente: assunto "MULTA POR DESCUMPRIMENTO DE OBF – VERIFICAR".',
      alerta:null, dica:null},
-    {topico:'Relatórios', q:'Como garantir qualidade nos relatórios gerenciais do E-Xyon?',
-     k:['relatório','gerencial','qualidade','dados','inserir','andamento'],
-     a:'A qualidade dos relatórios depende diretamente da qualidade dos dados inseridos no E-Xyon. Boas práticas: (1) Cadastre andamentos sempre no dia correto — duplicidade ocorre se mais de um andamento for cadastrado no mesmo dia; (2) O relatório "último andamento" mostra o andamento mais recente; (3) Use as categorias corretas para subsídios: "Documentação completa", "Documentação parcialmente completa" ou "Documentação incompleta".',
-     alerta:null, dica:'Dados corretos no E-Xyon = melhores relatórios para o banco = melhor posição no ranking.'}
+    {topico:'Recálculo', q:'Como solicitar recálculo financeiro (RHUMAS)?',
+     k:['recálculo','RHUMAS','calculista','financeiro','valores','cálculo'],
+     a:'Para recálculos complexos/incomuns determinados judicialmente: envie mensagem à Célula de OBF com assunto "AUTORIZAÇÃO RECÁLCULO EQUIPE DE CALCULISTA INTERNA". O texto é livre, sem documentos obrigatórios. O recálculo é um fluxo excepcional — precisa de autorização prévia da Célula de OBF antes de ser executado.
+
+Observação: acordos acima de R$ 7.000 (pré-sentença) ou R$ 10.000 (pós-sentença) também exigem recálculo pelo RHUMAS.',
+     alerta:null, dica:null},
+    {topico:'Pagamentos', q:'Como solicitar pagamento após um acordo ou condenação?',
+     k:['pagamento','solicitar','pagar','célula','prazo','acordo','condenação'],
+     a:'Após o acordo ser fechado: solicite pagamento à Célula de Pagamentos via E-Xyon com o lançamento "PAGAMENTO ACORDO/GARANTIA". Prazo de pagamento: 7 dias úteis após a solicitação. O acordo deve ser tratado dentro do prazo de trânsito em julgado.',
+     alerta:null, dica:'Se houver honorários já pagos em duplicidade (processos reabertos), comunique à Célula de Pagamentos antes de fazer novo lançamento.'},
+    {topico:'SCR', q:'Como solicitar exclusão do SCR (Sistema de Informações de Crédito do BACEN)?',
+     k:['SCR','BACEN','exclusão','Banco Central','crédito','sistema','negativação'],
+     a:'Quando determinado judicialmente: envie mensagem com assunto "EXCLUSÃO SCR – DETERMINAÇÃO JUDICIAL" + relatório padrão completo com dados da vara, instância, juiz, advogado do autor e todos os dados contratuais. A Célula de Cadastro protocolará junto ao BACEN e retornará o protocolo para você juntar aos autos.',
+     alerta:null, dica:null}
   ]
 };
 
-let currentTeam = 'defesa';
+let currentTeam = 'cadastro'; = 'cadastro';
 let currentTopico = 'todos';
 
 function selectTeam(team){
   currentTeam = team;
   currentTopico = 'todos';
-  document.getElementById('btn-defesa').classList.toggle('active', team==='defesa');
-  document.getElementById('btn-intermediarios').classList.toggle('active', team==='intermediarios');
+  ['cadastro','publicacao','defesa','intermediarios','cumprimento'].forEach(t=>{
+    const el=document.getElementById('btn-'+t);
+    if(el) el.classList.toggle('active', team===t);
+  });
   document.getElementById('faq-search').value = '';
   renderFaq();
 }

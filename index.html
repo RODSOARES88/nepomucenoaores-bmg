@@ -73,6 +73,33 @@ select:focus{outline:none;border-color:#1E2B6A}
 .news-impact{background:#f8f9fc;border-radius:8px;padding:10px 12px;font-size:12px;color:#333;line-height:1.5}
 .news-impact strong{color:#1E2B6A}
 .updated{font-size:11px;color:#aaa;text-align:right;margin-top:4px}
+
+.model-status{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:12px;font-size:11px;font-weight:700;margin-bottom:14px}
+.model-status.atual{background:#f0faf0;color:#2d7a2d}
+.model-status.revisar{background:#fffbf0;color:#a06000}
+.model-status.atualizar{background:#fff3e0;color:#c06000}
+.model-status.urgente{background:#fde8e8;color:#c0392b}
+.model-name{background:#f0f2f8;border-radius:8px;padding:10px 14px;font-size:13px;font-weight:600;color:#1E2B6A;margin-bottom:14px;border-left:3px solid #1E2B6A}
+.model-list{display:grid;gap:6px;margin-bottom:0}
+.model-item{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px}
+.model-item.incluir{background:#f0faf0;border:1px solid #c8e6c8}
+.model-item.reforcar{background:#e8f0fe;border:1px solid #b3c9f5}
+.model-item.atualizar{background:#fff8e8;border:1px solid #f5dfa0}
+.model-item.remover{background:#fff5f5;border:1px solid #f5c6c6}
+.model-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.model-dot.incluir{background:#2d7a2d}
+.model-dot.reforcar{background:#2B5DA1}
+.model-dot.atualizar{background:#c06000}
+.model-dot.remover{background:#c0392b}
+.model-item-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
+.model-item.incluir .model-item-label{color:#2d7a2d}
+.model-item.reforcar .model-item-label{color:#2B5DA1}
+.model-item.atualizar .model-item-label{color:#c06000}
+.model-item.remover .model-item-label{color:#c0392b}
+.model-item-text{color:#333;line-height:1.5}
+.model-news-alert{background:#fde8e8;border:1px solid #f5c6c6;border-radius:8px;padding:10px 14px;font-size:12px;color:#8b1a1a;margin-bottom:14px;line-height:1.5}
+.model-news-ok{background:#f0faf0;border:1px solid #c8e6c8;border-radius:8px;padding:10px 14px;font-size:12px;color:#1a5c1a;margin-bottom:14px}
+
 .footer{text-align:center;padding:24px;font-size:12px;color:#bbb}
 @media(max-width:600px){.cards{grid-template-columns:1fr 1fr}.selectors{grid-template-columns:1fr}.risks{grid-template-columns:1fr}}
 </style>
@@ -88,6 +115,7 @@ select:focus{outline:none;border-color:#1E2B6A}
 <div class="tabs">
   <div class="tab active" onclick="switchTab('inteligencia',this)">Plano de Inteligência</div>
   <div class="tab" onclick="switchTab('mercado',this)">Inteligência de Mercado</div>
+  <div class="tab" onclick="switchTab('modelos',this)">Sugestão de Modelos</div>
 </div>
 
 <div class="container">
@@ -131,6 +159,36 @@ select:focus{outline:none;border-color:#1E2B6A}
       <button class="nf-btn" onclick="filterNews('modalidade',this)">Não Reconhecimento</button>
     </div>
     <div id="news-list"></div>
+  </div>
+
+
+  <!-- ABA 3: SUGESTÃO DE MODELOS -->
+  <div id="modelos" class="panel">
+    <div class="selectors">
+      <div class="sel-group">
+        <label>Estado</label>
+        <select id="sel-uf-mod" onchange="renderModelos()">
+          <option value="SC">Santa Catarina — SC</option>
+          <option value="RS">Rio Grande do Sul — RS</option>
+          <option value="MG">Minas Gerais — MG</option>
+          <option value="SP">São Paulo — SP</option>
+          <option value="PR">Paraná — PR</option>
+          <option value="RJ">Rio de Janeiro — RJ</option>
+          <option value="ES">Espírito Santo — ES</option>
+        </select>
+      </div>
+      <div class="sel-group">
+        <label>Projeto (causa raiz)</label>
+        <select id="sel-causa-mod" onchange="renderModelos()">
+          <option value="fraude">Alegação de fraude</option>
+          <option value="modalidade">Não reconhecimento cartão</option>
+          <option value="cadastro">Cadastro incompleto</option>
+          <option value="entrega">Entrega de contrato</option>
+        </select>
+      </div>
+      <div class="updated" style="grid-column:1/-1">Sugestões baseadas em dados estatísticos + inteligência de mercado · Abril 2026</div>
+    </div>
+    <div id="modelos-output"></div>
   </div>
 
 </div>
@@ -413,6 +471,252 @@ function render(){
 
 render();
 renderNews();
+renderModelos();
+
+
+// ─── DADOS DE MODELOS ──────────────────────────────────────────────────────
+const MODELS = {
+  SC:{
+    fraude:{
+      status:'urgente',
+      statusTxt:'Atualização urgente necessária',
+      modelos:['FRAUDE - CARTÃO RMC.docx','FRAUDE - CARTÃO RCC.docx'],
+      newsAlert:'Atenção: TJMT (mar/2026) está invalidando biometria usando geolocalização contraditória. SC tem apenas 37% de êxito — maior prioridade de revisão do portfólio.',
+      items:[
+        {tipo:'incluir',label:'Incluir — funciona nas vitórias',txt:'Argumento de fortuito externo: fraude praticada por terceiro sem participação ou culpa do banco'},
+        {tipo:'incluir',label:'Incluir — funciona nas vitórias',txt:'Ausência de nexo causal entre conduta do banco e dano alegado'},
+        {tipo:'reforcar',label:'Reforçar — baseado em notícias recentes',txt:'Incluir comprovação de que a geolocalização da contratação é compatível com endereço ou local de trabalho do cliente (resposta à nova tese adversária do TJMT/2026)'},
+        {tipo:'reforcar',label:'Reforçar — baseado em notícias recentes',txt:'Mencionar medidas exigidas pelo TCU (abr/2026): biometria, validação documental, bloqueio de operações suspeitas — demonstra que o banco adota padrão regulatório de segurança'},
+        {tipo:'atualizar',label:'Atualizar — SC tem alto índice de dobro',txt:'Adicionar seção específica contra restituição em dobro (Art. 42 CDC): demonstrar ausência de má-fé e erro escusável — SC tem 8 casos de dobro nas derrotas'},
+        {tipo:'atualizar',label:'Atualizar — padrão SC',txt:'Reforçar argumento contra dano moral: SC aplica CDC amplamente. Incluir jurisprudência local de improcedência de dano moral em fraude de terceiro'}
+      ]
+    },
+    modalidade:{
+      status:'atualizar',
+      statusTxt:'Atualização necessária — Tema 1.414',
+      modelos:['MODALIDADE - CARTÃO RMC.docx','MODALIDADE - CARTÃO RCC.docx'],
+      newsAlert:'CRÍTICO: Suspensão nacional do Tema 1.414 STJ (13/mar/2026) — antes de peticionar qualquer defesa em Não Reconhecimento Cartão envolvendo RMC/RCC, verificar se o processo está sobrestado. Se não estiver, peticionar o sobrestamento.',
+      items:[
+        {tipo:'incluir',label:'Incluir — funciona nas vitórias',txt:'Prova de contratação regular: extrato de utilização do cartão, histórico de descontos em contracheque'},
+        {tipo:'incluir',label:'Incluir — funciona nas vitórias',txt:'Contrato livremente firmado com ciência das condições: demonstrar informação adequada prestada na contratação'},
+        {tipo:'reforcar',label:'Reforçar — Tema 1.414',txt:'Se o processo NÃO estiver sobrestado: incluir argumento de validade contratual com base na informação adequada prestada (antecipando os critérios do Tema 1.414)'},
+        {tipo:'atualizar',label:'Atualizar urgente — Circular 002',txt:'A Circular 002 descreve o Tema 1.414 como sendo sobre "portabilidade de crédito" — isso está INCORRETO. O Tema trata de validade e abusividade dos contratos RMC/RCC. Corrigir antes de usar em qualquer peça'}
+      ]
+    },
+    cadastro:{
+      status:'revisar',
+      statusTxt:'Revisão recomendada',
+      modelos:['MATERIAL DE APOIO DEFESA - TESES RECORRENTES.docx'],
+      newsAlert:null,
+      items:[
+        {tipo:'incluir',label:'Incluir — funciona nas vitórias',txt:'Contrato executado normalmente: demonstrar que o cliente usufruiu do serviço/crédito contratado'},
+        {tipo:'incluir',label:'Incluir — funciona nas vitórias',txt:'Irregularidade formal sem dano efetivo: mera falha cadastral não gera dano indenizável se não houve prejuízo concreto'},
+        {tipo:'atualizar',label:'Atualizar — padrão SC',txt:'SC aplica CDC amplamente em cadastro. Reforçar argumento de ausência de vulnerabilidade concreta do consumidor neste caso específico'}
+      ]
+    },
+    entrega:{
+      status:'revisar',
+      statusTxt:'Revisão recomendada',
+      modelos:['MATERIAL DE APOIO DEFESA - TESES RECORRENTES.docx'],
+      newsAlert:null,
+      items:[
+        {tipo:'incluir',label:'Incluir — essencial',txt:'Comprovante de entrega do contrato registrado no sistema E-Xyon'},
+        {tipo:'atualizar',label:'Avaliar',txt:'Ticket médio baixo (R$ 3.247) — avaliar acordo pré-sentença antes de contestar. Custo-benefício da disputa pode ser desfavorável'}
+      ]
+    }
+  },
+  RS:{
+    fraude:{
+      status:'atualizar',
+      statusTxt:'Atualização necessária — alto risco de dobro',
+      modelos:['FRAUDE - CARTÃO RMC.docx','FRAUDE - CARTÃO RCC.docx'],
+      newsAlert:'RS é o estado com maior incidência de restituição em dobro (14 casos) e maior ticket de derrota plena (R$ 30.792). A nova tese de geolocalização (TJMT/2026) pode migrar para o RS — preparar argumento preventivo.',
+      items:[
+        {tipo:'incluir',label:'Incluir — funciona nas vitórias',txt:'Fortuito externo: fraude praticada por terceiro alheio à relação contratual'},
+        {tipo:'reforcar',label:'Reforçar — novo risco RS',txt:'Adicionar seção específica contra restituição em dobro: demonstrar ausência de má-fé do banco, configuração de erro escusável e não de cobrança abusiva intencional'},
+        {tipo:'reforcar',label:'Reforçar — baseado em notícias',txt:'Incluir geolocalização consistente como prova de contratação legítima (resposta preventiva à nova tese adversária)'},
+        {tipo:'reforcar',label:'Reforçar — padrão RS',txt:'Argumento contra dano moral elevado: RS condena com dano moral de R$ 5.000–10.000 nas derrotas. Juntar jurisprudência local de valores menores em casos similares'},
+        {tipo:'atualizar',label:'Considerar acordo pré-sentença',txt:'Processos com alto valor (acima de R$ 25.000) e histórico desfavorável no RS — avaliar política de acordo antes de contestar para reduzir exposição ao dobro'}
+      ]
+    },
+    modalidade:{
+      status:'atualizar',
+      statusTxt:'Verificar suspensão Tema 1.414',
+      modelos:['MODALIDADE - CARTÃO RMC.docx','MODALIDADE - CARTÃO RCC.docx'],
+      newsAlert:'Suspensão nacional Tema 1.414 (STJ, 13/mar/2026): verificar sobrestamento antes de peticionar.',
+      items:[
+        {tipo:'incluir',label:'Incluir — funciona nas vitórias',txt:'Prova de contratação documentada: extrato de utilização do cartão, histórico de descontos'},
+        {tipo:'reforcar',label:'Reforçar',txt:'Art. 389/406 CC aparece em 11% das derrotas no RS — incluir argumento que afasta o inadimplemento do banco'},
+        {tipo:'atualizar',label:'Atualizar — Circular 002',txt:'Corrigir descrição do Tema 1.414 (não é sobre portabilidade, é sobre validade/abusividade RMC/RCC)'}
+      ]
+    },
+    cadastro:{
+      status:'revisar',statusTxt:'Monitorar',
+      modelos:['MATERIAL DE APOIO DEFESA - TESES RECORRENTES.docx'],
+      newsAlert:null,
+      items:[
+        {tipo:'incluir',label:'Incluir',txt:'Contrato executado normalmente, ausência de dano efetivo ao consumidor'},
+        {tipo:'atualizar',label:'Atenção',txt:'RS tem ticket de condenação em cadastro de R$ 22.613 — mais alto que a média. Reforçar argumento contra dano moral'}
+      ]
+    },
+    entrega:{status:'revisar',statusTxt:'Amostra insuficiente',modelos:['MATERIAL DE APOIO DEFESA - TESES RECORRENTES.docx'],newsAlert:null,items:[{tipo:'incluir',label:'Incluir',txt:'Comprovante de entrega do sistema'}]}
+  },
+  MG:{
+    fraude:{
+      status:'revisar',
+      statusTxt:'Modelo funcionando — pequenos ajustes',
+      modelos:['FRAUDE - CARTÃO RMC.docx','FRAUDE - CARTÃO RCC.docx'],
+      newsAlert:null,
+      items:[
+        {tipo:'incluir',label:'Incluir — funciona nas vitórias',txt:'Fortuito externo, ausência de nexo causal, prova de contratação via correspondente (CORBAN)'},
+        {tipo:'reforcar',label:'Reforçar — novo argumento 2026',txt:'Incluir comprovação de geolocalização consistente na contratação (prevenir nova tese adversária do TJMT/2026)'},
+        {tipo:'reforcar',label:'Reforçar — TCU 2026',txt:'Mencionar medidas de segurança exigidas pelo TCU como evidência do padrão adotado pelo banco'},
+        {tipo:'atualizar',label:'Atentar',txt:'MG tem 16 casos de dobro nas derrotas — incluir argumento anti-dobro preventivo nas peças'}
+      ]
+    },
+    modalidade:{
+      status:'atual',
+      statusTxt:'Melhor modelo do portfólio — 75% êxito',
+      modelos:['MODALIDADE - CARTÃO RMC.docx','MODALIDADE - CARTÃO RCC.docx'],
+      newsAlert:'Verificar sobrestamento Tema 1.414 antes de protocolar em processos RMC/RCC.',
+      items:[
+        {tipo:'incluir',label:'Incluir — referência do portfólio',txt:'Contratação regular documentada + prova de utilização do cartão: modelo mais eficaz do portfólio (75% êxito em MG)'},
+        {tipo:'incluir',label:'Incluir',txt:'Extrato demonstrando descontos regulares em contracheque — evidência de uso consciente'},
+        {tipo:'reforcar',label:'Reforçar — ABRADEB amicus',txt:'Preparar argumento de transparência contratual e possibilidade real de amortização — ABRADEB defende invalidação no Tema 1.414'},
+        {tipo:'atualizar',label:'Atualizar — Circular 002',txt:'Corrigir descrição do Tema 1.414 na Circular 002'}
+      ]
+    },
+    cadastro:{status:'atual',statusTxt:'Modelo funcionando — 80% êxito',modelos:['MATERIAL DE APOIO DEFESA - TESES RECORRENTES.docx'],newsAlert:null,
+      items:[{tipo:'incluir',label:'Incluir',txt:'Contrato executado normalmente, ausência de dano efetivo — MG tem 80% êxito em cadastro com ticket de condenação de R$ 333'}]},
+    entrega:{status:'revisar',statusTxt:'Amostra insuficiente',modelos:['MATERIAL DE APOIO DEFESA - TESES RECORRENTES.docx'],newsAlert:null,items:[{tipo:'incluir',label:'Incluir',txt:'Comprovante de entrega'}]}
+  },
+  SP:{
+    fraude:{
+      status:'revisar',
+      statusTxt:'Monitorar — 60% êxito',
+      modelos:['FRAUDE - CARTÃO RMC.docx','FRAUDE - CARTÃO RCC.docx'],
+      newsAlert:null,
+      items:[
+        {tipo:'incluir',label:'Incluir — funciona nas vitórias',txt:'Fortuito externo, medidas de segurança adotadas, culpa exclusiva do autor/terceiro'},
+        {tipo:'reforcar',label:'Reforçar — geolocalização',txt:'SP é o estado mais rápido (483 dias) — incluir argumento de geolocalização consistente para antecipar tese adversária'},
+        {tipo:'reforcar',label:'Reforçar',txt:'Demonstrar que banco não é responsável pela manutenção contratual em casos de fraude de terceiro'},
+        {tipo:'reforcar',label:'TCU 2026',txt:'Mencionar padrão de segurança exigido pelo TCU como referência regulatória'}
+      ]
+    },
+    modalidade:{status:'atual',statusTxt:'Bom resultado — 67% êxito',
+      modelos:['MODALIDADE - CARTÃO RMC.docx','MODALIDADE - CARTÃO RCC.docx'],
+      newsAlert:'Verificar sobrestamento Tema 1.414 antes de protocolar.',
+      items:[
+        {tipo:'incluir',label:'Incluir',txt:'Prova de contratação, extrato de utilização — modelo funcionando bem em SP'},
+        {tipo:'atualizar',label:'Atualizar — Circular 002',txt:'Corrigir descrição do Tema 1.414'}
+      ]
+    },
+    cadastro:{status:'atual',statusTxt:'Êxito perfeito — 100% (amostra pequena)',modelos:['MATERIAL DE APOIO DEFESA - TESES RECORRENTES.docx'],newsAlert:null,items:[{tipo:'incluir',label:'Incluir',txt:'Ausência de dano efetivo, contrato executado normalmente'}]},
+    entrega:{status:'revisar',statusTxt:'Amostra pequena',modelos:['MATERIAL DE APOIO DEFESA - TESES RECORRENTES.docx'],newsAlert:null,items:[{tipo:'incluir',label:'Incluir',txt:'Comprovante de entrega'}]}
+  },
+  PR:{
+    fraude:{
+      status:'revisar',
+      statusTxt:'Monitorar — 58% êxito',
+      modelos:['FRAUDE - CARTÃO RMC.docx','FRAUDE - CARTÃO RCC.docx'],
+      newsAlert:null,
+      items:[
+        {tipo:'incluir',label:'Incluir — funciona nas vitórias',txt:'Fortuito externo, prova de contratação via correspondente (CORBAN)'},
+        {tipo:'reforcar',label:'Reforçar — PR tem dobro alto',txt:'PR tem 8 casos de dobro nas derrotas. Incluir argumento anti-dobro: ausência de má-fé, erro escusável'},
+        {tipo:'reforcar',label:'Reforçar',txt:'Geolocalização consistente da contratação como prova preventiva'}
+      ]
+    },
+    modalidade:{status:'atual',statusTxt:'Bom resultado — 71% êxito',modelos:['MODALIDADE - CARTÃO RMC.docx','MODALIDADE - CARTÃO RCC.docx'],
+      newsAlert:'Verificar sobrestamento Tema 1.414 antes de protocolar.',
+      items:[
+        {tipo:'incluir',label:'Incluir',txt:'Contratação regular, prova documental — modelo funcionando bem no PR'},
+        {tipo:'atualizar',label:'Atualizar — Circular 002',txt:'Corrigir descrição do Tema 1.414'}
+      ]
+    },
+    cadastro:{status:'atual',statusTxt:'Bom resultado — 64% êxito',modelos:['MATERIAL DE APOIO DEFESA - TESES RECORRENTES.docx'],newsAlert:null,items:[{tipo:'incluir',label:'Incluir',txt:'Contrato executado normalmente, sem dano efetivo'}]},
+    entrega:{status:'revisar',statusTxt:'Êxito baixo — considerar acordo',modelos:['MATERIAL DE APOIO DEFESA - TESES RECORRENTES.docx'],newsAlert:null,items:[{tipo:'atualizar',label:'Avaliar',txt:'Ticket muito baixo (R$ 2.359) — acordo pré-sentença pode ser mais eficiente que contestação'}]}
+  },
+  RJ:{
+    fraude:{
+      status:'atualizar',
+      statusTxt:'Atualização necessária — maior risco financeiro',
+      modelos:['FRAUDE - CARTÃO RMC.docx','FRAUDE - CARTÃO RCC.docx'],
+      newsAlert:'RJ tem o maior ticket de derrota plena do portfólio (R$ 42.226). TJRJ consolidou que banco deve identificar transações fora do perfil do cliente (2026) — incluir esse argumento defensivo nos modelos.',
+      items:[
+        {tipo:'incluir',label:'Incluir — funciona nas vitórias',txt:'Fortuito externo, ausência de nexo causal'},
+        {tipo:'reforcar',label:'Reforçar — TJRJ 2026',txt:'Incluir demonstração de que a operação era consistente com o perfil do cliente (histórico de crédito, renda, operações anteriores) — resposta direta à tese do TJRJ sobre "perfil do cliente"'},
+        {tipo:'reforcar',label:'Reforçar — TCU 2026',txt:'Mencionar padrão de segurança exigido pelo TCU como evidência do padrão adotado pelo BMG'},
+        {tipo:'atualizar',label:'Atenção especial — RJ',txt:'RJ tem dano moral mais alto do portfólio. Incluir seção específica sobre quantum indenizatório com jurisprudência local de valores menores'},
+        {tipo:'atualizar',label:'Recurso Especial',txt:'Qualquer condenação acima de R$ 50.000: recurso especial obrigatório conforme Manual BMG. Preparar modelo de recurso específico para RJ'}
+      ]
+    },
+    modalidade:{status:'atual',statusTxt:'Bom resultado — 70% êxito',modelos:['MODALIDADE - CARTÃO RMC.docx','MODALIDADE - CARTÃO RCC.docx'],
+      newsAlert:'Verificar sobrestamento Tema 1.414 antes de protocolar.',
+      items:[
+        {tipo:'incluir',label:'Incluir',txt:'Prova de contratação, extrato de utilização'},
+        {tipo:'reforcar',label:'Reforçar — RJ',txt:'Argumento específico contra quantum de dano moral — RJ arbitra valores mais altos'},
+        {tipo:'atualizar',label:'Atualizar — Circular 002',txt:'Corrigir descrição do Tema 1.414'}
+      ]
+    },
+    cadastro:{status:'atual',statusTxt:'Bom resultado — 75% êxito',modelos:['MATERIAL DE APOIO DEFESA - TESES RECORRENTES.docx'],newsAlert:null,items:[{tipo:'incluir',label:'Incluir',txt:'Ausência de dano efetivo'}]},
+    entrega:{status:'revisar',statusTxt:'Sem dados em RJ',modelos:['MATERIAL DE APOIO DEFESA - TESES RECORRENTES.docx'],newsAlert:null,items:[{tipo:'incluir',label:'Incluir',txt:'Comprovante de entrega'}]}
+  },
+  ES:{
+    fraude:{
+      status:'atual',
+      statusTxt:'Melhor performance para Fraude — manter',
+      modelos:['FRAUDE - CARTÃO RMC.docx','FRAUDE - CARTÃO RCC.docx'],
+      newsAlert:null,
+      items:[
+        {tipo:'incluir',label:'Incluir — referência do portfólio',txt:'Fortuito externo, medidas de segurança do banco, prova de contratação — ES tem 65% êxito e apenas 1 caso de dobro'},
+        {tipo:'reforcar',label:'Reforçar — preventivo',txt:'Incluir geolocalização consistente como argumento preventivo para 2026'},
+        {tipo:'reforcar',label:'TCU 2026',txt:'Mencionar medidas de segurança do TCU como referência regulatória'}
+      ]
+    },
+    modalidade:{status:'atual',statusTxt:'Bom resultado — 61% êxito com processos rápidos',modelos:['MODALIDADE - CARTÃO RMC.docx','MODALIDADE - CARTÃO RCC.docx'],
+      newsAlert:'Verificar sobrestamento Tema 1.414 antes de protocolar.',
+      items:[
+        {tipo:'incluir',label:'Incluir',txt:'Prova de contratação regular — ES tem processos mais rápidos (470 dias)'},
+        {tipo:'atualizar',label:'Atualizar — Circular 002',txt:'Corrigir descrição do Tema 1.414'}
+      ]
+    },
+    cadastro:{status:'atual',statusTxt:'Bom resultado — 75% êxito',modelos:['MATERIAL DE APOIO DEFESA - TESES RECORRENTES.docx'],newsAlert:null,items:[{tipo:'incluir',label:'Incluir',txt:'Contrato executado normalmente, ausência de dano efetivo'}]},
+    entrega:{status:'revisar',statusTxt:'Sem dados em ES',modelos:['MATERIAL DE APOIO DEFESA - TESES RECORRENTES.docx'],newsAlert:null,items:[{tipo:'incluir',label:'Incluir',txt:'Comprovante de entrega'}]}
+  }
+};
+
+function renderModelos(){
+  const uf=document.getElementById('sel-uf-mod').value;
+  const causa=document.getElementById('sel-causa-mod').value;
+  const d=MODELS[uf][causa];
+  if(!d){document.getElementById('modelos-output').innerHTML='<div style="background:#fff;border-radius:10px;padding:24px;border:1px solid #e0e4f0;color:#888;font-size:14px">Sem dados para esta combinação.</div>';return;}
+  const statusColors={atual:'atual',revisar:'revisar',atualizar:'atualizar',urgente:'urgente'};
+  const statusIcons={atual:'✓ Modelo atualizado',revisar:'⚑ Revisão recomendada',atualizar:'⚠ Atualização necessária',urgente:'✕ Atualização urgente'};
+  const tipoGroups={incluir:'O que incluir / manter',reforcar:'O que reforçar com notícias recentes',atualizar:'O que atualizar ou ajustar',remover:'O que remover ou evitar'};
+  const grouped={};
+  d.items.forEach(item=>{if(!grouped[item.tipo])grouped[item.tipo]=[];grouped[item.tipo].push(item);});
+  document.getElementById('modelos-output').innerHTML=`
+    <div class="section">
+      <div class="section-title">Modelo recomendado — SharePoint</div>
+      <span class="model-status ${statusColors[d.status]}">${statusIcons[d.status]}</span>
+      ${d.modelos.map(m=>`<div class="model-name">📄 ${m}</div>`).join('')}
+      ${d.newsAlert?`<div class="model-news-alert"><strong>Alerta de inteligência:</strong> ${d.newsAlert}</div>`:`<div class="model-news-ok">Sem alertas críticos de jurisprudência para este projeto e estado no momento.</div>`}
+    </div>
+    <div class="section">
+      <div class="section-title">Orientações para elaboração da peça</div>
+      <div class="model-list">
+        ${Object.entries(tipoGroups).map(([tipo,label])=>grouped[tipo]?`
+          <div style="font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.06em;margin:10px 0 6px;padding-top:6px;border-top:1px solid #f0f2f8">${label}</div>
+          ${grouped[tipo].map(item=>`
+            <div class="model-item ${item.tipo}">
+              <div class="model-dot ${item.tipo}"></div>
+              <div><div class="model-item-text">${item.txt}</div></div>
+            </div>`).join('')}`:''
+        ).join('')}
+      </div>
+    </div>`;
+}
+
 </script>
 </body>
 </html>

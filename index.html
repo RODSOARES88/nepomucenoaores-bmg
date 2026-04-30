@@ -204,6 +204,42 @@ select:focus{outline:none;border-color:#1E2B6A}
 .sim-score-label{font-size:12px;color:#888;margin-top:4px}
 .rk-note{background:#fffbf0;border-radius:8px;padding:10px 14px;font-size:12px;color:#7d6608;border-left:3px solid #a06000;margin-bottom:16px}
 
+
+.strat-section{margin-top:20px}
+.strat-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.strat-header h3{font-size:14px;font-weight:600;color:#1a1a1a;margin:0}
+.strat-header span{font-size:11px;color:#888}
+.strat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.strat-card{background:#fff;border-radius:10px;border:1px solid #e0e4f0;overflow:hidden}
+.strat-card-head{padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f0f2f8}
+.strat-priority{width:28px;height:28px;border-radius:50%;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.strat-priority.p1{background:#c0392b;color:#fff}
+.strat-priority.p2{background:#a06000;color:#fff}
+.strat-priority.p3{background:#2B5DA1;color:#fff}
+.strat-priority.p4{background:#888;color:#fff}
+.strat-card-title{font-size:13px;font-weight:600;color:#1a1a1a;flex:1}
+.strat-impact{font-size:10px;padding:2px 8px;border-radius:8px;font-weight:700;flex-shrink:0}
+.strat-impact.high{background:#fde8e8;color:#c0392b}
+.strat-impact.mid{background:#fff2cc;color:#7d6608}
+.strat-impact.low{background:#e8f0fe;color:#2B5DA1}
+.strat-card-body{padding:12px 14px}
+.strat-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:12px;color:#333;line-height:1.5}
+.strat-row:last-child{margin-bottom:0}
+.strat-dot{width:6px;height:6px;border-radius:50%;background:#1E2B6A;flex-shrink:0;margin-top:5px}
+.strat-metric{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.strat-chip{font-size:10px;padding:2px 8px;border-radius:6px;background:#f0f2f8;color:#555;font-weight:500}
+.strat-chip.red{background:#fde8e8;color:#c0392b}
+.strat-chip.green{background:#e2efda;color:#375623}
+.strat-chip.blue{background:#e8f0fe;color:#1E2B6A}
+.strat-full{grid-column:1/-1}
+.strat-state-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:8px}
+.strat-state-box{border-radius:8px;padding:8px;text-align:center;border:1px solid #e0e4f0}
+.strat-state-uf{font-size:12px;font-weight:700}
+.strat-state-pct{font-size:15px;font-weight:700;margin:2px 0}
+.strat-state-box.ok{background:#f0faf0;border-color:#c8e6c8}
+.strat-state-box.warn{background:#fffbf0;border-color:#ffe082}
+.strat-state-box.alert{background:#fff5f5;border-color:#f5c6c6}
+
 .footer{text-align:center;padding:24px;font-size:12px;color:#bbb}
 @media(max-width:600px){.cards{grid-template-columns:1fr 1fr}.selectors{grid-template-columns:1fr}.risks{grid-template-columns:1fr}}
 </style>
@@ -584,6 +620,152 @@ select:focus{outline:none;border-color:#1E2B6A}
         </div>
       </div>
     </div>
+
+    <!-- SUGESTÕES DE ESTRATÉGIA -->
+    <div class="strat-section">
+      <div class="strat-header">
+        <h3>Sugestões estratégicas para melhorar o ranking</h3>
+        <span>ordenadas por impacto no score · base: abril 2026</span>
+      </div>
+
+      <div class="strat-grid">
+
+        <!-- P1: Acordo Pós Sentença -->
+        <div class="strat-card">
+          <div class="strat-card-head">
+            <div class="strat-priority p1">1</div>
+            <div class="strat-card-title">Aumentar % Acordo Pós Sentença</div>
+            <span class="strat-impact high">Peso 4 · Alto impacto</span>
+          </div>
+          <div class="strat-card-body">
+            <div class="strat-row"><div class="strat-dot"></div>Atualmente em 1,2% — muito abaixo do potencial. Acordos pós sentença têm peso 4 no ranking e hoje quase não são usados.</div>
+            <div class="strat-row"><div class="strat-dot"></div>Identificar sistematicamente casos com condenação entre R$ 5.000 e R$ 15.000 onde o autor ainda não distribuiu execução — propor acordo nesse intervalo.</div>
+            <div class="strat-row"><div class="strat-dot"></div>Ativar protocolo no Exyon: ao sentença de procedência chegar, equipe de cumprimento avalia viabilidade de acordo antes de aguardar distribuição.</div>
+            <div class="strat-metric">
+              <span class="strat-chip red">Atual: 1,2%</span>
+              <span class="strat-chip green">Meta: 8%</span>
+              <span class="strat-chip blue">+~12 pts no score</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- P2: Êxito SC e RS -->
+        <div class="strat-card">
+          <div class="strat-card-head">
+            <div class="strat-priority p1">2</div>
+            <div class="strat-card-title">Reverter SC e RS — Taxa de Êxito</div>
+            <span class="strat-impact high">Peso 4 · Alto impacto</span>
+          </div>
+          <div class="strat-card-body">
+            <div class="strat-row"><div class="strat-dot"></div>SC tem 37% e RS tem 47% de êxito — os dois estados com maior volume de derrotas e maior incidência de restituição em dobro.</div>
+            <div class="strat-row"><div class="strat-dot"></div>SC Fraude: revisar urgente o modelo de contestação para incluir argumento contra dano moral específico do TJSC e contra restituição em dobro.</div>
+            <div class="strat-row"><div class="strat-dot"></div>RS Fraude: incluir seção específica anti-dobro (Art. 42 CDC) + argumento de geolocalização consistente na contratação (nova tese adversária 2026).</div>
+            <div class="strat-metric">
+              <span class="strat-chip red">SC: 37% · RS: 47%</span>
+              <span class="strat-chip green">Meta: 55%+</span>
+              <span class="strat-chip blue">+~8 pts no score</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- P3: Ticket Médio Geral -->
+        <div class="strat-card">
+          <div class="strat-card-head">
+            <div class="strat-priority p2">3</div>
+            <div class="strat-card-title">Reduzir Ticket Médio de Condenação</div>
+            <span class="strat-impact mid">Peso 5+3 · Médio impacto</span>
+          </div>
+          <div class="strat-card-body">
+            <div class="strat-row"><div class="strat-dot"></div>Ticket médio geral (R$ 22.829) e de condenação (R$ 21.844) afetam as duas variáveis com maior peso do ranking.</div>
+            <div class="strat-row"><div class="strat-dot"></div>Estratégia imediata: em casos de derrota quase certa, negociar acordo pré-sentença para reduzir o valor final — evita condenação + honorários de sucumbência.</div>
+            <div class="strat-row"><div class="strat-dot"></div>Incluir argumento específico contra quantum do dano moral nas peças — jurisprudência recente admite valores abaixo de R$ 3.000 em casos sem negativação.</div>
+            <div class="strat-metric">
+              <span class="strat-chip red">Atual: R$ 21.844</span>
+              <span class="strat-chip green">Meta: R$ 18.000</span>
+              <span class="strat-chip blue">+~7 pts no score</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- P4: Encerramento -->
+        <div class="strat-card">
+          <div class="strat-card-head">
+            <div class="strat-priority p2">4</div>
+            <div class="strat-card-title">Aumentar % de Encerramento</div>
+            <span class="strat-impact mid">Peso 4 · Dados pendentes</span>
+          </div>
+          <div class="strat-card-body">
+            <div class="strat-row"><div class="strat-dot"></div>Variável com peso 4 — ainda sem dado disponível no CSV atual. Precisa da data de cadastro do processo para calcular o Aging e o % de encerrados no período.</div>
+            <div class="strat-row"><div class="strat-dot"></div>Ação imediata: pedir ao Alexandre incluir "Data de Cadastro" e "Status do Processo" no próximo CSV do Xjus. Com isso, calculamos automaticamente.</div>
+            <div class="strat-row"><div class="strat-dot"></div>Estratégia: revisar processos com mais de 2 anos e êxito provável — identificar se estão elegíveis para encerramento e acionar equipe.</div>
+            <div class="strat-metric">
+              <span class="strat-chip red">Atual: sem dados</span>
+              <span class="strat-chip blue">Incluir no próximo CSV</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- P5: Reduzir Condenação % -->
+        <div class="strat-card">
+          <div class="strat-card-head">
+            <div class="strat-priority p3">5</div>
+            <div class="strat-card-title">Reduzir % de Condenação</div>
+            <span class="strat-impact low">Peso 3 · Baixo-médio</span>
+          </div>
+          <div class="strat-card-body">
+            <div class="strat-row"><div class="strat-dot"></div>38,4% de condenação (plena ou parcial) — reduzir para abaixo de 35% melhora diretamente esta variável.</div>
+            <div class="strat-row"><div class="strat-dot"></div>Foco prioritário: SC Fraude (30% de condenação plena) e RS Fraude (28% de condenação plena) — os dois maiores problemas.</div>
+            <div class="strat-row"><div class="strat-dot"></div>A melhora no êxito (estratégia #2) reduz automaticamente o % de condenação — as duas estratégias se complementam.</div>
+            <div class="strat-metric">
+              <span class="strat-chip red">Atual: 38,4%</span>
+              <span class="strat-chip green">Meta: 33%</span>
+              <span class="strat-chip blue">+~5 pts no score</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- P6: Falhas -->
+        <div class="strat-card">
+          <div class="strat-card-head">
+            <div class="strat-priority p3">6</div>
+            <div class="strat-card-title">Zerar Falhas Financeiras e Operacionais</div>
+            <span class="strat-impact low">Peso 2+2 · Prevenção</span>
+          </div>
+          <div class="strat-card-body">
+            <div class="strat-row"><div class="strat-dot"></div>Falhas financeiras: nunca celebrar acordo acima da alçada autorizada sem aprovação. Acima de R$ 5.000 sempre enviar para CONTROLE ACORDO.</div>
+            <div class="strat-row"><div class="strat-dot"></div>Falhas operacionais: confirmar cumprimento de OBF obrigatoriamente, não instalar WFs indevidamente, não aceitar patrocínio de projetos fora da área.</div>
+            <div class="strat-row"><div class="strat-dot"></div>Impacto duplo: além do ranking, cada falha gera penalidade financeira direta (100% do valor do acordo no caso de advogado agressor).</div>
+            <div class="strat-metric">
+              <span class="strat-chip red">Meta: 0% de falhas</span>
+              <span class="strat-chip blue">+~6 pts no score</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mapa de estados -->
+        <div class="strat-card strat-full">
+          <div class="strat-card-head">
+            <div class="strat-priority p1">!</div>
+            <div class="strat-card-title">Mapa de prioridade por estado — Taxa de Êxito atual</div>
+            <span class="strat-impact high">Foco imediato nos vermelhos</span>
+          </div>
+          <div class="strat-card-body">
+            <div style="font-size:12px;color:#666;margin-bottom:8px">Clique na aba Plano de Inteligência para ver o detalhamento completo por estado e projeto.</div>
+            <div class="strat-state-grid">
+              <div class="strat-state-box alert"><div class="strat-state-uf">SC</div><div class="strat-state-pct" style="color:#c0392b">43,8%</div><div style="font-size:9px;color:#c0392b">Crítico</div></div>
+              <div class="strat-state-box warn"><div class="strat-state-uf">RS</div><div class="strat-state-pct" style="color:#a06000">53,3%</div><div style="font-size:9px;color:#a06000">Atenção</div></div>
+              <div class="strat-state-box warn"><div class="strat-state-uf">PR</div><div class="strat-state-pct" style="color:#a06000">63,4%</div><div style="font-size:9px;color:#a06000">Monitorar</div></div>
+              <div class="strat-state-box ok"><div class="strat-state-uf">SP</div><div class="strat-state-pct" style="color:#2d7a2d">61,5%</div><div style="font-size:9px;color:#2d7a2d">OK</div></div>
+              <div class="strat-state-box ok"><div class="strat-state-uf">MG</div><div class="strat-state-pct" style="color:#2d7a2d">67,0%</div><div style="font-size:9px;color:#2d7a2d">Bom</div></div>
+              <div class="strat-state-box ok"><div class="strat-state-uf">RJ</div><div class="strat-state-pct" style="color:#2d7a2d">67,6%</div><div style="font-size:9px;color:#2d7a2d">Bom</div></div>
+              <div class="strat-state-box ok"><div class="strat-state-uf">ES</div><div class="strat-state-pct" style="color:#2d7a2d">63,2%</div><div style="font-size:9px;color:#2d7a2d">OK</div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 
 </div>

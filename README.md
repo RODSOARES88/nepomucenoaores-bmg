@@ -1,0 +1,2 @@
+# nepomucenoaores-bmg
+inteligencia interna

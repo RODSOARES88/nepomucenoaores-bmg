@@ -249,7 +249,7 @@ select:focus{outline:none;border-color:#1E2B6A}
 <div class="topbar">
   <div style="width:32px;height:32px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">IA</div>
   <h1>Sistema de Inteligência Jurídica — Banco BMG</h1>
-  <span id="last-update">Atualizado: Abril 2026</span>
+  <span id="last-update">Atualizado: 04/05/2026</span>
 </div>
 
 <div class="tabs">
@@ -886,44 +886,52 @@ const DATA = {
 // ─── NOTÍCIAS ──────────────────────────────────────────────────────────────
 const NEWS = [
   {
-    id:'n1', impacto:'critico', causas:['modalidade','fraude'],
-    titulo:'STJ suspende TODOS os processos RMC e RCC no país — Tema 1.414',
-    fonte:'STJ / Conjur', data:'13 mar 2026',
-    resumo:'O Ministro Raul Araújo determinou a suspensão nacional de todos os processos pendentes — individuais e coletivos — que discutem a validade e abusividade dos contratos de cartão de crédito consignado (RMC e RCC). A suspensão vale para todas as instâncias. O STJ vai definir: (1) validade dos contratos, (2) forma de restituição, (3) configuração e valor do dano moral, (4) fixação dos juros moratórios.',
-    impactoModelos:'AÇÃO IMEDIATA: Verificar em TODOS os processos de Não Reconhecimento Cartão e Fraude envolvendo RMC/RCC se a suspensão se aplica. Peticionar sobrestamento onde cabível. Circular 002 precisa ser atualizada — o Tema trata de validade/abusividade dos contratos, NÃO de portabilidade.',
-    url:'https://www.stj.jus.br/sites/portalp/Paginas/Comunicacao/Noticias/2026/10032026-Repetitivo-discute-criterios-para-avaliar-abuso-em-contratos-de-cartao-de-credito-consignado.aspx'
+    id:'n1', impacto:'critico', causas:['modalidade'],
+    titulo:'STJ — Tema 1.328: dano moral in re ipsa quando RMC em benefício previdenciário é invalidada',
+    fonte:'STJ / TJPE NUGEP', data:'Abr 2026',
+    resumo:'O STJ fixou no Tema 1.328 que a invalidação de contratação de cartão de crédito com Reserva de Margem Consignável (RMC) em benefício previdenciário gera dano moral presumido (in re ipsa), dispensando comprovação do prejuízo pelo consumidor. A tese se aplica especialmente quando o aposentado ou pensionista alega que pretendia contratar empréstimo consignado tradicional e teve sua margem comprometida indefinidamente.',
+    impactoModelos:'AÇÃO IMEDIATA: Revisar modelos de Não Reconhecimento Cartão envolvendo RMC com beneficiários do INSS. A tese de defesa de "ausência de dano comprovado" não é mais sustentável após o Tema 1.328. Reforçar a defesa na fase contratual: comprovar dever de informação claro, diferenciação explícita entre RMC e empréstimo, e assinatura ciente. Provisionar dano moral em casos de RMC inválida.',
+    url:'https://portal.tjpe.jus.br/web/vice-presidencia/nugep/noticias/-/asset_publisher/ycFvOoAr1XZ2/content/tema-1328-stj-dano-moral-in-re-ipsa-na-hipotese-de-invalidacao-da-contratacao-de-cartao-de-credito-com-reserva-de-margem-consignavel-rmc-em-beneficio-previdenciario'
   },
   {
-    id:'n2', impacto:'critico', causas:['fraude'],
-    titulo:'TCU determina suspensão de consignados INSS até reforço de segurança',
+    id:'n2', impacto:'critico', causas:['modalidade','fraude'],
+    titulo:'STJ — Tema 1.414 mantém suspensão nacional dos processos sobre RMC e RCC',
+    fonte:'STJ / Conjur', data:'Mar 2026',
+    resumo:'Segue ativa a determinação do Min. Raul Araújo de sobrestamento nacional de todos os processos individuais e coletivos sobre validade e abusividade do cartão de crédito consignado. O STJ definirá critérios objetivos para análise de abusividade, dever de informação, e as consequências da invalidação (restituição, conversão em consignado tradicional ou revisão contratual). A ABRADEB foi admitida como amicus curiae defendendo a tese de abusividade estrutural.',
+    impactoModelos:'AÇÃO CONTINUADA: Manter petições de sobrestamento em todos os processos RMC/RCC ativos da carteira BMG. Para novos casos, peticionar suspensão imediata. Atualizar Circular 002 com a entrada de amicus curiae adversário. O resultado do Tema definirá o passivo da carteira de cartão consignado pelos próximos anos.',
+    url:'https://www.conjur.com.br/2026-mar-08/stj-vai-julgar-validade-do-cartao-de-credito-consignado-e-consequencias-do-abuso/'
+  },
+  {
+    id:'n3', impacto:'critico', causas:['fraude','cadastro'],
+    titulo:'TCU determina suspensão de consignados INSS até reforço de segurança contra fraudes',
     fonte:'TCU / Tribuna do Sertão', data:'29 abr 2026',
-    resumo:'O TCU determinou que a Dataprev priorize mecanismos de segurança no e-Consignado antes de retomar operações. As medidas exigidas incluem: bloqueio de averbações sem documentação mínima, impedimento de operações em nome de falecidos, validação biométrica reforçada, proibição de depósitos em contas não vinculadas ao benefício e restrições à venda casada de produtos como seguros.',
-    impactoModelos:'FAVORÁVEL AO BANCO: O TCU está exigindo dos bancos exatamente as medidas que usamos como defesa (biometria, validação documental). Usar essa determinação como prova de que o sistema de segurança do BMG está alinhado com o padrão exigido pelo regulador. Incluir nos modelos de Fraude.',
+    resumo:'O TCU determinou que a Dataprev priorize mecanismos de segurança no e-Consignado antes da retomada plena de operações. As exigências incluem bloqueio de averbações sem documentação mínima, impedimento de operações em nome de falecidos, validação biométrica reforçada, proibição de depósitos em contas não vinculadas ao benefício e restrições à venda casada de seguros prestamistas.',
+    impactoModelos:'FAVORÁVEL AO BANCO: Usar a determinação do TCU como prova de que o sistema de segurança do BMG está alinhado ao padrão exigido pelo regulador (biometria, validação documental, conta vinculada). Incluir nas defesas de Fraude e Cadastro Incompleto referência ao acórdão como evidência de cumprimento de dever objetivo de segurança.',
     url:'https://www.tribunadosertao.com.br/geral/2026/04/29/894259-tcu-determina-suspensao-de-consignados-do-inss-ate-reforco-de-seguranca-contra-fraudes'
   },
   {
-    id:'n3', impacto:'relevante', causas:['fraude'],
-    titulo:'TJMT invalida biometria por geolocalização contraditória em fraude consignado',
-    fonte:'TJMT', data:'Mar 2026',
-    resumo:'Em dois casos no Tribunal de Justiça de Mato Grosso, bancos alegaram contratação por biometria facial, mas a geolocalização da assinatura digital apontava local diferente do endereço do cliente. Os tribunais invalidaram a biometria e condenaram os bancos a indenizar por danos morais (R$ 10 mil). O entendimento segue a tese do STJ de responsabilidade objetiva por falha na segurança.',
-    impactoModelos:'NOVA TESE ADVERSÁRIA: Autores passarão a usar geolocalização para atacar a biometria. Verificar nos processos se a localização da assinatura é consistente. Incluir nos modelos de Fraude a comprovação de que a geolocalização da contratação é compatível com o endereço do cliente ou local de trabalho.',
-    url:'https://www.tjmt.jus.br/noticias/2026/3/prova-obtida-por-geolocalizacao-revela-fraude-em-consignado-e-garante-indenizacao-a-aposentada'
+    id:'n4', impacto:'relevante', causas:['modalidade'],
+    titulo:'Ministério restringe tarifas e limita custo do crédito consignado',
+    fonte:'Agência Brasil', data:'Abr 2026',
+    resumo:'Novas regras editadas pelo Ministério do Trabalho restringem cobranças acessórias e impõem teto ao custo total do crédito consignado para servidores e aposentados. As medidas alcançam tarifas administrativas, IOF embutido e custos cobrados em refinanciamentos sucessivos. As novas regras entraram em vigor em abril/2026 e atingem contratos novos.',
+    impactoModelos:'MONITORAR: Verificar se contratos firmados a partir de abril/2026 estão em conformidade com os novos tetos. Pode surgir nova frente de ações revisionais alegando descumprimento dos limites. Atualizar modelos de Não Reconhecimento Cartão para distinguir contratos pré e pós-regulação.',
+    url:'https://agenciabrasil.ebc.com.br/economia/noticia/2026-04/ministerio-restringe-tarifas-e-limita-custo-do-credito-consignado'
   },
   {
-    id:'n4', impacto:'relevante', causas:['fraude','modalidade'],
-    titulo:'TJRJ: banco deve identificar transações fora do perfil do cliente',
-    fonte:'TJRJ / Portal do Conhecimento', data:'2026',
-    resumo:'O Tribunal de Justiça do Rio de Janeiro consolidou entendimento, baseado em decisão do STF, de que os bancos têm o dever de evitar fraudes identificando e impedindo transações que não condizem com o perfil do cliente. A ausência de mecanismos eficazes de verificação caracteriza falha na prestação do serviço e atrai responsabilidade objetiva.',
-    impactoModelos:'RELEVANTE PARA RJ: Reforça a necessidade de incluir nos modelos de defesa para RJ a demonstração de que o perfil do cliente era consistente com a operação contratada (histórico de crédito, renda, operações anteriores). Argumento preventivo contra a tese de "fora do perfil".',
-    url:'https://www.tjrj.jus.br/web/portal-conhecimento/noticias/noticia/-/visualizar-conteudo/5736540/339995944'
+    id:'n5', impacto:'relevante', causas:['fraude','cadastro'],
+    titulo:'Novas regras de consignado para servidores e aposentados entram em vigor',
+    fonte:'Agência Brasil', data:'Abr 2026',
+    resumo:'Entraram em vigor novas regras para o crédito consignado de servidores e aposentados, exigindo autorização biométrica ou assinatura eletrônica qualificada para o desconto em folha. As instituições financeiras estão proibidas de incluir seguro prestamista compulsório na contratação. A norma também reforça a portabilidade e o direito de arrependimento em 7 dias.',
+    impactoModelos:'AÇÃO PREVENTIVA: Garantir que toda contratação a partir de abril/2026 tenha registro auditável de biometria/assinatura eletrônica e que produtos acessórios (seguro) sejam contratados por opt-in explícito. Reforçar nos modelos de defesa a apresentação dos logs de autenticação como prova de regularidade.',
+    url:'https://agenciabrasil.ebc.com.br/economia/noticia/2026-04/novas-regras-de-emprestimo-consignado-para-servidores-e-aposentados-entram-em-vigor'
   },
   {
-    id:'n5', impacto:'relevante', causas:['modalidade'],
-    titulo:'STJ admite ABRADEB como amicus curiae no Tema 1.414',
-    fonte:'ABRADEB / STJ', data:'2026',
-    resumo:'O STJ admitiu a Associação Brasileira de Defesa do Consumidor Bancário (ABRADEB) como "amiga da corte" no julgamento do Tema 1.414. A entidade defende a tese de abusividade estrutural dos contratos RMC/RCC, argumentando que o modelo de cobrança com juros rotativos sobre margem consignada cria dívida perpétua.',
-    impactoModelos:'MONITORAR: A participação da ABRADEB sinaliza que o julgamento do Tema 1.414 terá forte pressão pela invalidação dos contratos. Preparar peças defensivas que demonstrem transparência na contratação e possibilidade real de amortização do saldo.',
-    url:'https://abradeb.com.br/stj-admite-a-abradeb-como-amiga-da-corte-emjulgamento-decisivo-sobre-dano-moral-em-contratos-decartao-de-credito-consignado-rmc/'
+    id:'n6', impacto:'informativo', causas:['modalidade'],
+    titulo:'Decisão: Lei do Superendividamento não se aplica ao consignado',
+    fonte:'Conjur', data:'Out 2025 (em difusão 2026)',
+    resumo:'Decisão judicial reafirma o art. 4º do Decreto 11.150/22, que exclui as dívidas de crédito consignado da aferição do mínimo existencial para fins da Lei 14.181/21 (Superendividamento). Na prática, o consignado não é computado no cálculo do comprometimento de renda para enquadramento como superendividado, mas o tema tem sido contestado em ações de consumidores idosos.',
+    impactoModelos:'CONTEXTO ÚTIL: Em ações onde o autor invoca a Lei do Superendividamento para reduzir parcelas de RMC/RCC, citar o decreto regulamentador e a jurisprudência que afasta a aplicabilidade ao consignado. Argumento subsidiário, especialmente em SP e RS onde há maior incidência de teses de superendividamento.',
+    url:'https://www.conjur.com.br/2025-out-02/emprestimos-consignados-nao-sao-disciplinados-por-lei-do-superendividamento-decide-juiza/'
   }
 ];
 

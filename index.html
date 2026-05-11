@@ -249,7 +249,7 @@ select:focus{outline:none;border-color:#1E2B6A}
 <div class="topbar">
   <div style="width:32px;height:32px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">IA</div>
   <h1>Sistema de Inteligência Jurídica — Banco BMG</h1>
-  <span id="last-update">Atualizado: 04/05/2026</span>
+  <span id="last-update">Atualizado: 11/05/2026</span>
 </div>
 
 <div class="tabs">
@@ -886,32 +886,32 @@ const DATA = {
 // ─── NOTÍCIAS ──────────────────────────────────────────────────────────────
 const NEWS = [
   {
-    id:'n1', impacto:'critico', causas:['modalidade'],
+    id:'n1', impacto:'critico', causas:['modalidade','fraude'],
+    titulo:'TCU libera retomada dos consignados do INSS após recurso da AGU',
+    fonte:'Agência Brasil / Conjur', data:'05 mai 2026',
+    resumo:'O Ministro relator do TCU acolheu recurso da AGU e autorizou a retomada das averbações de novos consignados do INSS, anteriormente suspensas por medida cautelar. A liberação está condicionada à implementação progressiva dos requisitos de segurança definidos pelo TCU — biometria reforçada, validação documental, conta vinculada ao benefício e bloqueio de operações em benefícios irregulares. Bancos haviam criticado a suspensão alegando prejuízos a milhões de aposentados.',
+    impactoModelos:'AÇÃO IMEDIATA: Atualizar a Circular 002 e o discurso defensivo. A retomada sob condicionantes do TCU é argumento forte nas defesas de Fraude — demonstra que o BMG opera sob os protocolos de segurança exigidos pelo regulador federal. Anexar nas defesas o acórdão de liberação e os requisitos cumpridos.',
+    url:'https://agenciabrasil.ebc.com.br/economia/noticia/2026-05/ministro-do-tcu-libera-novos-consignados-do-inss-apos-recurso-da-agu'
+  },
+  {
+    id:'n2', impacto:'critico', causas:['modalidade'],
     titulo:'STJ — Tema 1.328: dano moral in re ipsa quando RMC em benefício previdenciário é invalidada',
     fonte:'STJ / TJPE NUGEP', data:'Abr 2026',
     resumo:'O STJ fixou no Tema 1.328 que a invalidação de contratação de cartão de crédito com Reserva de Margem Consignável (RMC) em benefício previdenciário gera dano moral presumido (in re ipsa), dispensando comprovação do prejuízo pelo consumidor. A tese se aplica especialmente quando o aposentado ou pensionista alega que pretendia contratar empréstimo consignado tradicional e teve sua margem comprometida indefinidamente.',
-    impactoModelos:'AÇÃO IMEDIATA: Revisar modelos de Não Reconhecimento Cartão envolvendo RMC com beneficiários do INSS. A tese de defesa de "ausência de dano comprovado" não é mais sustentável após o Tema 1.328. Reforçar a defesa na fase contratual: comprovar dever de informação claro, diferenciação explícita entre RMC e empréstimo, e assinatura ciente. Provisionar dano moral em casos de RMC inválida.',
+    impactoModelos:'AÇÃO CONTINUADA: Reforçar a defesa na fase contratual — comprovar dever de informação claro, diferenciação explícita entre RMC e empréstimo, e assinatura ciente. A tese de ausência de dano comprovado não é mais sustentável após o Tema 1.328. Provisionar dano moral em casos de RMC inválida.',
     url:'https://portal.tjpe.jus.br/web/vice-presidencia/nugep/noticias/-/asset_publisher/ycFvOoAr1XZ2/content/tema-1328-stj-dano-moral-in-re-ipsa-na-hipotese-de-invalidacao-da-contratacao-de-cartao-de-credito-com-reserva-de-margem-consignavel-rmc-em-beneficio-previdenciario'
   },
   {
-    id:'n2', impacto:'critico', causas:['modalidade','fraude'],
+    id:'n3', impacto:'critico', causas:['modalidade','fraude'],
     titulo:'STJ — Tema 1.414 mantém suspensão nacional dos processos sobre RMC e RCC',
     fonte:'STJ / Conjur', data:'Mar 2026',
-    resumo:'Segue ativa a determinação do Min. Raul Araújo de sobrestamento nacional de todos os processos individuais e coletivos sobre validade e abusividade do cartão de crédito consignado. O STJ definirá critérios objetivos para análise de abusividade, dever de informação, e as consequências da invalidação (restituição, conversão em consignado tradicional ou revisão contratual). A ABRADEB foi admitida como amicus curiae defendendo a tese de abusividade estrutural.',
-    impactoModelos:'AÇÃO CONTINUADA: Manter petições de sobrestamento em todos os processos RMC/RCC ativos da carteira BMG. Para novos casos, peticionar suspensão imediata. Atualizar Circular 002 com a entrada de amicus curiae adversário. O resultado do Tema definirá o passivo da carteira de cartão consignado pelos próximos anos.',
+    resumo:'Segue ativa a determinação do Min. Raul Araújo de sobrestamento nacional de todos os processos individuais e coletivos sobre validade e abusividade do cartão de crédito consignado. O STJ definirá critérios objetivos para análise de abusividade, dever de informação, e as consequências da invalidação (restituição, conversão em consignado tradicional ou revisão contratual).',
+    impactoModelos:'AÇÃO CONTINUADA: Manter petições de sobrestamento em todos os processos RMC/RCC ativos da carteira BMG. Para novos casos, peticionar suspensão imediata. O resultado do Tema definirá o passivo da carteira de cartão consignado pelos próximos anos.',
     url:'https://www.conjur.com.br/2026-mar-08/stj-vai-julgar-validade-do-cartao-de-credito-consignado-e-consequencias-do-abuso/'
   },
   {
-    id:'n3', impacto:'critico', causas:['fraude','cadastro'],
-    titulo:'TCU determina suspensão de consignados INSS até reforço de segurança contra fraudes',
-    fonte:'TCU / Tribuna do Sertão', data:'29 abr 2026',
-    resumo:'O TCU determinou que a Dataprev priorize mecanismos de segurança no e-Consignado antes da retomada plena de operações. As exigências incluem bloqueio de averbações sem documentação mínima, impedimento de operações em nome de falecidos, validação biométrica reforçada, proibição de depósitos em contas não vinculadas ao benefício e restrições à venda casada de seguros prestamistas.',
-    impactoModelos:'FAVORÁVEL AO BANCO: Usar a determinação do TCU como prova de que o sistema de segurança do BMG está alinhado ao padrão exigido pelo regulador (biometria, validação documental, conta vinculada). Incluir nas defesas de Fraude e Cadastro Incompleto referência ao acórdão como evidência de cumprimento de dever objetivo de segurança.',
-    url:'https://www.tribunadosertao.com.br/geral/2026/04/29/894259-tcu-determina-suspensao-de-consignados-do-inss-ate-reforco-de-seguranca-contra-fraudes'
-  },
-  {
     id:'n4', impacto:'relevante', causas:['modalidade'],
-    titulo:'Ministério restringe tarifas e limita custo do crédito consignado',
+    titulo:'Ministério do Trabalho restringe tarifas e limita custo total do consignado',
     fonte:'Agência Brasil', data:'Abr 2026',
     resumo:'Novas regras editadas pelo Ministério do Trabalho restringem cobranças acessórias e impõem teto ao custo total do crédito consignado para servidores e aposentados. As medidas alcançam tarifas administrativas, IOF embutido e custos cobrados em refinanciamentos sucessivos. As novas regras entraram em vigor em abril/2026 e atingem contratos novos.',
     impactoModelos:'MONITORAR: Verificar se contratos firmados a partir de abril/2026 estão em conformidade com os novos tetos. Pode surgir nova frente de ações revisionais alegando descumprimento dos limites. Atualizar modelos de Não Reconhecimento Cartão para distinguir contratos pré e pós-regulação.',
@@ -919,7 +919,7 @@ const NEWS = [
   },
   {
     id:'n5', impacto:'relevante', causas:['fraude','cadastro'],
-    titulo:'Novas regras de consignado para servidores e aposentados entram em vigor',
+    titulo:'Novas regras de consignado exigem biometria e proíbem seguro prestamista compulsório',
     fonte:'Agência Brasil', data:'Abr 2026',
     resumo:'Entraram em vigor novas regras para o crédito consignado de servidores e aposentados, exigindo autorização biométrica ou assinatura eletrônica qualificada para o desconto em folha. As instituições financeiras estão proibidas de incluir seguro prestamista compulsório na contratação. A norma também reforça a portabilidade e o direito de arrependimento em 7 dias.',
     impactoModelos:'AÇÃO PREVENTIVA: Garantir que toda contratação a partir de abril/2026 tenha registro auditável de biometria/assinatura eletrônica e que produtos acessórios (seguro) sejam contratados por opt-in explícito. Reforçar nos modelos de defesa a apresentação dos logs de autenticação como prova de regularidade.',
@@ -927,11 +927,11 @@ const NEWS = [
   },
   {
     id:'n6', impacto:'informativo', causas:['modalidade'],
-    titulo:'Decisão: Lei do Superendividamento não se aplica ao consignado',
-    fonte:'Conjur', data:'Out 2025 (em difusão 2026)',
-    resumo:'Decisão judicial reafirma o art. 4º do Decreto 11.150/22, que exclui as dívidas de crédito consignado da aferição do mínimo existencial para fins da Lei 14.181/21 (Superendividamento). Na prática, o consignado não é computado no cálculo do comprometimento de renda para enquadramento como superendividado, mas o tema tem sido contestado em ações de consumidores idosos.',
-    impactoModelos:'CONTEXTO ÚTIL: Em ações onde o autor invoca a Lei do Superendividamento para reduzir parcelas de RMC/RCC, citar o decreto regulamentador e a jurisprudência que afasta a aplicabilidade ao consignado. Argumento subsidiário, especialmente em SP e RS onde há maior incidência de teses de superendividamento.',
-    url:'https://www.conjur.com.br/2025-out-02/emprestimos-consignados-nao-sao-disciplinados-por-lei-do-superendividamento-decide-juiza/'
+    titulo:'Reforma do consignado INSS: margem reduz a 40% e prevê fim do cartão de benefícios',
+    fonte:'Folha Financeira / SPED Brasil', data:'2026',
+    resumo:'Programa federal altera o consignado do INSS com redução gradual da margem consignável de 45% para 40% (previsão de 30% em 2027) e decreta o fim do modelo de cartão de benefícios (RCC) e do cartão consignado tradicional para novos contratos. As modalidades RCC/RMC foram criticadas pelas taxas mais altas frente ao consignado tradicional.',
+    impactoModelos:'CONTEXTO ÚTIL: Em contratos novos, observar o teto de 40% e o fim das novas contratações de RCC/RMC. Para o passivo existente, manter a defesa pela legalidade das contratações pré-regulação. Útil em peças que sustentam que a vedação atual confirma a legalidade pretérita.',
+    url:'https://folhafinanceira.com.br/programa-federal-altera-regras-do-consignado-do-inss-e-preve-fim-do-cartao-de-beneficios/'
   }
 ];
 

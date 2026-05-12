@@ -148,6 +148,15 @@ select:focus{outline:none;border-color:#1E2B6A}
 .fdp-opt.nao{background:#fff5f5;border:1px solid #f5c6c6;color:#8b1a1a}
 .fdp-opt-label{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
 
+/* Seletor de equipes na aba Fluxos */
+.team-flow-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;padding:8px;background:#fff;border:1px solid #e0e4f0;border-radius:12px}
+.team-flow-tab{flex:1;min-width:120px;background:#f7f8fb;border:1.5px solid transparent;border-radius:8px;padding:10px 12px;text-align:center;cursor:pointer;transition:all .2s;color:#555;font-size:12px;font-weight:600;user-select:none}
+.team-flow-tab:hover{border-color:#cbd2e8;color:#1E2B6A;background:#fff}
+.team-flow-tab.active{border-color:#1E2B6A;background:#1E2B6A;color:#fff}
+.team-flow-tab .tft-icon{font-size:18px;display:block;margin-bottom:2px}
+.team-flow{display:none}
+.team-flow.active{display:block}
+
 
 .team-btn2{background:#fff;border:1.5px solid #e0e4f0;border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s;color:#555}
 .team-btn2:hover{border-color:#1E2B6A;color:#1E2B6A}
@@ -257,7 +266,7 @@ select:focus{outline:none;border-color:#1E2B6A}
   <div class="tab" onclick="switchTab('mercado',this)">Inteligência de Mercado</div>
   <div class="tab" onclick="switchTab('modelos',this)">Sugestão de Modelos</div>
   <div class="tab" onclick="switchTab('manual',this)">Manual da Equipe</div>
-  <div class="tab" onclick="switchTab('fluxo',this)">Fluxo de Defesa</div>
+  <div class="tab" onclick="switchTab('fluxo',this)">Fluxos das Equipes</div>
   <div class="tab" onclick="switchTab('ranking',this)">Ranking BMG</div>
 </div>
 
@@ -371,11 +380,121 @@ select:focus{outline:none;border-color:#1E2B6A}
     <div id="manual-content"></div>
   </div>
 
-  <!-- ABA 5: FLUXO DE DEFESA -->
+  <!-- ABA 5: FLUXOS DAS EQUIPES -->
   <div id="fluxo" class="panel">
     <div style="background:#f0f2fb;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#1E2B6A;border-left:3px solid #1E2B6A">
-      Clique em qualquer etapa do fluxo para ver as instruções detalhadas do manual.
+      Escolha a equipe abaixo. Clique em qualquer etapa do fluxo para ver as instruções detalhadas do manual.
     </div>
+
+    <!-- SELETOR DE EQUIPES -->
+    <div class="team-flow-tabs">
+      <div class="team-flow-tab" onclick="setFlowTeam('cadastro', this)"><span class="tft-icon">📋</span>Cadastro</div>
+      <div class="team-flow-tab active" onclick="setFlowTeam('defesa', this)"><span class="tft-icon">⚖</span>Defesa</div>
+      <div class="team-flow-tab" onclick="setFlowTeam('intermediarios', this)"><span class="tft-icon">📄</span>Intermediários</div>
+      <div class="team-flow-tab" onclick="setFlowTeam('cumprimento', this)"><span class="tft-icon">✅</span>Cumprimento</div>
+    </div>
+
+    <!-- FLUXO CADASTRO -->
+    <div id="flow-cadastro" class="team-flow">
+      <div class="flow-wrap">
+        <div class="flow-chart">
+          <div class="flow-chart-title">Fluxo de Cadastro — Nepomuceno Soares</div>
+
+          <div class="flow-item">
+            <div class="flow-start-end flow-start" onclick="showFlow('cad-inicio')" title="Início">▶</div>
+            <div style="font-size:9px;color:#2d7a2d;font-weight:600;margin:2px 0">PROCESSO MIGRADO</div>
+            <div class="flow-arrow"></div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-task" onclick="showFlow('cad-exportar')">1. Exportar Relatório<br><span style="font-weight:400;font-size:10px">Tarefas do Xjus</span></div>
+            <div class="flow-arrow"></div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-task" onclick="showFlow('cad-filtrar')">2. Filtrar por Estado</div>
+            <div class="flow-arrow"></div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-task" onclick="showFlow('cad-analisar')">3. Analisar caso a caso<br><span style="font-weight:400;font-size:10px">Site do tribunal</span></div>
+            <div class="flow-arrow"></div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-task" onclick="showFlow('cad-pasta')">4. Criar Pasta no SharePoint</div>
+            <div class="flow-arrow"></div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-decision" onclick="showFlow('cad-dec-cadastro')">
+              <div class="flow-decision-label">Cadastro<br>correto?</div>
+            </div>
+          </div>
+
+          <div class="flow-branch" style="margin-bottom:4px">
+            <div>
+              <div class="flow-branch-label" style="color:#c0392b">INCORRETO</div>
+              <div class="flow-task pink" onclick="showFlow('cad-correcoes')" style="font-size:10px">Realizar correções<br>Xjus + Exyon</div>
+            </div>
+            <div>
+              <div class="flow-branch-label" style="color:#2d7a2d">CORRETO ↓</div>
+              <div class="flow-task green" style="height:100%;display:flex;align-items:center;justify-content:center;font-size:10px">continua abaixo</div>
+            </div>
+          </div>
+
+          <div style="text-align:center;font-size:9px;color:#888;margin:4px 0">↓ (convergência)</div>
+
+          <div class="flow-item">
+            <div class="flow-task" onclick="showFlow('cad-prazo')">5. Lançar o Prazo</div>
+            <div class="flow-arrow"></div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-decision" onclick="showFlow('cad-dec-liminar')">
+              <div class="flow-decision-label">Há<br>liminar?</div>
+            </div>
+          </div>
+
+          <div class="flow-branch" style="margin-bottom:4px">
+            <div>
+              <div class="flow-branch-label" style="color:#a06000">SIM</div>
+              <div class="flow-task" onclick="showFlow('cad-liminar')" style="font-size:10px;background:#FFF8E1;border-color:#a06000;color:#a06000">Informar liminar<br>e acompanhar</div>
+            </div>
+            <div>
+              <div class="flow-branch-label">NÃO</div>
+              <div class="flow-task" onclick="showFlow('cad-sem-liminar')" style="font-size:10px">Concluir<br>"Não há liminar"</div>
+            </div>
+          </div>
+
+          <div style="text-align:center;font-size:9px;color:#888;margin:4px 0">↓ (convergência)</div>
+
+          <div class="flow-item">
+            <div class="flow-task" onclick="showFlow('cad-workflows')">6. Concluir Workflows<br><span style="font-weight:400;font-size:10px">de responsabilidade do cadastro</span></div>
+            <div class="flow-arrow"></div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-task" onclick="showFlow('cad-concluir')">7. Concluir Tarefa no Xjus</div>
+            <div class="flow-arrow"></div>
+            <div class="flow-start-end flow-end" title="Fim">■</div>
+            <div style="font-size:9px;color:#c0392b;font-weight:600;margin-top:2px">PROCESSO CADASTRADO</div>
+          </div>
+        </div>
+
+        <div class="flow-detail-panel" id="flow-detail-panel-cadastro">
+          <div class="fdp-empty">
+            <div class="fdp-empty-icon">👆</div>
+            <div style="font-size:14px;font-weight:500;color:#888;margin-bottom:6px">Clique em uma etapa</div>
+            <div style="font-size:12px;color:#bbb">As instruções detalhadas aparecem aqui</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- FLUXO DEFESA (existente, preservado) -->
+    <div id="flow-defesa" class="team-flow active">
     <div class="flow-wrap">
       <!-- FLUXOGRAMA -->
       <div class="flow-chart">
@@ -496,7 +615,7 @@ select:focus{outline:none;border-color:#1E2B6A}
       </div>
 
       <!-- PAINEL DE DETALHE -->
-      <div class="flow-detail-panel" id="flow-detail-panel">
+      <div class="flow-detail-panel" id="flow-detail-panel-defesa">
         <div class="fdp-empty">
           <div class="fdp-empty-icon">👆</div>
           <div style="font-size:14px;font-weight:500;color:#888;margin-bottom:6px">Clique em uma etapa</div>
@@ -504,6 +623,273 @@ select:focus{outline:none;border-color:#1E2B6A}
         </div>
       </div>
     </div>
+    </div>
+
+    <!-- FLUXO INTERMEDIÁRIOS -->
+    <div id="flow-intermediarios" class="team-flow">
+      <div class="flow-wrap">
+        <div class="flow-chart">
+          <div class="flow-chart-title">Fluxo Intermediários — Nepomuceno Soares</div>
+
+          <div class="flow-item">
+            <div class="flow-start-end flow-start" onclick="showFlow('int-inicio')" title="Início">▶</div>
+            <div style="font-size:9px;color:#2d7a2d;font-weight:600;margin:2px 0">RECEBIMENTO DO PRAZO</div>
+            <div class="flow-arrow"></div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-task" onclick="showFlow('int-analisar')">1. Analisar o Prazo</div>
+            <div class="flow-arrow"></div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-decision" onclick="showFlow('int-dec-tempo')">
+              <div class="flow-decision-label">Prazo<br>tempestivo?</div>
+            </div>
+          </div>
+
+          <div class="flow-branch" style="margin-bottom:4px">
+            <div>
+              <div class="flow-branch-label" style="color:#c0392b">NÃO</div>
+              <div class="flow-task pink" onclick="showFlow('int-auditoria')" style="font-size:10px">Auditoria de Prazos<br>cancelar/devolver</div>
+            </div>
+            <div>
+              <div class="flow-branch-label" style="color:#2d7a2d">SIM ↓</div>
+              <div class="flow-task green" style="height:100%;display:flex;align-items:center;justify-content:center;font-size:10px">continua abaixo</div>
+            </div>
+          </div>
+
+          <div style="text-align:center;font-size:9px;color:#888;margin:4px 0">↓ SIM</div>
+
+          <div class="flow-item">
+            <div class="flow-task" onclick="showFlow('int-tipo')">2. Identificar Tipo de Prazo</div>
+            <div class="flow-arrow"></div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-decision" onclick="showFlow('int-dec-tipo')">
+              <div class="flow-decision-label">Qual o<br>tipo?</div>
+            </div>
+          </div>
+
+          <div class="flow-branch" style="margin-bottom:4px">
+            <div>
+              <div class="flow-branch-label">SANEAMENTO</div>
+              <div class="flow-task" onclick="showFlow('int-saneamento')" style="font-size:10px;background:#E8F0FE">Auditar contestação<br>e documentos</div>
+            </div>
+            <div>
+              <div class="flow-branch-label">MANIFESTAÇÃO</div>
+              <div class="flow-task" onclick="showFlow('int-manifestacao')" style="font-size:10px;background:#E8F0FE">Conferir docs Exyon<br>+ protocolar</div>
+            </div>
+          </div>
+
+          <div class="flow-branch" style="margin:4px 0">
+            <div>
+              <div class="flow-branch-label">MEMORIAL</div>
+              <div class="flow-task" onclick="showFlow('int-memorial')" style="font-size:10px;background:#E8F0FE">Elaborar Memorial<br>+ protocolar</div>
+            </div>
+            <div>
+              <div class="flow-branch-label" style="color:#c0392b">RECURSO ↓</div>
+              <div class="flow-task pink" onclick="showFlow('int-recurso')" style="font-size:10px">Fluxo de Recurso<br>continua abaixo</div>
+            </div>
+          </div>
+
+          <div style="text-align:center;font-size:9px;color:#888;margin:4px 0">↓ RECURSO</div>
+
+          <div class="flow-item">
+            <div class="flow-task" onclick="showFlow('int-rec-dispensa')">3. Analisar Dispensa</div>
+            <div class="flow-arrow"></div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-decision" onclick="showFlow('int-dec-dispensa')">
+              <div class="flow-decision-label">Resposta<br>do banco?</div>
+            </div>
+          </div>
+
+          <div class="flow-branch" style="margin-bottom:4px">
+            <div>
+              <div class="flow-branch-label" style="color:#2d7a2d">POSITIVA</div>
+              <div class="flow-task green" onclick="showFlow('int-dispensar')" style="font-size:10px">Dispensar Recurso</div>
+              <div style="margin:4px auto;display:flex;align-items:center;justify-content:center">
+                <div class="flow-start-end flow-end" style="width:22px;height:22px;font-size:9px">■</div>
+              </div>
+              <div style="font-size:9px;color:#2d7a2d;font-weight:600;text-align:center">DISPENSADO</div>
+            </div>
+            <div>
+              <div class="flow-branch-label" style="color:#c0392b">NEGATIVA</div>
+              <div class="flow-task pink" onclick="showFlow('int-elaborar-recurso')" style="font-size:10px">Elaborar Recurso<br>+ guias + protocolar</div>
+              <div style="margin:4px auto;display:flex;align-items:center;justify-content:center">
+                <div class="flow-start-end flow-end" style="width:22px;height:22px;font-size:9px">■</div>
+              </div>
+              <div style="font-size:9px;color:#c0392b;font-weight:600;text-align:center">PROTOCOLADO</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-detail-panel" id="flow-detail-panel-intermediarios">
+          <div class="fdp-empty">
+            <div class="fdp-empty-icon">👆</div>
+            <div style="font-size:14px;font-weight:500;color:#888;margin-bottom:6px">Clique em uma etapa</div>
+            <div style="font-size:12px;color:#bbb">As instruções detalhadas aparecem aqui</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- FLUXO CUMPRIMENTO DE SENTENÇA -->
+    <div id="flow-cumprimento" class="team-flow">
+      <div class="flow-wrap">
+        <div class="flow-chart">
+          <div class="flow-chart-title">Fluxo de Cumprimento de Sentença — Nepomuceno Soares</div>
+
+          <div class="flow-item">
+            <div class="flow-start-end flow-start" onclick="showFlow('cum-inicio')" title="Início">▶</div>
+            <div style="font-size:9px;color:#2d7a2d;font-weight:600;margin:2px 0">INICIAR ANÁLISE</div>
+            <div class="flow-arrow"></div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-task" onclick="showFlow('cum-docs')">1. Solicitar Documentos</div>
+            <div class="flow-arrow"></div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-task" onclick="showFlow('cum-analise')">2. Análise de Indício<br><span style="font-weight:400;font-size:10px">do valor da condenação</span></div>
+            <div class="flow-arrow"></div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-decision" onclick="showFlow('cum-dec-valor')">
+              <div class="flow-decision-label">Valor da<br>condenação?</div>
+            </div>
+          </div>
+
+          <div class="flow-branch" style="margin-bottom:4px">
+            <div>
+              <div class="flow-branch-label" style="color:#c0392b">ACIMA R$ 7 MIL</div>
+              <div class="flow-task pink" onclick="showFlow('cum-acima')" style="font-size:10px">Cálculo Jurídico<br>+ WF Rhumas</div>
+            </div>
+            <div>
+              <div class="flow-branch-label">ABAIXO R$ 7 MIL</div>
+              <div class="flow-task" onclick="showFlow('cum-abaixo')" style="font-size:10px;background:#E8F0FE">Criar WF Esc<br>+ Kit Cálculo</div>
+            </div>
+          </div>
+
+          <div style="text-align:center;font-size:9px;color:#888;margin:4px 0">↓ (convergência)</div>
+
+          <div class="flow-item">
+            <div class="flow-task" onclick="showFlow('cum-tratativa')">3. Tratativa de Acordo</div>
+            <div class="flow-arrow"></div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-decision" onclick="showFlow('cum-dec-acordo')">
+              <div class="flow-decision-label">Acordo<br>celebrado?</div>
+            </div>
+          </div>
+
+          <div class="flow-branch" style="margin-bottom:4px">
+            <div>
+              <div class="flow-branch-label" style="color:#2d7a2d">SIM</div>
+              <div class="flow-task green" onclick="showFlow('cum-acordo-sim')" style="font-size:10px">Minuta + Protocolo<br>+ pagamento + autos</div>
+              <div style="margin:4px auto;display:flex;align-items:center;justify-content:center">
+                <div class="flow-start-end flow-end" style="width:22px;height:22px;font-size:9px">■</div>
+              </div>
+              <div style="font-size:9px;color:#2d7a2d;font-weight:600;text-align:center">ENVIAR P/ ENCERRAMENTO</div>
+            </div>
+            <div>
+              <div class="flow-branch-label" style="color:#c0392b">NÃO ↓</div>
+              <div class="flow-task pink" style="height:100%;display:flex;align-items:center;justify-content:center;font-size:10px" onclick="showFlow('cum-acordo-nao')">Aguardar CS<br>continua abaixo</div>
+            </div>
+          </div>
+
+          <div style="text-align:center;font-size:9px;color:#888;margin:4px 0">↓ SEM ACORDO</div>
+
+          <div class="flow-item">
+            <div class="flow-decision" onclick="showFlow('cum-dec-pagto')">
+              <div class="flow-decision-label">Pagamento?</div>
+            </div>
+          </div>
+
+          <div class="flow-branch" style="margin-bottom:4px">
+            <div>
+              <div class="flow-branch-label" style="color:#2d7a2d">INTEGRAL</div>
+              <div class="flow-task green" onclick="showFlow('cum-pgto-integral')" style="font-size:10px">Comprovar nos autos</div>
+              <div style="margin:4px auto;display:flex;align-items:center;justify-content:center">
+                <div class="flow-start-end flow-end" style="width:22px;height:22px;font-size:9px">■</div>
+              </div>
+              <div style="font-size:9px;color:#2d7a2d;font-weight:600;text-align:center">ENCERRAMENTO</div>
+            </div>
+            <div>
+              <div class="flow-branch-label" style="color:#a06000">PARCIAL ↓</div>
+              <div class="flow-task" onclick="showFlow('cum-pgto-parcial')" style="font-size:10px;background:#FFF8E1;border-color:#a06000;color:#a06000">Apresentar<br>Impugnação</div>
+            </div>
+          </div>
+
+          <div style="text-align:center;font-size:9px;color:#888;margin:4px 0">↓ IMPUGNAÇÃO</div>
+
+          <div class="flow-item">
+            <div class="flow-decision" onclick="showFlow('cum-dec-impug')">
+              <div class="flow-decision-label">Resultado<br>impugnação?</div>
+            </div>
+          </div>
+
+          <div class="flow-branch" style="margin-bottom:4px">
+            <div>
+              <div class="flow-branch-label" style="color:#2d7a2d">TOTAL. PROCEDENTE</div>
+              <div class="flow-task green" onclick="showFlow('cum-impug-procedente')" style="font-size:10px">Baixa da Apólice</div>
+              <div style="margin:4px auto;display:flex;align-items:center;justify-content:center">
+                <div class="flow-start-end flow-end" style="width:22px;height:22px;font-size:9px">■</div>
+              </div>
+              <div style="font-size:9px;color:#2d7a2d;font-weight:600;text-align:center">ENCERRAMENTO</div>
+            </div>
+            <div>
+              <div class="flow-branch-label" style="color:#c0392b">IMPROC./PARCIAL ↓</div>
+              <div class="flow-task pink" onclick="showFlow('cum-impug-improcedente')" style="font-size:10px">Verificar valor<br>remanescente</div>
+            </div>
+          </div>
+
+          <div style="text-align:center;font-size:9px;color:#888;margin:4px 0">↓ REMANESCENTE</div>
+
+          <div class="flow-item">
+            <div class="flow-decision" onclick="showFlow('cum-dec-remanescente')">
+              <div class="flow-decision-label">Valor<br>remanescente?</div>
+            </div>
+          </div>
+
+          <div class="flow-branch" style="margin-bottom:4px">
+            <div>
+              <div class="flow-branch-label" style="color:#c0392b">ACIMA R$ 7 MIL</div>
+              <div class="flow-task pink" onclick="showFlow('cum-agravo')" style="font-size:10px">Agravo de<br>Instrumento</div>
+            </div>
+            <div>
+              <div class="flow-branch-label">ABAIXO R$ 7 MIL</div>
+              <div class="flow-task" onclick="showFlow('cum-remanescente-pgto')" style="font-size:10px;background:#E8F0FE">Solicitar pagto<br>remanescente</div>
+            </div>
+          </div>
+
+          <div style="text-align:center;font-size:9px;color:#888;margin:4px 0">↓ (convergência)</div>
+
+          <div class="flow-item">
+            <div class="flow-task" onclick="showFlow('cum-baixa-final')">Fazer Baixa da Apólice</div>
+            <div class="flow-arrow"></div>
+            <div class="flow-start-end flow-end" title="Fim">■</div>
+            <div style="font-size:9px;color:#c0392b;font-weight:600;margin-top:2px">ENVIAR P/ ENCERRAMENTO</div>
+          </div>
+        </div>
+
+        <div class="flow-detail-panel" id="flow-detail-panel-cumprimento">
+          <div class="fdp-empty">
+            <div class="fdp-empty-icon">👆</div>
+            <div style="font-size:14px;font-weight:500;color:#888;margin-bottom:6px">Clique em uma etapa</div>
+            <div style="font-size:12px;color:#bbb">As instruções detalhadas aparecem aqui</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- ABA 6: RANKING BMG -->
@@ -1477,16 +1863,427 @@ const FLOW_DATA = {
      'Salvar e confirmar a conclusão.'
    ],
    alert:'NÃO concluir o prazo antes de verificar todos os itens do checklist.',
-   tip:'Após concluir, o processo fica aguardando a próxima publicação — monitorar na equipe de Publicação.'}
+   tip:'Após concluir, o processo fica aguardando a próxima publicação — monitorar na equipe de Publicação.'},
+
+  // ============== CADASTRO ==============
+  'cad-inicio': {num:'',title:'Processos Migrados para o Xjus',
+   steps:[
+     'Os processos migrados do Exyon vêm para o Xjus automaticamente.',
+     'A equipe de Cadastro recebe a lista para realizar o cadastro inicial.',
+     'Próximo passo: exportar o relatório de tarefas do Xjus.'
+   ],
+   alert:null,
+   tip:'Acessar Xjus em https://app.xjus.com.br/nepomucenosoares para visualizar os processos migrados.'},
+  'cad-exportar': {num:'Etapa 1',title:'Exportar Relatório de Tarefas do Xjus',
+   steps:[
+     'Acessar o painel de tarefas no Xjus.',
+     'Aplicar filtro de tarefas pendentes de cadastro.',
+     'Exportar a lista em formato compatível (Excel ou CSV).',
+     'Salvar o arquivo na pasta local de trabalho.'
+   ],
+   alert:null,
+   tip:'O relatório é a fonte de verdade do dia — todos os processos a serem cadastrados aparecem nele.'},
+  'cad-filtrar': {num:'Etapa 2',title:'Filtrar por Estado',
+   steps:[
+     'Abrir o relatório exportado.',
+     'Aplicar filtro por estado de atuação (SC, RS, MG, SP, PR, RJ, ES).',
+     'Priorizar estados com maior volume ou prazo mais apertado.',
+     'Separar os processos por estado para análise individual.'
+   ],
+   alert:null,tip:null},
+  'cad-analisar': {num:'Etapa 3',title:'Analisar caso a caso no site do tribunal',
+   steps:[
+     'Acessar o site do tribunal correspondente ao estado de cada processo.',
+     'Verificar: dados das partes, vara, comarca, valor da causa, andamentos recentes.',
+     'Confirmar: data da citação, prazo de defesa, modalidade da citação.',
+     'Conferir se há liminar/tutela já deferida.',
+     'Identificar inconsistências entre dados do tribunal e do Xjus/Exyon.'
+   ],
+   alert:'A análise no site do tribunal é a verdade objetiva — sempre prevalece sobre o que está no Xjus se houver divergência.',
+   tip:null},
+  'cad-pasta': {num:'Etapa 4',title:'Criar Pasta no SharePoint',
+   steps:[
+     'Acessar a área de SharePoint do escritório (BMG > Processos).',
+     'Criar pasta com a nomenclatura padrão: CIV - Nome do Autor - Estado.',
+     'Estruturar subpastas: Contestação, Documentos, Audiências, Decisões.',
+     'Vincular a pasta ao processo no Xjus para acesso rápido.'
+   ],
+   alert:null,
+   tip:'Padronização da pasta é crítica — facilita a busca por todas as equipes posteriores (Defesa, Intermediários, Cumprimento).'},
+  'cad-dec-cadastro': {num:'Decisão',title:'O cadastro está correto?',
+   decision:true,
+   sim:'CORRETO: dados consistentes entre tribunal, Xjus e Exyon — seguir para o lançamento do prazo.',
+   nao:'INCORRETO: há divergências entre os sistemas — realizar correções no Xjus e Exyon antes de prosseguir.',
+   steps:[],alert:null,
+   tip:'Erro de cadastro pode causar falha operacional. Verificar nome, número CIV, vara, valor da causa, dados do autor.'},
+  'cad-correcoes': {num:'',title:'Realizar Correções no Xjus e Exyon',
+   steps:[
+     'Identificar os campos divergentes entre tribunal/Xjus/Exyon.',
+     'No Xjus: corrigir nome das partes, vara, comarca, valor da causa, motivo/sub-motivo.',
+     'No Exyon: solicitar workflow de Correção de Cadastro se for divergência de produto ou modalidade.',
+     'Documentar as correções realizadas em observação no Xjus.',
+     'Após correções, retornar à decisão e validar novamente.'
+   ],
+   alert:'Cadastro errado = falha operacional. Cada falha tem peso 2 no ranking do BMG.',
+   tip:null},
+  'cad-prazo': {num:'Etapa 5',title:'Lançar o Prazo',
+   steps:[
+     'No Xjus, abrir o processo cadastrado.',
+     'Aba Prazos > Lançar novo prazo.',
+     'Selecionar tipo: Defesa, Manifestação, Recurso, etc.',
+     'Preencher data inicial e data final (calculada conforme tipo de citação).',
+     'Salvar o prazo — uma tarefa é criada automaticamente para a equipe responsável.'
+   ],
+   alert:null,
+   tip:'O sistema X-JUS calcula automaticamente prazos para a maioria dos tipos. Verificar se o cálculo está correto antes de salvar.'},
+  'cad-dec-liminar': {num:'Decisão',title:'Há liminar/tutela neste processo?',
+   decision:true,
+   sim:'SIM: localizada decisão de liminar ou tutela de urgência — informar no Exyon e acompanhar o cumprimento.',
+   nao:'NAO: nenhuma liminar identificada — concluir saneamento de liminar com Nao ha liminar.',
+   steps:[],alert:null,
+   tip:'Verificar tanto no site do tribunal quanto no Exyon. Liminares não comunicadas geram OBF perdida = falha grave.'},
+  'cad-liminar': {num:'',title:'Informar Liminar e Acompanhar Cumprimento',
+   steps:[
+     'No Exyon, abrir o Controle de Liminar do processo.',
+     'Selecionar tipo de liminar: provisória ou definitiva.',
+     'Preencher: data da decisão, prazo de cumprimento, OBF determinada.',
+     'A tarefa SOLICITAR CUMPRIMENTO DA LIMINAR é gerada automaticamente.',
+     'Acompanhar até a confirmação de cumprimento da OBF pelo banco.'
+   ],
+   alert:'OBF definitiva é IRREVERSÍVEL — só instalar com certeza absoluta. Em dúvida, manter como provisória.',
+   tip:null},
+  'cad-sem-liminar': {num:'',title:'Concluir Saneamento Nao ha liminar',
+   steps:[
+     'No workflow de saneamento de liminar do Xjus, concluir com curso alternativo Não há liminar.',
+     'Confirmar a conclusão.',
+     'Prosseguir para os demais workflows do cadastro.'
+   ],
+   alert:null,tip:null},
+  'cad-workflows': {num:'Etapa 6',title:'Concluir Workflows de Responsabilidade do Cadastro',
+   steps:[
+     'No Exyon, verificar todos os workflows abertos vinculados ao processo recém-cadastrado.',
+     'Concluir os workflows de responsabilidade do Cadastro (Saneamento Inicial, Liminar, Subsídios iniciais).',
+     'Não concluir workflows de responsabilidade de outras equipes (Defesa, Intermediários).',
+     'Garantir que cada conclusão tem observação/justificativa adequada.'
+   ],
+   alert:null,
+   tip:'Workflows pendentes geram alertas no Exyon — manter a fila de cadastro sempre limpa é crítico para o ranking.'},
+  'cad-concluir': {num:'Etapa 7',title:'Concluir Tarefa no Xjus',
+   steps:[
+     'No Xjus, localizar a tarefa de Cadastro do processo.',
+     'Clicar em Concluir.',
+     'Preencher observação: Cadastro concluido — processo apto para defesa.',
+     'Salvar e confirmar.',
+     'O processo passa para a equipe seguinte (Publicação/Defesa).'
+   ],
+   alert:'Não concluir a tarefa de cadastro mantém o processo travado e impede a próxima equipe de atuar.',
+   tip:null},
+
+  // ============== INTERMEDIÁRIOS ==============
+  'int-inicio': {num:'',title:'Recebimento do Prazo',
+   steps:[
+     'A equipe de Intermediários recebe prazos do Xjus após publicação ou decisão judicial.',
+     'O prazo pode vir de diferentes fontes: saneamento de contestação, manifestação, especificação de provas, memorial, recurso.',
+     'Próximo passo: analisar a tempestividade e o tipo do prazo recebido.'
+   ],
+   alert:null,
+   tip:'Tipos comuns: prazo de saneamento, manifestação, especificação de provas, memoriais, recurso (apelação, agravo).'},
+  'int-analisar': {num:'Etapa 1',title:'Analisar o Prazo Recebido',
+   steps:[
+     'Abrir o processo no Xjus pelo número CIV.',
+     'Verificar o tipo de tarefa recebida e a data limite.',
+     'Conferir a publicação que originou o prazo: site do tribunal + Exyon.',
+     'Verificar se o prazo está dentro da tempestividade legal.',
+     'Identificar qual tipo de manifestação será necessário.'
+   ],
+   alert:'Prazo perdido sem comunicação = responsabilidade do advogado. Comunicar a gestão imediatamente em caso de irregularidade.',
+   tip:null},
+  'int-dec-tempo': {num:'Decisão',title:'O prazo está tempestivo?',
+   decision:true,
+   sim:'SIM: prazo está dentro do limite legal — prosseguir para identificar o tipo de manifestação.',
+   nao:'NÃO: prazo incorreto, processo migrado sem prazo, ou caso de dispensa — encaminhar para Auditoria de Prazos.',
+   steps:[],alert:null,tip:null},
+  'int-auditoria': {num:'',title:'Auditoria de Prazos — Cancelar ou Devolver',
+   steps:[
+     'Identificar se o prazo é passível de cancelamento ou se deve ser devolvido com motivo.',
+     'Se passível de cancelamento: cancelar prazo no Xjus + criar novo prazo correto + alimentar o Exyon.',
+     'Se não passível de cancelamento: devolver o prazo e registrar motivo.',
+     'Documentar a decisão de auditoria.'
+   ],
+   alert:null,
+   tip:'A Auditoria de Prazos protege o escritório de erros sistêmicos do Xjus — usar quando há divergência entre publicação e prazo lançado.'},
+  'int-tipo': {num:'Etapa 2',title:'Identificar Tipo de Prazo',
+   steps:[
+     'Ler a publicação que gerou o prazo.',
+     'Classificar entre: Saneamento (após contestação), Manifestação/Especificação de Provas, Memorial, Recurso.',
+     'Cada tipo segue um sub-fluxo específico — clique na opção abaixo do diagrama.'
+   ],
+   alert:null,tip:null},
+  'int-dec-tipo': {num:'Decisão',title:'Qual é o tipo do prazo?',
+   decision:true,
+   sim:'SANEAMENTO: auditar contestação e documentos. MANIFESTAÇÃO: conferir docs e protocolar resposta.',
+   nao:'MEMORIAL: elaborar peça final antes da sentença. RECURSO: analisar dispensa e elaborar recurso se necessário.',
+   steps:[],alert:null,
+   tip:'O tipo determina toda a estratégia da manifestação. Em dúvida, consultar a Defesa.'},
+  'int-saneamento': {num:'',title:'Saneamento após Contestação',
+   steps:[
+     'Auditar a contestação protocolada pela Defesa e os documentos juntados.',
+     'Verificar se contestação está com teses obrigatórias, documentos completos e prazo correto.',
+     'Se contestação E documentação corretas: finalizar o prazo no Xjus.',
+     'Se incorretas ou incompletas: criar prazo de correção/complementação e comunicar a Defesa.',
+     'Documentar o resultado da auditoria.'
+   ],
+   alert:'Documentos faltantes na contestação podem inviabilizar provas posteriores — atenção a contratos originais e laudos.',
+   tip:null},
+  'int-manifestacao': {num:'',title:'Manifestação / Especificação de Provas',
+   steps:[
+     'Conferir informações e documentações no Exyon.',
+     'Se documentação completa: acessar site do tribunal, analisar decisão judicial, protocolar manifestação.',
+     'Se documentação incompleta: solicitar documentação no Exyon antes de prosseguir.',
+     'Considerar incidente de falsidade se aplicável.',
+     'Se houve alteração da causa de pedir: prosseguir com incidente de falsidade.',
+     'Se não houve alteração: usar petição padrão + apresentar quesitos + juntar contrato original + pedir redução ou pagar honorários periciais.'
+   ],
+   alert:null,
+   tip:'Em casos de fraude com perícia: sempre verificar laudo da SUAUD antes de aceitar quesitos.'},
+  'int-memorial': {num:'',title:'Elaborar Memorial',
+   steps:[
+     'Analisar todo o processo (audiência, provas, contestação, manifestações).',
+     'Elaborar o memorial final consolidando teses e provas favoráveis.',
+     'Revisar os argumentos centrais — tese principal e secundárias.',
+     'Anexar planilhas de cálculo se relevantes para o quantum debeatur.',
+     'Protocolar o memorial no tribunal e atualizar o Exyon.'
+   ],
+   alert:null,
+   tip:'Memoriais bem fundamentados aumentam a chance de êxito na sentença — última oportunidade antes da decisão.'},
+  'int-recurso': {num:'',title:'Iniciar Fluxo de Recurso',
+   steps:[
+     'Analisar a sentença ou decisão recorrível.',
+     'Identificar os pontos a serem recorridos.',
+     'Próximo passo: analisar se vale solicitar dispensa do recurso ao banco.'
+   ],
+   alert:'Atenção ao prazo do recurso — apelação 15 dias úteis, agravo 15 dias úteis. Não há renovação.',
+   tip:null},
+  'int-rec-dispensa': {num:'Etapa 3',title:'Analisar Dispensa do Recurso',
+   steps:[
+     'Avaliar a sentença/decisão e a viabilidade do recurso.',
+     'Verificar precedentes do tribunal sobre o tema.',
+     'Calcular custo-benefício: honorários sucumbenciais + custas vs. chance de reversão.',
+     'Realizar pedido de dispensa ao banco se a reversão for improvável.',
+     'Aguardar resposta do banco antes de protocolar o recurso.'
+   ],
+   alert:null,
+   tip:'Recursos sem chance real de reversão aumentam aging do processo — afeta percepção do banco.'},
+  'int-dec-dispensa': {num:'Decisão',title:'Resposta do banco sobre dispensa?',
+   decision:true,
+   sim:'RESPOSTA POSITIVA: banco autoriza a dispensa — dispensar o recurso e encerrar o prazo.',
+   nao:'RESPOSTA NEGATIVA: banco quer recorrer — elaborar o recurso, solicitar pagamento de guias e protocolar.',
+   steps:[],alert:null,tip:null},
+  'int-dispensar': {num:'',title:'Dispensar o Recurso',
+   steps:[
+     'Após autorização do banco, formalizar a dispensa do recurso.',
+     'Documentar no Exyon a aprovação da dispensa.',
+     'Finalizar o prazo no Xjus com observação Recurso dispensado pelo banco.',
+     'Atualizar andamento no Exyon.'
+   ],
+   alert:null,tip:null},
+  'int-elaborar-recurso': {num:'',title:'Elaborar e Protocolar Recurso',
+   steps:[
+     'Elaborar o recurso (apelação, agravo, embargos) usando modelos padronizados.',
+     'Solicitar emissão de guias de custas recursais.',
+     'Realizar o pagamento das guias antes do protocolo.',
+     'Protocolar o recurso no tribunal correspondente.',
+     'Atualizar o Exyon e Xjus com andamento Recurso protocolado.'
+   ],
+   alert:'Não protocolar recurso sem comprovante de pagamento das guias — é causa de inadmissibilidade.',
+   tip:null},
+
+  // ============== CUMPRIMENTO DE SENTENÇA ==============
+  'cum-inicio': {num:'',title:'Iniciar Análise de Cumprimento',
+   steps:[
+     'A equipe de Cumprimento recebe o processo após sentença condenatória.',
+     'Próximo passo: solicitar documentos necessários para iniciar o cumprimento.'
+   ],
+   alert:null,
+   tip:'O cumprimento bem feito reduz aging e melhora o ranking. Acordo pós-sentença tem peso 4 e hoje está em 1,2% (oportunidade).'},
+  'cum-docs': {num:'Etapa 1',title:'Solicitar Documentos',
+   steps:[
+     'Solicitar à Defesa todos os documentos da fase de conhecimento.',
+     'Obter cópia da sentença/acórdão com trânsito em julgado.',
+     'Obter cálculo provisório se já elaborado pelo autor.',
+     'Reunir documentos contratuais para confronto.'
+   ],
+   alert:null,tip:null},
+  'cum-analise': {num:'Etapa 2',title:'Análise de Indício do Valor da Condenação',
+   steps:[
+     'Analisar o dispositivo da sentença para identificar valores e índices.',
+     'Calcular o indício de valor: principal + danos morais + correção monetária + juros.',
+     'Estimar se o valor da condenação está acima ou abaixo de R$ 7.000,00.',
+     'Esta análise determina o próximo passo: cálculo Rhumas (acima de R$ 7k) ou Kit Cálculo (abaixo de R$ 7k).'
+   ],
+   alert:null,
+   tip:'R$ 7 mil é o ponto de inflexão entre processo simples (calculável internamente) e processo que exige Rhumas.'},
+  'cum-dec-valor': {num:'Decisão',title:'Valor da condenação?',
+   decision:true,
+   sim:'ACIMA DE R$ 7 MIL: elaborar cálculo no Cálculo Jurídico (Rhumas) + instalar Workflow Cálculo Rhumas.',
+   nao:'ABAIXO DE R$ 7 MIL: criar Workflow ESC - Anexar Kit Cálculo + anexar o kit + verificar.',
+   steps:[],alert:null,tip:null},
+  'cum-acima': {num:'',title:'Pagamento Acima de R$ 7 mil — Rhumas',
+   steps:[
+     'Elaborar o cálculo detalhado no sistema Cálculo Jurídico.',
+     'Instalar o Workflow Cálculo Rhumas no Exyon.',
+     'Anexar o cálculo gerado ao workflow.',
+     'Aguardar validação do Rhumas (área financeira).',
+     'Prosseguir para tratativa de acordo.'
+   ],
+   alert:'Cálculos acima de R$ 7 mil sempre passam pelo Rhumas — não fazer cálculo manual sem validação.',
+   tip:null},
+  'cum-abaixo': {num:'',title:'Pagamento Abaixo de R$ 7 mil — Kit Cálculo',
+   steps:[
+     'Criar Workflow ESC - Anexar Kit Cálculo no Exyon.',
+     'Anexar o Kit Cálculo (planilha padronizada do escritório).',
+     'Verificar se o cálculo está correto.',
+     'Se cálculo correto: anexar ao workflow e prosseguir.',
+     'Se incorreto: refazer até estar correto.',
+     'Prosseguir para tratativa de acordo.'
+   ],
+   alert:null,
+   tip:'Kit Cálculo é o template padronizado do escritório — sempre usar a versão mais recente do SharePoint.'},
+  'cum-tratativa': {num:'Etapa 3',title:'Realizar Tratativa de Acordo',
+   steps:[
+     'Avaliar viabilidade de acordo pós-sentença.',
+     'Identificar a faixa de valor que o banco autoriza (alçada).',
+     'Propor acordo se valor da condenação está dentro da faixa entre R$ 5k e R$ 15k.',
+     'Negociar com o autor ou seu advogado.',
+     'Documentar a tratativa no Exyon.'
+   ],
+   alert:'NUNCA celebrar acordo acima da alçada autorizada — falha financeira com peso 2 + penalidade individual.',
+   tip:'Acordo pós-sentença é uma das maiores oportunidades de ganho no ranking (peso 4, hoje em 1,2%).'},
+  'cum-dec-acordo': {num:'Decisão',title:'Acordo foi celebrado?',
+   decision:true,
+   sim:'SIM: elaborar minuta, enviar para o advogado, elaborar protocolo, solicitar pagamento e comprovar nos autos.',
+   nao:'NÃO: aguardar cumprimento de sentença pela parte vencida e analisar a forma de pagamento.',
+   steps:[],alert:null,tip:null},
+  'cum-acordo-sim': {num:'',title:'Acordo Celebrado — Procedimento',
+   steps:[
+     'Elaborar a minuta de acordo com os termos negociados.',
+     'Enviar para o advogado revisar e assinar.',
+     'Elaborar o protocolo do acordo no tribunal.',
+     'Solicitar pagamento ao banco conforme alçada autorizada.',
+     'Comprovar o pagamento nos autos.',
+     'Encaminhar processo para Encerramento.'
+   ],
+   alert:null,
+   tip:'Acordo bem documentado evita reabertura do processo. Sempre incluir cláusula de quitação geral.'},
+  'cum-acordo-nao': {num:'',title:'Sem Acordo — Aguardar Cumprimento de Sentença',
+   steps:[
+     'Aguardar o pagamento espontâneo pela parte vencida.',
+     'Monitorar o processo no tribunal.',
+     'Analisar a forma de pagamento quando ocorrer: integral ou parcial.',
+     'Caso não haja pagamento, considerar execução nos próprios autos.'
+   ],
+   alert:null,tip:null},
+  'cum-dec-pagto': {num:'Decisão',title:'Forma de pagamento?',
+   decision:true,
+   sim:'PAGAMENTO INTEGRAL: solicitar pagamento ao banco + comprovar nos autos + encaminhar para encerramento.',
+   nao:'PAGAMENTO PARCIAL: solicitar pagamento ao banco + apresentar impugnação ao valor restante.',
+   steps:[],alert:null,tip:null},
+  'cum-pgto-integral': {num:'',title:'Pagamento Integral — Procedimento',
+   steps:[
+     'Solicitar o pagamento integral ao banco.',
+     'Após pagamento, comprovar nos autos com guia/comprovante.',
+     'Atualizar andamento no Exyon.',
+     'Encaminhar para Encerramento.'
+   ],
+   alert:null,tip:null},
+  'cum-pgto-parcial': {num:'',title:'Pagamento Parcial — Apresentar Impugnação',
+   steps:[
+     'Solicitar o pagamento parcial ao banco conforme apurado.',
+     'Apresentar impugnação ao valor remanescente contestando excessos.',
+     'Aguardar decisão sobre a impugnação.',
+     'Próximo passo: avaliar resultado da impugnação.'
+   ],
+   alert:null,tip:null},
+  'cum-dec-impug': {num:'Decisão',title:'Resultado da impugnação?',
+   decision:true,
+   sim:'TOTALMENTE PROCEDENTE: fazer baixa da apólice + encaminhar para encerramento.',
+   nao:'IMPROCEDENTE ou PARCIAL PROCEDENTE: verificar valor remanescente e decidir entre pagar ou agravar.',
+   steps:[],alert:null,tip:null},
+  'cum-impug-procedente': {num:'',title:'Impugnação Totalmente Procedente',
+   steps:[
+     'A impugnação foi acolhida integralmente — não há valor remanescente.',
+     'Fazer a baixa da apólice de garantia (se houver).',
+     'Atualizar Exyon com decisão final.',
+     'Encaminhar processo para Encerramento.'
+   ],
+   alert:null,tip:null},
+  'cum-impug-improcedente': {num:'',title:'Impugnação Improcedente ou Parcial',
+   steps:[
+     'Verificar o valor remanescente a ser pago.',
+     'Avaliar se o valor está acima ou abaixo de R$ 7 mil.',
+     'Decidir entre apresentar Agravo de Instrumento (acima de R$ 7k) ou solicitar pagamento (abaixo de R$ 7k).'
+   ],
+   alert:null,tip:null},
+  'cum-dec-remanescente': {num:'Decisão',title:'Valor remanescente?',
+   decision:true,
+   sim:'ACIMA DE R$ 7 MIL: viabilizar Agravo de Instrumento contra a decisão de impugnação.',
+   nao:'ABAIXO DE R$ 7 MIL: solicitar pagamento remanescente ao banco e seguir para baixa da apólice.',
+   steps:[],alert:null,tip:null},
+  'cum-agravo': {num:'',title:'Apresentar Agravo de Instrumento',
+   steps:[
+     'Verificar tempestividade do agravo — 15 dias úteis.',
+     'Elaborar minuta do agravo contestando a decisão de impugnação.',
+     'Solicitar emissão e pagamento das guias recursais.',
+     'Protocolar o agravo no tribunal correspondente.',
+     'Acompanhar o processamento.'
+   ],
+   alert:'Agravo só é cabível para valores significativos — analisar custo-benefício antes.',
+   tip:null},
+  'cum-remanescente-pgto': {num:'',title:'Solicitar Pagamento Remanescente',
+   steps:[
+     'Solicitar ao banco o pagamento do valor remanescente apurado.',
+     'Comprovar o pagamento nos autos.',
+     'Atualizar Exyon.',
+     'Seguir para baixa da apólice e encerramento.'
+   ],
+   alert:null,tip:null},
+  'cum-baixa-final': {num:'',title:'Fazer Baixa da Apólice de Garantia',
+   steps:[
+     'Verificar se há apólice de garantia (penhora, caução) no processo.',
+     'Solicitar a liberação/baixa da apólice ao tribunal.',
+     'Acompanhar até a efetiva baixa.',
+     'Encaminhar processo para Encerramento.'
+   ],
+   alert:null,
+   tip:'Apólice não baixada gera custo financeiro indevido para o banco. Sempre dar baixa antes de fechar.'}
+
 };
+
+let currentFlowTeam = 'defesa';
+
+function setFlowTeam(team, el){
+  currentFlowTeam = team;
+  document.querySelectorAll('.team-flow').forEach(function(t){ t.classList.remove('active'); });
+  var target = document.getElementById('flow-' + team);
+  if(target) target.classList.add('active');
+  document.querySelectorAll('.team-flow-tab').forEach(function(t){ t.classList.remove('active'); });
+  if(el) el.classList.add('active');
+}
 
 function showFlow(id){
   const d = FLOW_DATA[id];
   if(!d){ return; }
-  
-  // Highlight active node
-  document.querySelectorAll('.flow-task,.flow-decision').forEach(el=>el.classList.remove('active'));
-  event && event.currentTarget && event.currentTarget.classList.add('active');
+
+  var team = 'defesa';
+  if(id.indexOf('cad-')===0) team = 'cadastro';
+  else if(id.indexOf('int-')===0) team = 'intermediarios';
+  else if(id.indexOf('cum-')===0) team = 'cumprimento';
+
+  var teamContainer = document.getElementById('flow-' + team);
+  if(teamContainer){
+    teamContainer.querySelectorAll('.flow-task,.flow-decision').forEach(function(el){ el.classList.remove('active'); });
+  }
+  if(event && event.currentTarget) event.currentTarget.classList.add('active');
 
   let html = '';
   if(d.num) html += `<div class="fdp-step-num">${d.num}</div>`;
@@ -1515,7 +2312,8 @@ function showFlow(id){
     if(d.tip) html += `<div class="fdp-tip"><strong>Dica:</strong> ${d.tip}</div>`;
   }
 
-  document.getElementById('flow-detail-panel').innerHTML = html;
+  var panel = document.getElementById('flow-detail-panel-' + team);
+  if(panel) panel.innerHTML = html;
 }
 
 </script>

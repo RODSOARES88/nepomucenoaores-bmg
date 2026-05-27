@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "criado_em": "2026-05-27T13:30:00Z",
+    "descricao": "Arquivos do SharePoint pasta 'inteligencia jurídica BMG' já vistos pelo workflow. Atualizado automaticamente toda segunda 9h.",
+    "folder_uri": "file:///b!8P5Egiw6vUuoeo7GidDlS2MQXWtpcm1CllFlqjIAlSsN7lrFE_bYR4T7mTogFed_/01KKRSXWF4FM37THGW2RBJMJK7X6QP3W2B"
+  },
+  "arquivos_conhecidos": {
+    "Decisões - 01.02.2026 a 30.04.2026.csv": {
+      "modified": "2026-05-20T00:00:00Z"
+    },
+    "Decisões - 01.05.2026 a 12.05.2026.csv": {
+      "modified": "2026-05-13T00:00:00Z"
+    },
+    "Decisões - 12.05.2026 a 18.05.2026.xlsx": {
+      "modified": "2026-05-19T00:00:00Z"
+    },
+    "Decisões - 19.05.2026 a 25.05.2026.xlsx": {
+      "modified": "2026-05-26T18:55:32Z"
+    }
+  }
+}

@@ -1,0 +1,111 @@
+name: Varredura semanal de notícias jurídicas
+
+# Toda segunda 09h07 BRT (12h07 UTC) · evita o :00 cluster
+# Também pode ser disparado manualmente via "Run workflow" na UI.
+on:
+  schedule:
+    - cron: '7 12 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  varredura:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # ─── Setup Python (para o script de varredura) ────────────────────
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python dependencies
+        run: pip install -r scripts/requirements.txt
+
+      # ─── Setup Node (pra staticrypt encrypt + decrypt) ────────────────
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install staticrypt
+        run: npm install -g staticrypt
+
+      # ─── Descriptografar HTML atual via staticrypt --decrypt ──────────
+      - name: Decrypt current site
+        env:
+          STATICRYPT_PASSWORD: ${{ secrets.STATICRYPT_PASSWORD }}
+        run: |
+          mkdir -p decrypted
+          staticrypt --decrypt index.html -p "$STATICRYPT_PASSWORD" -d decrypted/
+
+      # ─── Rodar varredura (Claude API + web_search) ────────────────────
+      - name: Run varredura
+        id: varredura
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/varredura_noticias.py
+        continue-on-error: true
+
+      # ─── Validar JS antes de re-encriptar ────────────────────────────
+      - name: Validate JS
+        if: steps.varredura.outcome == 'success'
+        run: |
+          node -e "
+            const fs = require('fs');
+            const html = fs.readFileSync('decrypted/index.html', 'utf8');
+            const scripts = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].map(m => m[1]);
+            const vm = require('vm');
+            scripts.forEach((s, i) => {
+              try { new vm.Script(s, {filename: 'script_' + i + '.js'}); }
+              catch(e) { console.error('ERR script', i, ':', e.message); process.exit(1); }
+            });
+            console.log('All ' + scripts.length + ' scripts parsed OK');
+          "
+
+      # ─── Re-encriptar com staticrypt (sobrescreve index.html) ─────────
+      - name: Encrypt with StatiCrypt
+        if: steps.varredura.outcome == 'success'
+        env:
+          STATICRYPT_PASSWORD: ${{ secrets.STATICRYPT_PASSWORD }}
+        run: staticrypt decrypted/index.html -p "$STATICRYPT_PASSWORD" --short -d .
+
+      # ─── Commitar mudanças (só index.html encriptado + briefing) ──────
+      - name: Commit changes
+        if: steps.varredura.outcome == 'success'
+        run: |
+          git config user.name "BMG News Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html briefings-semanais/ 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Sem mudanças pra commitar"
+          else
+            git commit -m "auto: varredura semanal de notícias jurídicas $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      # ─── Abrir issue com briefing (sempre que houver briefing-latest) ─
+      - name: Open briefing issue
+        if: always() && hashFiles('briefing-latest.md') != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('briefing-latest.md', 'utf8');
+            const dataStr = new Date().toISOString().slice(0, 10);
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `📰 Briefing semanal · ${dataStr}`,
+              body: body,
+              labels: ['varredura-noticias', 'briefing-semanal']
+            });
+
+      - name: Report status
+        run: echo "Varredura concluída · outcome=${{ steps.varredura.outcome }}"

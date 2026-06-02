@@ -156,8 +156,10 @@ Essas abas SEMPRE entram na propagação quando um dos 10 inputs chega. Cada inp
 | 17 | Mesa NS | **aba Régua BMG · leitura estratégica** | Idem Site 1 |
 | 18 | Mesa NS | **aba Carteira BMG · AGREGADO** | Idem Site 1 |
 | 19 | Mesa NS | `FATURAMENTO_BMG.POR_MES[mes]` + agregados | enc + receita_enc + receita_total + queda |
-| 20 | **Mesa NS** | **`data/estrategia-ativa.json` ⚠️ CRÍTICO** | **decisoes_resumidas + bandeiras + sessao.data + meta_junho + kpis_resumo · este JSON alimenta o widget azul 'Decisões Mesa Diretora' no topo do Site 1 e Central via fetch · TODOS os 3 sites pegam atualização automática em ~1-2min após push** |
-| ★ | Dados | `BMG-Central/faturamento-bmg.json` | Sincroniza com Mesa NS |
+| 20 | **Mesa NS** | **`data/estrategia-ativa.json` ⚠️ CRÍTICO + AUTOMATIZÁVEL** | **decisoes_resumidas + bandeiras + sessao.data + meta_mes_ativo + kpis_resumo. Este JSON alimenta o widget azul 'Decisões Mesa Diretora' no topo do Site 1 e Central via fetch · TODOS os 3 sites pegam atualização automática em ~1-2min após push.<br><br>🤖 **Não fazer manual!** Existe wrapper local: `C:\Users\Rodrigo\Documents\BMG-Central\sync-estrategia.bat`. Roda `_gera_estrategia.py v2` que detecta cenário (fechamento_recente / em_curso / apenas_fechado) automaticamente a partir do `faturamento-bmg.json` (campo `METAS_MENSAIS`) + carteira + decisões, gera o JSON com bandeiras e decisoes adaptativas, faz git add/commit/push da Mesa NS. 1 comando = ecossistema sincronizado.** |
+| ★ | Dados | `BMG-Central/faturamento-bmg.json` | Sincroniza com Mesa NS · **deve ter `METAS_MENSAIS` atualizado por mês** (status=fechado com realizados ou status=ativo com só meta) |
+| ★★ | Local | `BMG-Central/_gera_estrategia.py v2` | Script Python adaptativo · lê faturamento + carteira + decisões · gera estrategia-ativa.json com cenário detectado |
+| ★★★ | Local | `BMG-Central/sync-estrategia.bat` | Wrapper de 1 comando · roda script + commit + push da Mesa NS |
 
 ---
 

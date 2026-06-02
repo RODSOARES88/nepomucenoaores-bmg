@@ -28,6 +28,7 @@ Essas abas SEMPRE entram na propagação quando um dos 10 inputs chega. Cada inp
 | **Central** | Encerramentos | Recebe email Beatriz + planilha detalhe |
 | **Central** | Reembolsos | Recebe planilha reembolsos |
 | **Central** | Financeira | KPIs derivam dos DADOS · auto-recalcula |
+| **Central** | **Visão Geral** | **AUTO** · É a vista resumida dos números das outras abas (palavras do usuário: *"a visão geral na central tem que corresponder aos números específicos de cada aba"*). KPIs derivam de DADOS.historico[mesAtual]. Sempre que atualizo Defesas/Encerramentos/Audiências, a Visão Geral reflete em auto. |
 | **Central** | Atualizações | Changelog · auto |
 | **Mesa NS** | Mesa Diretora · BMG | Espelho da Mesa Site 1 + financeiro pros sócios |
 
@@ -40,7 +41,6 @@ Essas abas SEMPRE entram na propagação quando um dos 10 inputs chega. Cada inp
 | **Site 1** | Manual da Equipe | Quando usuário encaminha novidade/procedimento novo |
 | **Central** | Entradas | Quando usuário encaminha planilha/email de entradas |
 | **Central** | Audiências | Quando usuário encaminha planilha/email de audiências |
-| **Central** | Visão Geral · blocos editoriais | Quando usuário pede atualização específica (KPIs auto-derivam) |
 | **Mesa NS** | Mesa de Licitações | Quando usuário encaminha conteúdo de licitação |
 | **Mesa NS** | Visão Consolidada | Quando usuário pede |
 | **Radar Licitações** | Tudo | Manual sob demanda |

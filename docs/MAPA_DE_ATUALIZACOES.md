@@ -2,6 +2,53 @@
 
 > **Filosofia (palavras do usuário):**
 > *"é um ecossistema. quando atualizo um, todos atualizam."*
+> *"o site 1 no manual, qualquer novidade eu encaminho. nas abas entradas, audiencias e visão geral eu encaminho, e nas licitações também são manuais."*
+
+---
+
+## 🎯 Classificação das abas · MODO AUTO vs MODO MANUAL SOB DEMANDA
+
+Antes de propagar qualquer input pelo ecossistema, lembrar dessa classificação. Algumas abas são alimentadas **automaticamente em conjunto** com fechamentos/snapshots, outras **só atualizam quando o usuário encaminha conteúdo específico delas**.
+
+### 🔄 MODO AUTO · propagam em conjunto
+
+Essas abas SEMPRE entram na propagação quando um dos 10 inputs chega. Cada input afeta um subconjunto delas (ver tabelas abaixo).
+
+| Site | Aba | Por que é auto |
+|---|---|---|
+| **Site 1** | Plano de Inteligência | Deriva de DECISOES_FINAL · recalcula com decisões novas |
+| **Site 1** | Sugestão de Modelos | Deriva de DATA · recalcula com decisões novas |
+| **Site 1** | Ranking BMG | Recebe META_INFO de Thais/Beatriz/BMG |
+| **Site 1** | Régua BMG | Banner leitura estratégica · todo input pode atualizar contexto. Números RGB só com Input 9 (BI BMG) |
+| **Site 1** | Carteira BMG | Banner leitura estratégica · todo input pode atualizar contexto. Números só com Input 10 (Thais Entradas/Saídas) |
+| **Site 1** | Inteligência de Mercado | Varredura semanal de notícias jurídicas (manual ou robô) |
+| **Site 1** | Mesa Diretora | **Alimentada por TUDO** · 5 falas dos setores |
+| **Site 1** | Atualizações | Changelog auto-popula data do topbar |
+| **Central** | Defesas | Recebe planilha defesas semanal |
+| **Central** | Encerramentos | Recebe email Beatriz + planilha detalhe |
+| **Central** | Reembolsos | Recebe planilha reembolsos |
+| **Central** | Financeira | KPIs derivam dos DADOS · auto-recalcula |
+| **Central** | Atualizações | Changelog · auto |
+| **Mesa NS** | Mesa Diretora · BMG | Espelho da Mesa Site 1 + financeiro pros sócios |
+
+### 🤝 MODO MANUAL SOB DEMANDA · só atualiza quando o usuário encaminha
+
+**Estas abas NÃO entram na propagação automática dos 10 inputs.** Quando o usuário envia algo específico delas, eu atualizo SÓ aquela aba e suas dependências diretas.
+
+| Site | Aba | Como atualizar |
+|---|---|---|
+| **Site 1** | Manual da Equipe | Quando usuário encaminha novidade/procedimento novo |
+| **Central** | Entradas | Quando usuário encaminha planilha/email de entradas |
+| **Central** | Audiências | Quando usuário encaminha planilha/email de audiências |
+| **Central** | Visão Geral · blocos editoriais | Quando usuário pede atualização específica (KPIs auto-derivam) |
+| **Mesa NS** | Mesa de Licitações | Quando usuário encaminha conteúdo de licitação |
+| **Mesa NS** | Visão Consolidada | Quando usuário pede |
+| **Radar Licitações** | Tudo | Manual sob demanda |
+| **Radar Análise** | Tudo | Manual sob demanda |
+
+**Regra:** se o usuário NÃO mencionou explicitamente essas abas, eu NÃO mexo nelas mesmo durante propagação de fechamentos mensais.
+
+---
 >
 > Toda atualização de dados operacionais (defesas, encerramentos, reembolsos, audiências, decisões, metas) **alimenta a visão estratégica da Mesa Diretora E também os painéis estruturais (Régua BMG e Carteira BMG)**.
 >

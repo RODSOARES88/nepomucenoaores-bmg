@@ -156,6 +156,7 @@ Essas abas SEMPRE entram na propagação quando um dos 10 inputs chega. Cada inp
 | 17 | Mesa NS | **aba Régua BMG · leitura estratégica** | Idem Site 1 |
 | 18 | Mesa NS | **aba Carteira BMG · AGREGADO** | Idem Site 1 |
 | 19 | Mesa NS | `FATURAMENTO_BMG.POR_MES[mes]` + agregados | enc + receita_enc + receita_total + queda |
+| 20 | **Mesa NS** | **`data/estrategia-ativa.json` ⚠️ CRÍTICO** | **decisoes_resumidas + bandeiras + sessao.data + meta_junho + kpis_resumo · este JSON alimenta o widget azul 'Decisões Mesa Diretora' no topo do Site 1 e Central via fetch · TODOS os 3 sites pegam atualização automática em ~1-2min após push** |
 | ★ | Dados | `BMG-Central/faturamento-bmg.json` | Sincroniza com Mesa NS |
 
 ---

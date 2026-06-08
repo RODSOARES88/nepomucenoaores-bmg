@@ -297,6 +297,32 @@ Essas abas SEMPRE entram na propagação quando um dos 10 inputs chega. Cada inp
 
 ---
 
+### 1️⃣1️⃣ 🆕 Snapshot Dashboard Aquila (escritório interno · mensal · FONTE DA VERDADE)
+
+**Exemplo:** screenshots da tela Aquila com Visão Geral · Base ativa por UF · Ativos por projeto · Fluxo entrada/saída mensal · Detalhamento mês fechado · Ranking êxito por estado.
+
+**Frequência:** ideal mensal · Aquila atualizado normalmente no dia 14 do mês.
+
+**Propagação obrigatória:**
+
+| # | Site | Onde | O que muda |
+|---|---|---|---|
+| 1 | Central | `faturamento-bmg.json → QUADRO_AQUILA` | Substituir TODAS as 6 subseções (visao_geral, base_ativa_por_uf_pct, ativos_por_projeto, fluxo_mensal_entrada_saida, ULTIMO_MES_fechado_detalhamento, exitos_por_estado_ranking) + bumpar `data_atualizacao` |
+| 2 | Central | `faturamento-bmg.json → POR_MES` | Para cada mês que Aquila atualizou: substituir `encerramentos` e `pct_exito` + adicionar `fonte_oficial: "Quadro Aquila YYYY-MM-DD"` e `meta_aquila` |
+| 3 | Central | `faturamento-bmg.json → METAS_ANUAIS_BMG` | Se Aquila trouxe metas atualizadas, substituir |
+| 4 | Site 1 | **aba Ranking BMG · bloco Pulso Operacional Aquila** | 4 cards (sobrecarga, velocity YTD, pra zerar, tempo médio) + tabela Velocity mensal + tabela Base por UF + Top projetos + Ranking êxito + Detalhamento mês mágico + 3 decisões fechamento |
+| 5 | Site 1 | **aba Ranking BMG · bloco Meta Anual** | Atualizar última linha (mês novo fechado) + déficit acumulado |
+| 6 | Site 1 | **aba Mesa Diretora · fala CFO/Administrativo** | Atualizar déficit + ~R$ receita perdida |
+| 7 | Site 1 | **aba Mesa Diretora · fala CEO/Estratégico** | Atualizar narrativa segundo mês mágico ou ruim |
+| 8 | Site 1 | changelog | Entrada nova |
+| 9 | Mesa NS | **seção colapsável Pulso Aquila** | Replicar mudanças do Site 1 |
+| 10 | Mesa NS | **seção colapsável Matriz UF × Projeto** | Verificar se concentração mudou |
+| 11 | Mesa NS | `FATURAMENTO_BMG` se afetou improc/êxito | Sincronizar |
+
+**Cuidado:** Aquila é fonte da verdade · qualquer divergência com Beatriz, BMG ou Thais, **Aquila ganha** (decisão do usuário 03/06/2026).
+
+---
+
 ### 🔟 🆕 Planilha "Entradas e Saidas Processos" (Gestor Jurídico BMG · estoque atual da carteira)
 
 **Exemplo:** `Entradas e Saidas Processos.xlsx` (mensal · Thais ou similar)

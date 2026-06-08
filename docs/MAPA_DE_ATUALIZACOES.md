@@ -6,6 +6,21 @@
 
 ---
 
+## 🏆 FONTE DA VERDADE OFICIAL
+
+**Quadro Aquila** (Dashboard interno do escritório · `Atualizado DD/MM/YYYY`) é a **fonte da verdade oficial** pra encerramentos, metas mensais, % êxito por mês, % êxito por estado, base ativa, tempo médio de encerramento, entradas/saídas mensais e ativos por projeto.
+
+**Hierarquia de fontes (quando há conflito):**
+1. 🏆 **Quadro Aquila** (consolidado interno · confronta planilhas mais completas desde sempre)
+2. 📧 Email Beatriz Duarte (fechamento mensal por produto · BMG oficial · bom pra detalhe por produto)
+3. 📊 BI BMG Performance (snapshot oficial BMG · bom pro ranking competitivo · clusters ranqueáveis)
+4. 📋 Email Thais semanal (snapshot intermediário)
+5. ⚠️ Slide BMG "Meta de encerramento 2026" — **DESCARTADO em 03/06/2026** por divergir do Aquila
+
+Sempre que receber Quadro Aquila novo, atualizar com os números dele SEM questionar e adicionar campo `fonte: "Quadro Aquila YYYY-MM-DD"` em cada registro.
+
+---
+
 ## 🎯 Classificação das abas · MODO AUTO vs MODO MANUAL SOB DEMANDA
 
 Antes de propagar qualquer input pelo ecossistema, lembrar dessa classificação. Algumas abas são alimentadas **automaticamente em conjunto** com fechamentos/snapshots, outras **só atualizam quando o usuário encaminha conteúdo específico delas**.

@@ -254,11 +254,13 @@ Essas abas SEMPRE entram na propagação quando um dos 10 inputs chega. Cada inp
 | 1 | Site 1 | **aba Ranking BMG · bloco Snapshot semanal** | Cards + tabelas UF×resultado + projeto×resultado |
 | 2 | Site 1 | `DECISOES_FINAL` embedded | Incrementar array |
 | 3 | Site 1 | `DATA[uf][causa]` | Recalcular via `recalcularDATAComDecisoesReais()` |
-| 4 | Site 1 | **aba Régua BMG · leitura estratégica** | Se tese vencedora por cluster mudou, atualizar banner |
-| 5 | Site 1 | **aba Carteira BMG · leitura estratégica** | Se concentração de causa raiz por UF/produto mudou, ajustar contexto |
-| 6 | Site 1 | **aba Mesa Diretora · fala CLO/Jurídico** | Movimentação de teses |
-| 7 | Site 1 | changelog | Entrada nova |
-| 8 | Mesa NS | `FATURAMENTO_BMG` se afetou improc/êxito | Sincronizar |
+| 4 | Site 1 | **aba Ranking BMG · bloco Matriz UF × Projeto (probabilidade)** | Recalcular % favorável de cada cruzamento (script `_probabilidade_uf_projeto.py` em BMG-Central · gera `_probabilidade_uf_projeto.json` · atualizar cells HTML do heatmap + TOP 5 + BOTTOM 5) |
+| 5 | Site 1 | **aba Régua BMG · leitura estratégica** | Se tese vencedora por cluster mudou, atualizar banner |
+| 6 | Site 1 | **aba Carteira BMG · leitura estratégica** | Se concentração de causa raiz por UF/produto mudou, ajustar contexto |
+| 7 | Site 1 | **aba Mesa Diretora · fala CLO/Jurídico** | Movimentação de teses |
+| 8 | Site 1 | changelog | Entrada nova |
+| 9 | Mesa NS | **Matriz UF × Projeto (espelho)** | Sincronizar HTML do heatmap com Site 1 |
+| 10 | Mesa NS | `FATURAMENTO_BMG` se afetou improc/êxito | Sincronizar |
 
 ---
 

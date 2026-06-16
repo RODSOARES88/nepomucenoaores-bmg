@@ -190,22 +190,33 @@ def call_claude(prompt: str) -> dict:
         messages=[{"role": "user", "content": prompt}],
     )
 
-    # Extrai o último bloco de texto da resposta (após uso de tools)
+    # Extrai TODOS os blocos de texto da resposta (incluindo após tool use)
     text_chunks = [b.text for b in response.content if hasattr(b, "text") and b.text]
     if not text_chunks:
         raise RuntimeError("Resposta da API não contém texto")
-    final_text = text_chunks[-1].strip()
+    all_text = "\n\n".join(text_chunks)
 
-    # Remove cercas markdown se houver
-    if final_text.startswith("```json"):
-        final_text = final_text[7:]
-    elif final_text.startswith("```"):
-        final_text = final_text[3:]
-    if final_text.endswith("```"):
-        final_text = final_text[:-3]
-    final_text = final_text.strip()
+    # Busca JSON em qualquer posição da resposta (suporta texto antes/depois do bloco)
+    # Prioridade 1: bloco delimitado por ```json ... ```
+    fenced = re.search(r"```(?:json)?\s*([\[\{][\s\S]*?[\]\}])\s*```", all_text, re.DOTALL)
+    if fenced:
+        return json.loads(fenced.group(1))
 
-    return json.loads(final_text)
+    # Prioridade 2: maior bloco que comece com [ ou {
+    for opener, closer in [("[", "]"), ("{", "}")]:
+        start = all_text.find(opener)
+        end = all_text.rfind(closer)
+        if start != -1 and end > start:
+            candidate = all_text[start : end + 1]
+            try:
+                return json.loads(candidate)
+            except json.JSONDecodeError:
+                pass
+
+    # Falhou tudo · imprime contexto pra debug
+    preview = all_text[:600] + ("..." if len(all_text) > 600 else "")
+    print(f"  [DEBUG] Resposta recebida (primeiros 600 chars):\n{preview}", flush=True)
+    raise RuntimeError(f"Nenhum JSON válido encontrado na resposta (len={len(all_text)})")
 
 
 # ─── Atualização do HTML ────────────────────────────────────────────────

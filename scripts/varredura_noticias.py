@@ -30,7 +30,7 @@ from pathlib import Path
 
 from anthropic import Anthropic
 
-MODEL = "claude-sonnet-4-5-20250929"  # melhor custo-benefício pra esta tarefa
+MODEL = "claude-sonnet-4-6"  # atualizado 16/06/2026 · Sonnet 4.6 (Sonnet 4.5 de set/2025 pode estar aposentado)
 DECRYPTED_PATH = Path("decrypted/index.html")
 BRIEFINGS_DIR = Path("briefings-semanais")
 BRIEFING_LATEST = Path("briefing-latest.md")

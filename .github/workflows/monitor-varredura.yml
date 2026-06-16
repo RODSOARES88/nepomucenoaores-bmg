@@ -1,0 +1,65 @@
+name: Watchdog · varredura semanal
+
+# Roda toda terça-feira 15:00 UTC (12:00 BRT)
+# Verifica se houve commit de varredura na segunda anterior
+# Se NÃO houve, abre issue de alerta — sem isso, falhas ficam invisíveis
+on:
+  schedule:
+    - cron: '0 15 * * 2'   # terça 15:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 50   # pega commits recentes pra olhar histórico
+
+      - name: Check if Monday had a varredura commit
+        id: check
+        run: |
+          # Data da última segunda-feira (UTC)
+          MONDAY=$(date -u -d "last monday" +%Y-%m-%d 2>/dev/null || date -u -v-1d -v-mon +%Y-%m-%d)
+          echo "Looking for varredura commit on $MONDAY"
+
+          # Procura por commit de varredura desde a segunda
+          COMMITS=$(git log --oneline --since="$MONDAY 00:00" --until="$MONDAY 23:59" --author="BMG News Bot" || echo "")
+
+          if [ -z "$COMMITS" ]; then
+            echo "missed=true" >> $GITHUB_OUTPUT
+            echo "monday=$MONDAY" >> $GITHUB_OUTPUT
+            echo "🚨 SEM varredura na segunda $MONDAY"
+          else
+            echo "missed=false" >> $GITHUB_OUTPUT
+            echo "✓ Varredura OK · $COMMITS"
+          fi
+
+      - name: Open alert issue if varredura was missed
+        if: steps.check.outputs.missed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const monday = '${{ steps.check.outputs.monday }}';
+            const actionsUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/workflows/varredura-noticias.yml`;
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `⚠️ Varredura de segunda ${monday} NÃO RODOU`,
+              body: `O watchdog detectou que **não houve commit de varredura semanal** na segunda-feira ${monday}.\n\n` +
+                    `**Causas comuns:**\n` +
+                    `- GitHub Actions pulou o cron (acontece em períodos de alta carga)\n` +
+                    `- Workflow falhou silenciosamente\n` +
+                    `- Schedule cron desativado por inatividade do repo (improvável)\n\n` +
+                    `**Ação imediata:** disparar manual na UI dos Actions\n` +
+                    `🔗 [Abrir Actions e clicar "Run workflow"](${actionsUrl})\n\n` +
+                    `Ou esperar o backup das 15:07 UTC da próxima segunda (já configurado como redundância).\n\n` +
+                    `_Issue gerada automaticamente pelo watchdog · terça-feira._`,
+              labels: ['varredura-noticias', 'monitoramento', 'atencao']
+            });

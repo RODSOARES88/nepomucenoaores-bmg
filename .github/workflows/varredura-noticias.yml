@@ -1,10 +1,16 @@
 name: Varredura semanal de notícias jurídicas
 
-# Toda segunda 09h07 BRT (12h07 UTC) · evita o :00 cluster
+# Roda toda segunda 2 vezes pra redundância:
+#   12:07 UTC (~09:07 BRT) · janela principal
+#   15:07 UTC (~12:07 BRT) · backup se GitHub pulou o primeiro
+# O script é idempotente (varre últimos 7 dias) · rodar 2x na mesma segunda
+# não duplica notícias (o NEWS é reescrito, não acrescentado).
+#
 # Também pode ser disparado manualmente via "Run workflow" na UI.
 on:
   schedule:
-    - cron: '7 12 * * 1'
+    - cron: '7 12 * * 1'   # segunda 12:07 UTC · principal
+    - cron: '7 15 * * 1'   # segunda 15:07 UTC · backup
   workflow_dispatch:
 
 permissions:
@@ -19,7 +25,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      # ─── Setup Python (para o script de varredura) ────────────────────
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -28,7 +33,6 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r scripts/requirements.txt
 
-      # ─── Setup Node (pra staticrypt encrypt + decrypt) ────────────────
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -37,25 +41,60 @@ jobs:
       - name: Install staticrypt
         run: npm install -g staticrypt
 
-      # ─── Descriptografar HTML atual via staticrypt --decrypt ──────────
+      # ─── Verificar se já houve varredura hoje (evita rodar 2x na mesma segunda) ───
+      - name: Check if already ran today
+        id: check_ran
+        run: |
+          TODAY=$(date -u +%Y-%m-%d)
+          # Olha últimos 5 commits do bot · se algum tem a data de hoje, pula
+          if git log --oneline --since="$TODAY" --author="BMG News Bot" | grep -q "varredura semanal"; then
+            echo "already_ran=true" >> $GITHUB_OUTPUT
+            echo "✓ Já houve varredura hoje · pulando."
+          else
+            echo "already_ran=false" >> $GITHUB_OUTPUT
+            echo "→ Sem varredura hoje · vai rodar."
+          fi
+
       - name: Decrypt current site
+        if: steps.check_ran.outputs.already_ran == 'false'
         env:
           STATICRYPT_PASSWORD: ${{ secrets.STATICRYPT_PASSWORD }}
         run: |
           mkdir -p decrypted
           staticrypt --decrypt index.html -p "$STATICRYPT_PASSWORD" -d decrypted/
 
-      # ─── Rodar varredura (Claude API + web_search) ────────────────────
-      - name: Run varredura
+      # ─── Rodar varredura com retry (3 tentativas) ─────────────────────
+      - name: Run varredura (with retry)
+        if: steps.check_ran.outputs.already_ran == 'false'
         id: varredura
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: python scripts/varredura_noticias.py
-        continue-on-error: true
+        run: |
+          MAX_ATTEMPTS=3
+          for i in $(seq 1 $MAX_ATTEMPTS); do
+            echo "── Tentativa $i/$MAX_ATTEMPTS ──"
+            if python scripts/varredura_noticias.py; then
+              echo "✓ Varredura OK na tentativa $i"
+              exit 0
+            else
+              CODE=$?
+              if [ $CODE -eq 1 ]; then
+                echo "→ Sem novidades relevantes (exit 1) · não é erro"
+                exit 0
+              fi
+              echo "✗ Tentativa $i falhou (exit $CODE)"
+              if [ $i -lt $MAX_ATTEMPTS ]; then
+                SLEEP=$((30 * i))
+                echo "  aguardando ${SLEEP}s antes de tentar de novo..."
+                sleep $SLEEP
+              fi
+            fi
+          done
+          echo "✗✗✗ Todas as $MAX_ATTEMPTS tentativas falharam"
+          exit 2
 
-      # ─── Validar JS antes de re-encriptar ────────────────────────────
       - name: Validate JS
-        if: steps.varredura.outcome == 'success'
+        if: steps.check_ran.outputs.already_ran == 'false' && steps.varredura.outcome == 'success'
         run: |
           node -e "
             const fs = require('fs');
@@ -69,16 +108,14 @@ jobs:
             console.log('All ' + scripts.length + ' scripts parsed OK');
           "
 
-      # ─── Re-encriptar com staticrypt (sobrescreve index.html) ─────────
       - name: Encrypt with StatiCrypt
-        if: steps.varredura.outcome == 'success'
+        if: steps.check_ran.outputs.already_ran == 'false' && steps.varredura.outcome == 'success'
         env:
           STATICRYPT_PASSWORD: ${{ secrets.STATICRYPT_PASSWORD }}
         run: staticrypt decrypted/index.html -p "$STATICRYPT_PASSWORD" --short -d .
 
-      # ─── Commitar mudanças (só index.html encriptado + briefing) ──────
       - name: Commit changes
-        if: steps.varredura.outcome == 'success'
+        if: steps.check_ran.outputs.already_ran == 'false' && steps.varredura.outcome == 'success'
         run: |
           git config user.name "BMG News Bot"
           git config user.email "actions@users.noreply.github.com"
@@ -90,9 +127,8 @@ jobs:
             git push
           fi
 
-      # ─── Abrir issue com briefing (sempre que houver briefing-latest) ─
       - name: Open briefing issue
-        if: always() && hashFiles('briefing-latest.md') != ''
+        if: steps.check_ran.outputs.already_ran == 'false' && hashFiles('briefing-latest.md') != ''
         uses: actions/github-script@v7
         with:
           script: |
@@ -107,5 +143,25 @@ jobs:
               labels: ['varredura-noticias', 'briefing-semanal']
             });
 
+      # ─── Abrir issue de FALHA se varredura falhou (NOVO · sai do silêncio) ───
+      - name: Open failure issue
+        if: steps.check_ran.outputs.already_ran == 'false' && failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const dataStr = new Date().toISOString().slice(0, 10);
+            const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚨 Varredura de notícias FALHOU · ${dataStr}`,
+              body: `O workflow de varredura semanal falhou em ${dataStr}.\n\n` +
+                    `**Causa provável:** API timeout, rate limit, ou erro no script Python (3 tentativas com retry já feitas).\n\n` +
+                    `**Próxima ação:** abrir o log do run e identificar a falha · pode disparar manual via UI.\n\n` +
+                    `🔗 [Ver log do run](${runUrl})`,
+              labels: ['varredura-noticias', 'erro', 'urgente']
+            });
+
       - name: Report status
-        run: echo "Varredura concluída · outcome=${{ steps.varredura.outcome }}"
+        if: always()
+        run: echo "Varredura concluída · already_ran=${{ steps.check_ran.outputs.already_ran }} · outcome=${{ steps.varredura.outcome }}"

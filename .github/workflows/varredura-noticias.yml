@@ -119,7 +119,9 @@ jobs:
         run: |
           git config user.name "BMG News Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add index.html briefings-semanais/ 2>/dev/null || true
+          # Commita TAMBÉM o decrypted/ pra manter a fonte editável por humanos
+          # em sincronia · sem isso, um publish manual reverte as notícias do bot.
+          git add index.html briefings-semanais/ decrypted/index.html 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Sem mudanças pra commitar"
           else

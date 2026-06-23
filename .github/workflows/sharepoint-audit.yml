@@ -28,18 +28,22 @@ jobs:
       - name: Install dependencies
         run: pip install -r scripts/requirements.txt
 
+      # O script retorna: 0 = nada novo · 1 = arquivos novos · 2 = erro técnico.
+      # Capturamos o código real pra tratar cada caso separadamente (sem isso,
+      # erro de credencial Azure virava "workflow failed" + ENOENT no passo seguinte).
       - name: Run audit
         id: audit
         env:
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-        # URI da pasta "inteligencia jurídica BMG"
-        # Achada via mcp__86583cfd-d0b0-465b-8f29-62ea7bcd12b5__sharepoint_folder_search "BMG"
+        # URI da pasta "inteligência jurídica BMG"
         run: |
+          set +e
           python scripts/sharepoint_audit.py \
             --folder-uri "file:///b!8P5Egiw6vUuoeo7GidDlS2MQXWtpcm1CllFlqjIAlSsN7lrFE_bYR4T7mTogFed_/01KKRSXWF4FM37THGW2RBJMJK7X6QP3W2B" \
             --folder-label "inteligência jurídica BMG"
+          echo "code=$?" >> "$GITHUB_OUTPUT"
         continue-on-error: true
 
       - name: Commit manifest if changed
@@ -50,26 +54,70 @@ jobs:
           git diff --cached --quiet || git commit -m "chore(sync): atualiza manifest SharePoint $(date -u +%Y-%m-%d)"
           git push || true
 
-      - name: Open issue if new files detected
-        if: steps.audit.outcome == 'failure'
+      - name: Ensure issue labels exist
+        if: steps.audit.outputs.code == '1' || steps.audit.outputs.code == '2'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const labels = [
+              { name: 'sharepoint-sync',    color: '0E8A16', description: 'Watchdog SharePoint detectou novidade' },
+              { name: 'pendente-processar', color: 'D93F0B', description: 'Aguarda processamento manual via Claude' },
+              { name: 'erro',               color: 'B60205', description: 'Falha técnica no workflow' },
+            ];
+            for (const l of labels) {
+              try {
+                await github.rest.issues.getLabel({ owner: context.repo.owner, repo: context.repo.repo, name: l.name });
+              } catch (e) {
+                if (e.status === 404) {
+                  await github.rest.issues.createLabel({ owner: context.repo.owner, repo: context.repo.repo, ...l });
+                  console.log(`Criou label: ${l.name}`);
+                } else { throw e; }
+              }
+            }
+
+      - name: Open issue · new files detected
+        if: steps.audit.outputs.code == '1'
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            const body = fs.readFileSync('audit-report.md', 'utf8');
+            let body;
+            try { body = fs.readFileSync('audit-report.md', 'utf8'); }
+            catch (e) { body = '⚠ Auditoria sinalizou novidade mas não gerou o relatório. Veja os logs do run.'; }
             const dataStr = new Date().toISOString().slice(0, 10);
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: `🆕 SharePoint · novos arquivos detectados (${dataStr})`,
-              body: body,
+              body,
               labels: ['sharepoint-sync', 'pendente-processar']
+            });
+
+      # exit 2 = erro técnico (credencial Azure expirada, permissão revogada, etc).
+      # Abre uma issue HONESTA em vez de deixar o workflow falhar silenciosamente.
+      - name: Open issue · audit error
+        if: steps.audit.outputs.code == '2'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const dataStr = new Date().toISOString().slice(0, 10);
+            const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚨 SharePoint Audit · erro técnico (${dataStr})`,
+              body: `O audit do SharePoint falhou com erro técnico (exit 2).\n\n` +
+                    `**Causa provável:** credencial Azure expirada (\`AZURE_CLIENT_SECRET\`) ou permissão do app "BMG Sites Sync" revogada.\n\n` +
+                    `**Como resolver:** gerar novo client secret no portal Azure e atualizar o secret \`AZURE_CLIENT_SECRET\` no repo (Settings → Secrets and variables → Actions).\n\n` +
+                    `🔗 [Ver log do run](${runUrl})`,
+              labels: ['sharepoint-sync', 'erro']
             });
 
       - name: Report status
         run: |
-          if [ "${{ steps.audit.outcome }}" == "failure" ]; then
-            echo "⚠️ Arquivos novos detectados · issue aberta."
-          else
-            echo "✓ Pasta sincronizada · nada novo."
-          fi
+          case "${{ steps.audit.outputs.code }}" in
+            0) echo "✓ Pasta sincronizada · nada novo." ;;
+            1) echo "⚠️ Arquivos novos detectados · issue aberta." ;;
+            2) echo "🚨 Erro técnico no audit · issue de erro aberta." ;;
+            *) echo "? Código inesperado: '${{ steps.audit.outputs.code }}'" ;;
+          esac

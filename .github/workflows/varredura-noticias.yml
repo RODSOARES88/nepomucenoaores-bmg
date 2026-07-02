@@ -119,9 +119,11 @@ jobs:
         run: |
           git config user.name "BMG News Bot"
           git config user.email "actions@users.noreply.github.com"
-          # Commita TAMBÉM o decrypted/ pra manter a fonte editável por humanos
-          # em sincronia · sem isso, um publish manual reverte as notícias do bot.
-          git add index.html briefings-semanais/ decrypted/index.html 2>/dev/null || true
+          # 🔒 SEGURANÇA (2026-07-01): NUNCA commitar decrypted/ — o repo é público
+          # e o claro anula a senha StatiCrypt. Sincronia humano↔bot agora é:
+          # antes de editar local, git pull + re-descriptografar do index.html
+          # cifrado (staticrypt --decrypt · igual este workflow faz no passo acima).
+          git add index.html briefings-semanais/ 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Sem mudanças pra commitar"
           else

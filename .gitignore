@@ -12,3 +12,9 @@ encrypted/
 Thumbs.db
 *.swp
 node_modules/
+
+# 🔐 Credenciais Azure locais · NUNCA commitar (repo público · secret vazaria)
+.env
+scripts/.env
+*.env
+!*.env.exemplo

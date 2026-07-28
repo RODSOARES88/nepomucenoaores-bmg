@@ -2,20 +2,81 @@
   "_meta": {
     "criado_em": "2026-05-27T13:30:00Z",
     "descricao": "Arquivos do SharePoint pasta 'inteligencia jurídica BMG' já vistos pelo workflow. Atualizado automaticamente toda segunda 9h.",
-    "folder_uri": "file:///b!8P5Egiw6vUuoeo7GidDlS2MQXWtpcm1CllFlqjIAlSsN7lrFE_bYR4T7mTogFed_/01KKRSXWF4FM37THGW2RBJMJK7X6QP3W2B"
+    "folder_uri": "file:///b!8P5Egiw6vUuoeo7GidDlS2MQXWtpcm1CllFlqjIAlSsN7lrFE_bYR4T7mTogFed_/01KKRSXWF4FM37THGW2RBJMJK7X6QP3W2B",
+    "ultima_sync": "2026-07-28T16:18:35.510157Z"
   },
   "arquivos_conhecidos": {
     "Decisões - 01.02.2026 a 30.04.2026.csv": {
-      "modified": "2026-05-20T00:00:00Z"
+      "id": "01KKRSXWAXM2BYSNMGABA2BL22YYW23QAS",
+      "modified": "2026-04-30T14:41:38Z",
+      "size": 1235011,
+      "webUrl": "https://escritorionepomuceno.sharepoint.com/sites/BMG/_layouts/15/Doc.aspx?sourcedoc=%7B89836617-8635-4100-A0AF-5AC62DADC012%7D&file=Decis%C3%B5es%20-%2001.02.2026%20a%2030.04.2026.csv&action=default&mobileredirect=true"
     },
     "Decisões - 01.05.2026 a 12.05.2026.csv": {
-      "modified": "2026-05-13T00:00:00Z"
+      "id": "01KKRSXWCZAH3KW4RT25GY46CQSKYGEIKT",
+      "modified": "2026-05-12T11:47:54Z",
+      "size": 172669,
+      "webUrl": "https://escritorionepomuceno.sharepoint.com/sites/BMG/_layouts/15/Doc.aspx?sourcedoc=%7BABF60159-3372-4DD7-8E78-5092B0622153%7D&file=Decis%C3%B5es%20-%2001.05.2026%20a%2012.05.2026.csv&action=default&mobileredirect=true"
+    },
+    "Decisões - 02.06.2026 a 08.06.2026.xlsx": {
+      "id": "01KKRSXWEWTNIHXM6PBFEZR7PSUGERGL5G",
+      "modified": "2026-06-10T10:32:21Z",
+      "size": 305735,
+      "webUrl": "https://escritorionepomuceno.sharepoint.com/sites/BMG/_layouts/15/Doc.aspx?sourcedoc=%7B7B509B96-CFB3-4909-98FD-F2A189132FA6%7D&file=Decis%C3%B5es%20-%2002.06.2026%20a%2008.06.2026.xlsx&action=default&mobileredirect=true"
+    },
+    "Decisões - 07.07.2026 a 13.07.2026.xlsx": {
+      "id": "01KKRSXWCRMXERYPTQJFBLG76O6DWOJFKH",
+      "modified": "2026-07-15T12:33:45Z",
+      "size": 476279,
+      "webUrl": "https://escritorionepomuceno.sharepoint.com/sites/BMG/_layouts/15/Doc.aspx?sourcedoc=%7B1CC96551-703E-4249-B37F-CEF0ECE49547%7D&file=Decis%C3%B5es%20-%2007.07.2026%20a%2013.07.2026.xlsx&action=default&mobileredirect=true"
+    },
+    "Decisões - 09.06.2026 a 15.06.2026.xlsx": {
+      "id": "01KKRSXWBAALFLQQB5PNFZK3PIOLAPMKCV",
+      "modified": "2026-06-16T22:08:13Z",
+      "size": 223814,
+      "webUrl": "https://escritorionepomuceno.sharepoint.com/sites/BMG/_layouts/15/Doc.aspx?sourcedoc=%7BB8CA0220-3D40-4B7B-956D-E872C0F62855%7D&file=Decis%C3%B5es%20-%2009.06.2026%20a%2015.06.2026.xlsx&action=default&mobileredirect=true"
     },
     "Decisões - 12.05.2026 a 18.05.2026.xlsx": {
-      "modified": "2026-05-19T00:00:00Z"
+      "id": "01KKRSXWGFZ4K4AYP2IBE3RIOCVQFZKFBW",
+      "modified": "2026-05-20T12:43:28Z",
+      "size": 235633,
+      "webUrl": "https://escritorionepomuceno.sharepoint.com/sites/BMG/_layouts/15/Doc.aspx?sourcedoc=%7BC015CFC5-FA61-4940-B8A1-C2AC0B951436%7D&file=Decis%C3%B5es%20-%2012.05.2026%20a%2018.05.2026.xlsx&action=default&mobileredirect=true"
+    },
+    "Decisões - 14.07.2026 a 20.07.2026.xlsx": {
+      "id": "01KKRSXWA7NTJWAATAEBCILNX2NUUAUQUX",
+      "modified": "2026-07-22T03:20:50Z",
+      "size": 392082,
+      "webUrl": "https://escritorionepomuceno.sharepoint.com/sites/BMG/_layouts/15/Doc.aspx?sourcedoc=%7B60D36C1F-6002-4420-85B6-FA6D280A4297%7D&file=Decis%C3%B5es%20-%2014.07.2026%20a%2020.07.2026.xlsx&action=default&mobileredirect=true"
+    },
+    "Decisões - 16.06.2026 a 22.06.2026.xlsx": {
+      "id": "01KKRSXWCEDTHE2KS4GNE25CPQVOZTJVS4",
+      "modified": "2026-06-25T13:48:54Z",
+      "size": 331726,
+      "webUrl": "https://escritorionepomuceno.sharepoint.com/sites/BMG/_layouts/15/Doc.aspx?sourcedoc=%7B4DCE1C44-5C2A-4933-AE89-F0ABB334D65C%7D&file=Decis%C3%B5es%20-%2016.06.2026%20a%2022.06.2026.xlsx&action=default&mobileredirect=true"
     },
     "Decisões - 19.05.2026 a 25.05.2026.xlsx": {
-      "modified": "2026-05-26T18:55:32Z"
+      "id": "01KKRSXWFSQVESEMY5GRDLS5S5WT32K2R3",
+      "modified": "2026-05-26T18:55:32Z",
+      "size": 370625,
+      "webUrl": "https://escritorionepomuceno.sharepoint.com/sites/BMG/_layouts/15/Doc.aspx?sourcedoc=%7B224985B2-1D33-4634-B976-5DB4F7A56A3B%7D&file=Decis%C3%B5es%20-%2019.05.2026%20a%2025.05.2026.xlsx&action=default&mobileredirect=true"
+    },
+    "Decisões - 23.06.2026 a 29.06.2026.xlsx": {
+      "id": "01KKRSXWDMPKMZOPJ4CBB26SZFJ47MSS2N",
+      "modified": "2026-07-01T13:49:35Z",
+      "size": 178728,
+      "webUrl": "https://escritorionepomuceno.sharepoint.com/sites/BMG/_layouts/15/Doc.aspx?sourcedoc=%7B97997A6C-3C3D-4310-AF4B-254F3EC94B4D%7D&file=Decis%C3%B5es%20-%2023.06.2026%20a%2029.06.2026.xlsx&action=default&mobileredirect=true"
+    },
+    "Decisões - 26.05.2026 a 01.06.2026.xlsx": {
+      "id": "01KKRSXWH2LV6P3SEYSFDLULXX3UOBE6A6",
+      "modified": "2026-06-03T14:09:09Z",
+      "size": 303212,
+      "webUrl": "https://escritorionepomuceno.sharepoint.com/sites/BMG/_layouts/15/Doc.aspx?sourcedoc=%7BFD7C5DFA-98C8-4691-BA2E-F7DD1C12781E%7D&file=Decis%C3%B5es%20-%2026.05.2026%20a%2001.06.2026.xlsx&action=default&mobileredirect=true"
+    },
+    "Decisões - 30.06.2026 a 06.07.2026.xlsx": {
+      "id": "01KKRSXWGEXQEPJ4CRB5EI5XXDGMYWNXYA",
+      "modified": "2026-07-20T18:00:48Z",
+      "size": 336259,
+      "webUrl": "https://escritorionepomuceno.sharepoint.com/sites/BMG/_layouts/15/Doc.aspx?sourcedoc=%7BF408BCC4-51F0-480F-8EDE-E3333166DF00%7D&file=Decis%C3%B5es%20-%2030.06.2026%20a%2006.07.2026.xlsx&action=default&mobileredirect=true"
     }
   }
 }

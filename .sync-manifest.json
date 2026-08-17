@@ -3,7 +3,7 @@
     "criado_em": "2026-05-27T13:30:00Z",
     "descricao": "Arquivos do SharePoint pasta 'inteligencia jurídica BMG' já vistos pelo workflow. Atualizado automaticamente toda segunda 9h.",
     "folder_uri": "file:///b!8P5Egiw6vUuoeo7GidDlS2MQXWtpcm1CllFlqjIAlSsN7lrFE_bYR4T7mTogFed_/01KKRSXWF4FM37THGW2RBJMJK7X6QP3W2B",
-    "ultima_sync": "2026-08-10T12:37:14.041306Z"
+    "ultima_sync": "2026-08-17T12:15:54.903864Z"
   },
   "arquivos_conhecidos": {
     "Decisões - 01.02.2026 a 30.04.2026.csv": {
@@ -23,6 +23,12 @@
       "modified": "2026-06-10T10:32:21Z",
       "size": 305735,
       "webUrl": "https://escritorionepomuceno.sharepoint.com/sites/BMG/_layouts/15/Doc.aspx?sourcedoc=%7B7B509B96-CFB3-4909-98FD-F2A189132FA6%7D&file=Decis%C3%B5es%20-%2002.06.2026%20a%2008.06.2026.xlsx&action=default&mobileredirect=true"
+    },
+    "Decisões - 04.08.2026 a 10.08.2026.xlsx": {
+      "id": "01KKRSXWDVJRSPANMTBZC34QWWZM2FS66U",
+      "modified": "2026-08-12T13:01:53Z",
+      "size": 431002,
+      "webUrl": "https://escritorionepomuceno.sharepoint.com/sites/BMG/_layouts/15/Doc.aspx?sourcedoc=%7BF0644C75-9335-450E-BE42-D6CB34597BD4%7D&file=Decis%C3%B5es%20-%2004.08.2026%20a%2010.08.2026.xlsx&action=default&mobileredirect=true"
     },
     "Decisões - 07.07.2026 a 13.07.2026.xlsx": {
       "id": "01KKRSXWCRMXERYPTQJFBLG76O6DWOJFKH",

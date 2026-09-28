@@ -1,14 +1,14 @@
 # Audit SharePoint · inteligência jurídica BMG
 
-Snapshot: `2026-09-21T17:14:54.362240Z`
+Snapshot: `2026-09-28T18:48:32.591372Z`
 Pasta: **inteligência jurídica BMG**
-Total de arquivos visíveis: **20**
+Total de arquivos visíveis: **21**
 
 ## 🆕 Arquivos novos a processar
 
 | Arquivo | Modificado em | Tamanho | Link |
 |---|---|---|---|
-| `Decisões - 08.09.2026 a14.09.2026.xlsx` | 2026-09-16T01:11:25Z | 446.297 bytes | [abrir](https://escritorionepomuceno.sharepoint.com/sites/BMG/_layouts/15/Doc.aspx?sourcedoc=%7BE5226884-D4E9-4C92-BB97-BFD6A9F6F273%7D&file=Decis%C3%B5es%20-%2008.09.2026%20a14.09.2026.xlsx&action=default&mobileredirect=true) |
+| `Decisões - 15.09.2026 a 21.09.2026.xlsx` | 2026-09-23T12:42:59Z | 437.358 bytes | [abrir](https://escritorionepomuceno.sharepoint.com/sites/BMG/_layouts/15/Doc.aspx?sourcedoc=%7B3F09EE2F-D1C1-4A83-BAC7-4EA670EE3E2D%7D&file=Decis%C3%B5es%20-%2015.09.2026%20a%2021.09.2026.xlsx&action=default&mobileredirect=true) |
 
 ---
 
